@@ -9,24 +9,26 @@
 #ifndef __cyril2__CyrilPaletteItem__
 #define __cyril2__CyrilPaletteItem__
 
-#include "ofMain.h"
-#include "cmds.h"
+#include <ofMain.h>
+#include <cyril/cmds.h>
+
 #include "Cyril.h"
 #include "Palette.h"
 
-class CyrilPaletteItem : public Cyril {
+class CyrilPaletteItem : public Cyril
+{
   Cyril* e;
   bool paletteCalc;
-  float d,r,g,b;
+  float d, r, g, b;
+
 public:
   CyrilPaletteItem(float _f, Cyril* _e);
-  CyrilPaletteItem (const CyrilPaletteItem &other) ;
-  virtual ~CyrilPaletteItem ();
+  CyrilPaletteItem(const CyrilPaletteItem& other);
+  virtual ~CyrilPaletteItem();
   void print();
-  virtual Cyril *clone ();
+  virtual Cyril* clone();
   virtual int size();
-  virtual void eval(CyrilState &);
+  virtual void eval(CyrilState&);
 };
-
 
 #endif /* defined(__cyril2__CyrilPaletteItem__) */

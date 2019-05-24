@@ -1,0 +1,3 @@
+[submodule "addons/ofxEditor"]
+	path = addons/ofxEditor
+	url = git@github.com:darrenmothersele/ofxEditor.git

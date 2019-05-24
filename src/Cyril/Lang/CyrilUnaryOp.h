@@ -9,15 +9,19 @@
 #ifndef cyril2_CyrilUnaryOp_h
 #define cyril2_CyrilUnaryOp_h
 
-#include "cmds.h"
+#include <cyril/cmds.h>
 
-
-class CyrilUnaryOp : public Cyril {
+class CyrilUnaryOp : public Cyril
+{
   string o;
   int op;
   Cyril* e;
+
 public:
-  CyrilUnaryOp(string _o, Cyril* _e) : o(_o), e(_e) {
+  CyrilUnaryOp(string _o, Cyril* _e)
+    : o(_o)
+    , e(_e)
+  {
     valid = e->valid;
     if ("!" == o) {
       op = OP_NOT;
@@ -25,27 +29,26 @@ public:
         yyerror("Operand to ! should be 1 value");
         valid = false;
       }
-    }
-    else {
+    } else {
       yyerror("Unknown operation");
       valid = false;
     }
   }
-  CyrilUnaryOp (const CyrilUnaryOp &other) {
-    o = other.o;
-    e = other.e->clone ();
-  }
-  virtual ~CyrilUnaryOp ()
+  CyrilUnaryOp(const CyrilUnaryOp& other)
   {
-    delete e;
+    o = other.o;
+    e = other.e->clone();
   }
-  void print() {
+  virtual ~CyrilUnaryOp() { delete e; }
+  void print()
+  {
     e->print();
     cout << "Unary: " << o << endl;
   }
-  virtual Cyril *clone () { return new CyrilUnaryOp (*this); }
+  virtual Cyril* clone() { return new CyrilUnaryOp(*this); }
   virtual int size() { return 1; }
-  virtual void eval(CyrilState &_s) {
+  virtual void eval(CyrilState& _s)
+  {
     e->eval(_s);
     float v1 = _s.stk->top();
     _s.stk->pop();
@@ -53,8 +56,7 @@ public:
       case OP_NOT:
         if (v1 > 0) {
           _s.stk->push(0);
-        }
-        else {
+        } else {
           _s.stk->push(1);
         }
         break;

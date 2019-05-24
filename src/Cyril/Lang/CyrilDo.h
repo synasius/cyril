@@ -9,36 +9,44 @@
 #ifndef cyril2_CurilDo_h
 #define cyril2_CurilDo_h
 
-#include "cmds.h"
+#include <cyril/cmds.h>
 
-class CyrilDo : public Cyril {
+class CyrilDo : public Cyril
+{
   Cyril* e;
   Cyril* c;
+
 public:
-  CyrilDo(Cyril* _e, Cyril* _c) : e(_e), c(_c) {
+  CyrilDo(Cyril* _e, Cyril* _c)
+    : e(_e)
+    , c(_c)
+  {
     valid = c->valid;
     if (_e->size() != 1) {
       yyerror("Incorrect size of expression in do loop");
       valid = false;
     }
   }
-  CyrilDo (const CyrilDo &other) {
-    e = other.e->clone ();
-    c = other.c->clone ();
+  CyrilDo(const CyrilDo& other)
+  {
+    e = other.e->clone();
+    c = other.c->clone();
   }
-  virtual ~CyrilDo ()
+  virtual ~CyrilDo()
   {
     delete e;
     delete c;
   }
-  void print() {
+  void print()
+  {
     c->print();
     e->print();
     cout << "Do: " << endl;
   }
-  virtual Cyril *clone () { return new CyrilDo (*this); }
+  virtual Cyril* clone() { return new CyrilDo(*this); }
   virtual int size() { return 0; }
-  virtual void eval(CyrilState &_s) {
+  virtual void eval(CyrilState& _s)
+  {
     e->eval(_s);
     float val = _s.stk->top();
     _s.stk->pop();
@@ -49,6 +57,5 @@ public:
   }
   virtual int matchPushPop() { return c->matchPushPop(); }
 };
-
 
 #endif

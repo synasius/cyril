@@ -1,9 +1,7 @@
 %{
-#define YY_DECL extern "C" int yylex()
 #include "y.tab.h"
 extern "C" int line_no;
-extern "C" int yyparse();
- 
+
 %}
 
 %option noyywrap

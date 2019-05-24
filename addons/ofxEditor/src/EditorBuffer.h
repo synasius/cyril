@@ -28,11 +28,11 @@ class EditorBuffer {
   float charWidth;
   ofTrueTypeFont * font;
 
-	vector<ofTTFCharacter> shapes;
+	vector<ofPath> shapes;
   ofRectangle bounds;
   ofPoint cursorPoint;
   float minScale, maxScale;
-  
+
 public:
   EditorBuffer(ofTrueTypeFont * f);
 
@@ -64,7 +64,7 @@ public:
   void updateBounds();
   void drawStrings();
   void drawCursor();
-  
+
 };
 
 #endif /* defined(__textEditor__EditorBuffer__) */

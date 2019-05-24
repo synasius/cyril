@@ -9,7 +9,8 @@
 #ifndef cyril2_CyrilParser_h
 #define cyril2_CyrilParser_h
 
-#include "ofMain.h"
+#include <ofMain.h>
+
 #include "Cyril.h"
 #include "CyrilList.h"
 #include "CyrilOp.h"
@@ -26,7 +27,7 @@
 #include "CyrilUnaryOp.h"
 #include "CyrilParticle.h"
 
-extern "C" int yyparse();
+int yyparse();
 extern FILE *yyin;
 extern "C" int line_no;
 extern Cyril * pRoot;

@@ -9,22 +9,24 @@
 #ifndef cyril2_CyrilFun_h
 #define cyril2_CyrilFun_h
 
-#include "ofMain.h"
-#include "Cyril.h"
-#include "cmds.h"
+#include <ofMain.h>
+#include <cyril/cmds.h>
 
-class CyrilFun : public Cyril {
+#include "Cyril.h"
+
+class CyrilFun : public Cyril
+{
 protected:
   Cyril* c;
+
 public:
   CyrilFun(Cyril* _c = NULL);
-  CyrilFun(const CyrilFun &other);
-  virtual ~CyrilFun ();
+  CyrilFun(const CyrilFun& other);
+  virtual ~CyrilFun();
   virtual void print();
-  virtual Cyril *clone ();
+  virtual Cyril* clone();
   virtual int size();
-  virtual void eval(CyrilState &);
+  virtual void eval(CyrilState&);
 };
-
 
 #endif

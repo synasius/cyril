@@ -1,8 +1,8 @@
 %{
 #include <cstdio>
 #include <iostream>
-#include "ofMain.h"
-#include "cmds.h"
+#include <ofMain.h>
+#include <cyril/cmds.h>
 #include "Cyril.h"
 #include "CyrilList.h"
 #include "CyrilAssign.h"
@@ -73,8 +73,7 @@
 
 using namespace std;
 
-extern "C" int yylex();
-extern "C" int yyparse();
+int yylex();
 extern FILE *yyin;
 
 int line_no = 0;
@@ -123,7 +122,7 @@ int regFind(string _s) {
   if ("F2" == _s) return OSC_F2;
   if ("F3" == _s) return OSC_F3;
   if ("F4" == _s) return OSC_F4;
-  
+
   if (symTab.find(_s) == symTab.end()) {
     int loc = symTab.size() + REG_COUNT;
     symTab[_s] = loc;
@@ -131,7 +130,7 @@ int regFind(string _s) {
   }
   return symTab[_s];
 }
- 
+
 Cyril * cyrilOpFactory(const char * _s, Cyril * _c) {
   if (strncmp("box", _s, 3) == 0) return new CyrilBoxOp(_c);
   if (strncmp("move", _s, 4) == 0) return new CyrilMoveOp(_c);
@@ -199,7 +198,7 @@ Cyril * cyrilFunFactory(const char * _s, Cyril * _c) {
 %left MULT PLUS MINUS DIV MOD EQ NOTEQ LESSEQ LESS GREQ GR
 %right NOT
 
-%type <ast> expr expr_list statement statement_list cyril palette_list anim_list 
+%type <ast> expr expr_list statement statement_list cyril palette_list anim_list
 
 %start cyril
 %%
@@ -216,7 +215,7 @@ statement
 | statement_list statement
 {
   $$ = new CyrilList($1, $2);
-  
+
 }
 ;
 

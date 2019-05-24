@@ -43,7 +43,7 @@ void CyrilRotateOp::eval(CyrilState &_s) {
       x = _s.stk->top(); _s.stk->pop();
       w = _s.stk->top(); _s.stk->pop();
       ofRotate(w, x, y, z);
-      _s.ms->rotate(w, x, y, z);
+      _s.ms->rotateRad(w, x, y, z);
       break;
     case 3:
       y = _s.stk->top(); _s.stk->pop();
@@ -52,19 +52,19 @@ void CyrilRotateOp::eval(CyrilState &_s) {
       ofRotateX(x);
       ofRotateY(y);
       ofRotateZ(z);
-      _s.ms->rotate(x, 1, 0, 0);
-      _s.ms->rotate(y, 0, 1, 0);
-      _s.ms->rotate(z, 0, 0, 1);
+      _s.ms->rotateRad(x, 1, 0, 0);
+      _s.ms->rotateRad(y, 0, 1, 0);
+      _s.ms->rotateRad(z, 0, 0, 1);
       break;
     case 1:
       w = _s.stk->top(); _s.stk->pop();
       ofRotateZ(w);
-      _s.ms->rotate(w, 0, 0, 1);
+      _s.ms->rotateRad(w, 0, 0, 1);
       break;
     default:
       w = (*_s.sym)[REG_TIME] / 36.0;
       ofRotate(w, 0, 1, 0.5);
-      _s.ms->rotate(w, 0, 1, 0.5);/*
+      _s.ms->rotateRad(w, 0, 1, 0.5);/*
       w = (*_s.sym)[REG_TIME] / 64.0;
       ofRotate(w, 0, 0, 1);
       _s.ms->rotate(w, 0, 0, 1);*/

@@ -8,7 +8,9 @@
 
 #include "CyrilPixelate.h"
 
-CyrilPixelate::CyrilPixelate (Cyril* _e) : e(_e) {
+CyrilPixelate::CyrilPixelate(Cyril* _e)
+  : e(_e)
+{
   s = e->size();
   if (!(s == 2 || s == 1 || s == 0)) {
     // Width, Height - or single argument for same w and h
@@ -17,26 +19,41 @@ CyrilPixelate::CyrilPixelate (Cyril* _e) : e(_e) {
   }
 }
 
-CyrilPixelate::CyrilPixelate (const CyrilPixelate &other) {
-  e = other.e->clone ();
-}
-CyrilPixelate::~CyrilPixelate ()
+CyrilPixelate::CyrilPixelate(const CyrilPixelate& other)
 {
+  e = other.e->clone();
 }
-void CyrilPixelate::print() {
+
+CyrilPixelate::~CyrilPixelate() {}
+
+void
+CyrilPixelate::print()
+{
   cout << "CyrilPixelate" << endl;
 }
-Cyril * CyrilPixelate::clone () {
-  return new CyrilPixelate (*this);
+
+Cyril*
+CyrilPixelate::clone()
+{
+  return new CyrilPixelate(*this);
 }
-int CyrilPixelate::size() {
+
+int
+CyrilPixelate::size()
+{
   return 0;
 }
-void CyrilPixelate::update(CyrilState &_s) {
+
+void
+CyrilPixelate::update(CyrilState& _s)
+{
   // FX_PIXELATE = 2
   _s.post[2]->enable();
 }
-void CyrilPixelate::eval(CyrilState &_s) {
+
+void
+CyrilPixelate::eval(CyrilState& _s)
+{
   float width, height;
   if (s == 2) {
     e->eval(_s);
@@ -44,14 +61,12 @@ void CyrilPixelate::eval(CyrilState &_s) {
     _s.stk->pop();
     width = _s.stk->top();
     _s.stk->pop();
-  }
-  else if (s == 1) {
+  } else if (s == 1) {
     e->eval(_s);
     height = _s.stk->top();
     width = height;
     _s.stk->pop();
-  }
-  else {
+  } else {
     // same defaults as ofxPostProcessing:
     width = 100;
     height = 100;

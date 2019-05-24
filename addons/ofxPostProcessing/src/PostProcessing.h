@@ -40,23 +40,22 @@ namespace itg
     {
     public:
         typedef shared_ptr<PostProcessing> Ptr;
-        
+
         void init(unsigned width = ofGetWidth(), unsigned height = ofGetHeight(), bool arb = false);
         void begin();
         void begin(ofCamera& cam);
         void end(bool autoDraw = true);
-        
+
         // float rather than int and not const to override ofBaseDraws
-        void draw(float x = 0.f, float y = 0.f) const ;
+        void draw(float x = 0.f, float y = 0.f) const;
         void draw(float x, float y, float w, float h) const;
         float getWidth() const { return width; }
         float getHeight() const { return height; }
-        void setWidth(float _w) { width = _w; }
-        void setHeight(float _h) { height = _h; }
-
+        void setWidth(float w) { width = w; }
+        void setHeight(float h) { height = h; }
 
         void debugDraw();
-        
+
         template<class T>
         shared_ptr<T> createPass()
         {
@@ -64,34 +63,34 @@ namespace itg
             passes.push_back(pass);
             return pass;
         }
-        
+
         ofTexture& getProcessedTextureReference();
-        
+
         // advanced
         void process(ofFbo& raw, bool hasDepthAsTexture = true);
-        
+
         /**
          * Set flip.
          * Turn on if using ofEasyCam to fix flipping bug.
          */
         void setFlip(bool flip) { this->flip = flip; }
-        
+
         unsigned size() const { return passes.size(); }
         RenderPass::Ptr operator[](unsigned i) const { return passes[i]; }
         vector<RenderPass::Ptr>& getPasses() { return passes; }
         unsigned getNumProcessedPasses() const { return numProcessedPasses; }
-        
+
         ofFbo& getRawRef() { return raw; }
-        
+
     private:
         void process();
-        
+
         unsigned currentReadFbo;
         unsigned numProcessedPasses;
         unsigned width, height;
         bool flip;
         bool arb;
-        
+
         ofFbo raw;
         ofFbo pingPong[2];
         vector<RenderPass::Ptr> passes;

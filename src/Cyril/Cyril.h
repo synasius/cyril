@@ -9,25 +9,28 @@
 #ifndef cyril2_Cyril_h
 #define cyril2_Cyril_h
 
-#include "ofMain.h"
-#include "cmds.h"
+#include <cyril/cmds.h>
+#include <ofMain.h>
+
 #include "CyrilState.h"
 
 class Particle;
 
-void yyerror(const char *);
+void
+yyerror(const char*);
 
-class Cyril {
+class Cyril
+{
 public:
   bool valid;
   Cyril() { valid = true; }
-  virtual ~Cyril () {}
-  Cyril (const Cyril &other);
-  virtual Cyril *clone ();
-  virtual void print() { };
+  virtual ~Cyril() {}
+  Cyril(const Cyril& other);
+  virtual Cyril* clone();
+  virtual void print(){};
   virtual int size();
-  virtual void update(CyrilState &);
-  virtual void eval(CyrilState &);
+  virtual void update(CyrilState&);
+  virtual void eval(CyrilState&);
   virtual int matchPushPop() { return 0; }
 };
 

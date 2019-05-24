@@ -4,6 +4,10 @@ This openFrameworks addon gives you an easy way of putting together a chain of G
 
 www.neilmendoza.com/ofxpostprocessing
 
+NB This addon uses the branch setup as OF itself, the stable branch corresponds to the most recent release (i.e. the version that is downloadable from the OF site) and the master branch is the develop branch. If you have downloaded from the website, the you will want to use the stable branch...
+
+https://github.com/neilmendoza/ofxPostProcessing/tree/stable
+
 ## Features
 
 At the moment, it comes with the following effects (some ported from other sources and some original) that I'll gradually add to over time:
@@ -57,9 +61,6 @@ post.end();
 ```
 
 ## TODO
+* Add support for ofGLProgrammableRenderer with version 150 shaders
 * More FX
 * OpenGL ES, it's based around power of two textures so it should be fairly quick to get working. 
-
----
-
-Feel free to give me some Bitcoins if you like the addon - 1FxuEpubUwhPaqwmqABvwGmoMcEEMPgxjN

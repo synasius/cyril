@@ -8,7 +8,9 @@
 
 #include "CyrilBloom.h"
 
-CyrilBloom::CyrilBloom (Cyril* _e) : e(_e) {
+CyrilBloom::CyrilBloom(Cyril* _e)
+  : e(_e)
+{
   s = e->size();
   if (!(s == 1 || s == 0)) {
     // Width, Height - or single argument for same w and h
@@ -18,33 +20,47 @@ CyrilBloom::CyrilBloom (Cyril* _e) : e(_e) {
   prevBloom = 0.001953125;
 }
 
-CyrilBloom::CyrilBloom (const CyrilBloom &other) {
-  e = other.e->clone ();
-}
-CyrilBloom::~CyrilBloom ()
+CyrilBloom::CyrilBloom(const CyrilBloom& other)
 {
+  e = other.e->clone();
 }
-void CyrilBloom::print() {
+
+CyrilBloom::~CyrilBloom() {}
+
+void
+CyrilBloom::print()
+{
   cout << "CyrilBloom" << endl;
 }
-Cyril * CyrilBloom::clone () {
-  return new CyrilBloom (*this);
+
+Cyril*
+CyrilBloom::clone()
+{
+  return new CyrilBloom(*this);
 }
-int CyrilBloom::size() {
+
+int
+CyrilBloom::size()
+{
   return 0;
 }
-void CyrilBloom::update(CyrilState &_s) {
+
+void
+CyrilBloom::update(CyrilState& _s)
+{
   // FX_BLOOM = 3
   _s.post[3]->enable();
 }
-void CyrilBloom::eval(CyrilState &_s) {
+
+void
+CyrilBloom::eval(CyrilState& _s)
+{
   float bloom;
   if (s == 1) {
     e->eval(_s);
     bloom = (_s.stk->top()) / 1000.0f;
     _s.stk->pop();
-  }
-  else {
+  } else {
     // same defaults as ofxPostProcessing:
     bloom = 0.001953125;
   }
@@ -53,5 +69,4 @@ void CyrilBloom::eval(CyrilState &_s) {
     _s.bloom->setIncrements(bloom, 0, 0, bloom);
   }
 }
-
 

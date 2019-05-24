@@ -192,13 +192,13 @@ void EditorBuffer::updateBounds() {
   bounds = ofRectangle(0, 0, 0, lineHeight);
   string ss;
   bool foundCursor = false;
-  
+
   // keep track of selection areas
   shapes.clear();
   ofPath selection;
   ofPoint select;
   bool inHighlight = false;
-  
+
   for (string::iterator i = text.begin(); i < text.end(); ++i) {
     if (i == cursorPosition) {
       cursorPoint = ofPoint(font->stringWidth(ss), bounds.height);
@@ -239,7 +239,7 @@ void EditorBuffer::updateBounds() {
     cursorPoint = ofPoint(font->stringWidth(ss), bounds.height);
   }
   bounds.growToInclude(font->stringWidth(ss), bounds.height);
-  
+
   selection.setColor(highlightColor);
   shapes.push_back(selection);
 }
@@ -262,11 +262,11 @@ void EditorBuffer::drawStrings() {
 }
 
 void EditorBuffer::drawCursor() {
-  
+
   ofPushMatrix();
   ofPushStyle();
   //ofTranslate(x, y);
-  
+
   ofPopStyle();
   ofPopMatrix();
 }
@@ -275,10 +275,10 @@ void EditorBuffer::draw(float x, float y, float w, float h) {
   ofPushMatrix();
   ofPushStyle();
   ofTranslate(x, y);
-  
+
   // Need to calculate size of editor before drawing
   updateBounds();
-  
+
   // Scale down if needed
   float scale = 1;
   if (bounds.width > 0 && bounds.height > 0) {
@@ -287,7 +287,7 @@ void EditorBuffer::draw(float x, float y, float w, float h) {
     scale = max(scale, minScale);
     ofScale(scale, scale);
   }
-  
+
   // Move editor content if cursor is off screen
   float offsetY = (h / scale) - cursorPoint.y;
   if (offsetY < 0) {
@@ -297,16 +297,16 @@ void EditorBuffer::draw(float x, float y, float w, float h) {
   if (offsetX < 0) {
     ofTranslate(offsetX, 0);
   }
-  
+
   // Draw selected text highlight
-  for (vector<ofTTFCharacter>::iterator i = shapes.begin(); i < shapes.end(); ++i) {
+  for (vector<ofPath>::iterator i = shapes.begin(); i < shapes.end(); ++i) {
     (*i).draw();
   }
 
   // Draw text buffer content
   ofSetColor(textColor);
   drawStrings();
-  
+
 
   // Draw cursor
   ofSetColor(cursorColor);
@@ -387,12 +387,17 @@ void EditorBuffer::updateShapes() {
   shapes.push_back(selection);
 
   bounds = ofRectangle(0,0,0,0);
-  for (vector<ofTTFCharacter>::iterator i = shapes.begin(); i < shapes.end(); ++i) {
-    //(*i).draw();
-    for (vector<ofPolyline>::const_iterator j = (*i).getOutline().begin(); j < (*i).getOutline().end(); ++j) {
-      bounds.growToInclude((*j).getBoundingBox());
+  for (const auto& shape : shapes) {
+    for (const auto& line : shape.getOutline()) {
+      bounds.growToInclude(line.getBoundingBox());
     }
   }
+  //for (vector<ofPath>::iterator i = shapes.begin(); i < shapes.end(); ++i) {
+    ////(*i).draw();
+    //for (vector<ofPolyline>::iterator j = (*i).getOutline().begin(); j < (*i).getOutline().end(); ++j) {
+      //bounds.growToInclude((*j).getBoundingBox());
+    //}
+  //}
 }
 
 

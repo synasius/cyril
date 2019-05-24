@@ -9,21 +9,23 @@
 #ifndef __cyril2__CyrilColorLoad__
 #define __cyril2__CyrilColorLoad__
 
-#include "ofMain.h"
-#include "cmds.h"
+#include <cyril/cmds.h>
+#include <ofMain.h>
+
 #include "Cyril.h"
 
-class CyrilColorLoad : public Cyril {
+class CyrilColorLoad : public Cyril
+{
   int loc;
+
 public:
   CyrilColorLoad(int _i);
-  CyrilColorLoad (const CyrilColorLoad &other) ;
-  virtual ~CyrilColorLoad ();
+  CyrilColorLoad(const CyrilColorLoad& other);
+  virtual ~CyrilColorLoad();
   void print();
-  virtual Cyril *clone ();
+  virtual Cyril* clone();
   virtual int size();
-  virtual void eval(CyrilState &);
+  virtual void eval(CyrilState&);
 };
-
 
 #endif /* defined(__cyril2__CyrilColorLoad__) */
