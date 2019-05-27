@@ -24,9 +24,9 @@ project(Cyril VERSION 1.0
 
 find_package(BISON REQUIRED)
 find_package(FLEX REQUIRED)
-BISON_TARGET(CyrilParser src/Cyril/cyril.ypp ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp
+BISON_TARGET(CyrilParser ${CMAKE_SOURCE_DIR}/src/Cyril/cyril.ypp ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp
         COMPILE_FLAGS --defines=${CMAKE_CURRENT_BINARY_DIR}/y.tab.h)
-FLEX_TARGET(CyrilScanner src/Cyril/cyril.lpp  ${CMAKE_CURRENT_BINARY_DIR}/lexer.cpp)
+FLEX_TARGET(CyrilScanner ${CMAKE_SOURCE_DIR}/src/Cyril/cyril.lpp  ${CMAKE_CURRENT_BINARY_DIR}/lexer.cpp)
 ADD_FLEX_BISON_DEPENDENCY(CyrilScanner CyrilParser)
 
 # cyril executable
@@ -333,6 +333,10 @@ target_link_libraries(cyril PRIVATE PkgConfig::SndFile)
 # RtAudio
 pkg_check_modules(RtAudio REQUIRED IMPORTED_TARGET rtaudio)
 target_link_libraries(cyril PRIVATE PkgConfig::RtAudio)
+
+# Lib mpg123
+pkg_check_modules(mpg123 REQUIRED IMPORTED_TARGET libmpg123)
+target_link_libraries(cyril PRIVATE PkgConfig::mpg123)
 
 # TODO: these are from OF  should use Find*.cmake
 
