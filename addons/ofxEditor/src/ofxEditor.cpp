@@ -1,10 +1,4 @@
-//
-//  ofxEditor.cpp
-//  textEditor
-//
 //  Created by Darren Mothersele on 19/11/2013.
-//
-//
 
 #include "ofxEditor.h"
 
@@ -51,81 +45,11 @@ ofxEditor::ofxEditor(int noBuffers, string fontname)
 void
 ofxEditor::handleKeyPress(ofKeyEventArgs& _key)
 {
-
   int key = _key.key;
   bool alt = (bool)(ofGetKeyPressed(OF_KEY_ALT));
   bool shift = (bool)(ofGetKeyPressed(OF_KEY_SHIFT));
   bool cmd = (bool)(ofGetKeyPressed(OF_KEY_CONTROL));
   bool ctrl = (bool)(ofGetKeyPressed(OF_KEY_CONTROL));
-
-  // GLFW bug see issue:
-  // https://github.com/openframeworks/openFrameworks/issues/2562 Allow shift on
-  // non-alpha characters
-  if (shift) {
-    // 1 ! 49 33
-    if (key == 49)
-      key = 33;
-    // 2 @ 50 64
-    else if (key == 50)
-      key = 64;
-    // 3 £ 51 -- use # 35
-    else if (key == 51)
-      key = 35;
-    // 4 $ 52 36
-    else if (key == 52)
-      key = 36;
-    // 5 % 53 37
-    else if (key == 53)
-      key = 37;
-    // 6 ^ 54 94
-    else if (key == 54)
-      key = 94;
-    // 7 & 55 38
-    else if (key == 55)
-      key = 38;
-    // 8 * 56 42
-    else if (key == 56)
-      key = 42;
-    // 9 ( 57 40
-    else if (key == 57)
-      key = 40;
-    // 0 ) 48 41
-    else if (key == 48)
-      key = 41;
-    // - _ 45 95
-    else if (key == 45)
-      key = 95;
-    // = + 61 43
-    else if (key == 61)
-      key = 43;
-    // [ { 91 123
-    else if (key == 91)
-      key = 123;
-    // ] } 93 125
-    else if (key == 93)
-      key = 125;
-    // ; : 59 58
-    else if (key == 59)
-      key = 58;
-    // ' " 39 34
-    else if (key == 39)
-      key = 34;
-    // \ | 92 124
-    else if (key == 92)
-      key = 124;
-    // ` ~ 96 126
-    else if (key == 96)
-      key = 126;
-    // , < 44 60
-    else if (key == 44)
-      key = 60;
-    // . > 46 62
-    else if (key == 46)
-      key = 62;
-    // / ? 47 63
-    else if (key == 47)
-      key = 63;
-  }
 
   // Add printable ASCII characters to buffer text
   if (!cmd && key < 127 && key > 31) {
@@ -145,20 +69,16 @@ ofxEditor::handleKeyPress(ofKeyEventArgs& _key)
   }
 
   // Move cursor around with arrow keys
-  // up 357
-  if (key == 357) {
+  if (key == OF_KEY_UP) {
     buf[currentBuffer]->moveCursorRow(-1, shift, cmd);
   }
-  // down 359
-  if (key == 359) {
+  if (key == OF_KEY_DOWN) {
     buf[currentBuffer]->moveCursorRow(1, shift, cmd);
   }
-  // left 356
-  if (key == 356) {
+  if (key == OF_KEY_LEFT) {
     buf[currentBuffer]->moveCursorCol(-1, shift, cmd);
   }
-  // right 358
-  if (key == 358) {
+  if (key == OF_KEY_RIGHT) {
     buf[currentBuffer]->moveCursorCol(1, shift, cmd);
   }
 
@@ -176,7 +96,7 @@ ofxEditor::handleKeyPress(ofKeyEventArgs& _key)
   // ESC key (27) handled elsewhere
 
   // Tab through buffers
-  if (key == 9) {
+  if (key == OF_KEY_TAB) {
     if (shift || cmd) {
       if (--currentBuffer < 0)
         currentBuffer = maxBuffer;
@@ -184,9 +104,8 @@ ofxEditor::handleKeyPress(ofKeyEventArgs& _key)
       if (++currentBuffer > maxBuffer)
         currentBuffer = 0;
     }
-    // cout << "Switch to buffer " << currentBuffer << " of " << maxBuffer <<
-    // endl;
   }
+
   // Switch buffer using ALT+number
   if (cmd && key >= 49 && key <= 57) {
     int newBuffer = key - 48;

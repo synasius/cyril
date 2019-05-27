@@ -16,6 +16,8 @@ endif()
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
+set(OF_DIRECTORY "openFrameworks" CACHE STRING "OpenFrameworks")
+
 project(Cyril VERSION 1.0
               DESCRIPTION "Cyril Live Visuals"
               LANGUAGES CXX)

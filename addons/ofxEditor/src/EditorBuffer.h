@@ -1,17 +1,11 @@
-//
-//  EditorBuffer.h
-//  textEditor
-//
+#pragma once
+
 //  Created by Darren Mothersele on 19/11/2013.
-//
-//
 
-#ifndef __textEditor__EditorBuffer__
-#define __textEditor__EditorBuffer__
+#include <ofMain.h>
 
-#include "ofMain.h"
-
-class EditorBuffer {
+class EditorBuffer
+{
 
   string text;
   string::iterator cursorPosition;
@@ -26,15 +20,15 @@ class EditorBuffer {
 
   float lineHeight;
   float charWidth;
-  ofTrueTypeFont * font;
+  ofTrueTypeFont* font;
 
-	vector<ofPath> shapes;
+  vector<ofPath> shapes;
   ofRectangle bounds;
   ofPoint cursorPoint;
   float minScale, maxScale;
 
 public:
-  EditorBuffer(ofTrueTypeFont * f);
+  EditorBuffer(ofTrueTypeFont* f);
 
   void insert(int);
   void insert(const string);
@@ -64,7 +58,5 @@ public:
   void updateBounds();
   void drawStrings();
   void drawCursor();
-
 };
 
-#endif /* defined(__textEditor__EditorBuffer__) */
