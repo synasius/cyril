@@ -1,6 +1,6 @@
 %{
 #include "y.tab.h"
-extern "C" int line_no;
+extern int line_no;
 
 %}
 

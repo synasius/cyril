@@ -11,17 +11,6 @@ typedef void (*EditorCommand)(void*);
 
 class ofxEditor
 {
-
-  ofFbo editorFbo;
-  ofTrueTypeFont font;
-
-  ofColor textColor;
-  ofColor textBorderColor;
-  ofColor cursorColor;
-  ofColor highlightColor;
-
-  map<int, pair<void*, EditorCommand>> cmds;
-
 public:
   ofxEditor(int noBuffers = 1, string fontname = "DroidSansMono.ttf");
 
@@ -43,5 +32,16 @@ public:
 
   bool loadFile(string filename, int whichBuffer);
   bool saveFile(string filename, int whichBuffer);
+
+private:
+  ofFbo editorFbo;
+  ofTrueTypeFont m_font;
+
+  ofColor textColor;
+  ofColor textBorderColor;
+  ofColor cursorColor;
+  ofColor highlightColor;
+
+  map<int, pair<void*, EditorCommand>> cmds;
 };
 

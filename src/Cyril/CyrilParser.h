@@ -1,43 +1,29 @@
-//
-//  CyrilParser.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 05/11/2013.
-//
-//
+#pragma once
 
-#ifndef cyril2_CyrilParser_h
-#define cyril2_CyrilParser_h
+//  Created by Darren Mothersele on 05/11/2013.
 
 #include <ofMain.h>
 
 #include "Cyril.h"
-#include "CyrilList.h"
-#include "CyrilOp.h"
 #include "CyrilAssign.h"
-#include "CyrilPush.h"
+#include "CyrilBinaryOp.h"
 #include "CyrilDo.h"
 #include "CyrilFor.h"
-#include "CyrilIf.h"
-#include "CyrilWhile.h"
-#include "CyrilHexColor.h"
 #include "CyrilFun.h"
-#include "CyrilBinaryOp.h"
+#include "CyrilHexColor.h"
+#include "CyrilIf.h"
+#include "CyrilList.h"
 #include "CyrilLoad.h"
-#include "CyrilUnaryOp.h"
+#include "CyrilOp.h"
 #include "CyrilParticle.h"
+#include "CyrilPush.h"
+#include "CyrilUnaryOp.h"
+#include "CyrilWhile.h"
 
-int yyparse();
-extern FILE *yyin;
-extern "C" int line_no;
-extern Cyril * pRoot;
-extern int yycyrilParseString(const char *str);
-
-class CyrilParser {
+class CyrilParser
+{
 public:
   static Cyril* parseString(string progStr);
   static Cyril* parseFile(string fileName);
 };
-
-#endif
 

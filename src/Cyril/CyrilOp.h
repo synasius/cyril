@@ -1,13 +1,6 @@
-//
-//  CyrilOp.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 05/11/2013.
-//
-//
+#pragma once
 
-#ifndef cyril2_CyrilOp_h
-#define cyril2_CyrilOp_h
+//  Created by Darren Mothersele on 05/11/2013.
 
 #include <cyril/cmds.h>
 #include <ofMain.h>
@@ -20,7 +13,7 @@ protected:
   Cyril* c;
 
 public:
-  CyrilOp(Cyril* _c = NULL);
+  CyrilOp(Cyril* _c = nullptr);
   CyrilOp(const CyrilOp& other);
   virtual ~CyrilOp();
   virtual void print();
@@ -29,4 +22,3 @@ public:
   virtual void eval(CyrilState&);
 };
 
-#endif

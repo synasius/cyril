@@ -76,11 +76,13 @@ add_executable(cyril
     src/Cyril/Lang/CyrilDebugOp.cpp
     src/Cyril/Lang/CyrilDebugOp.h
     src/Cyril/Lang/CyrilDo.h
+    src/Cyril/Lang/CyrilFor.cpp
     src/Cyril/Lang/CyrilFor.h
     src/Cyril/Lang/CyrilHexColor.h
     src/Cyril/Lang/CyrilIf.h
     src/Cyril/Lang/CyrilList.h
     src/Cyril/Lang/CyrilLoad.h
+    src/Cyril/Lang/CyrilLoad.cpp
     src/Cyril/Lang/CyrilNamedColor.h
     src/Cyril/Lang/CyrilPush.h
     src/Cyril/Lang/CyrilUnaryOp.h

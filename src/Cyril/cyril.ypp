@@ -74,7 +74,6 @@
 using namespace std;
 
 int yylex();
-extern FILE *yyin;
 
 int line_no = 0;
 Cyril * pRoot;

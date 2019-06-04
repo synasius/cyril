@@ -8,21 +8,19 @@ ofxEditor::ofxEditor(int noBuffers, string fontname)
   , cursorColor(ofColor::white, 200)
   , highlightColor(ofColor::white, 200)
 {
-  // cout << "Configure editor with " << noBuffers << " buffers" << endl;
-  // Load font from "data/" folder
-  // font.loadFont(fontname, 20, true, false, true, 0.00001);
-  // font.loadFont(fontname, 5, true, false, true);
-  font.loadFont(fontname, 20);
+  if (!m_font.load(fontname, 20, true, true, false, 0.3f, 0)) {
+    std::cout << "Could not load font '" << fontname << "'\n";
+  }
 
   // Reserve text buffers
   buf.reserve(noBuffers);
   for (int i = 0; i < noBuffers; ++i) {
-    buf[i] = new EditorBuffer(&font);
+    buf[i] = new EditorBuffer(&m_font);
     buf[i]->setTextColor(textColor, textBorderColor);
     buf[i]->setCursorColor(cursorColor);
     buf[i]->setHighlightColor(highlightColor);
   }
-  currentBuffer = 1;
+  currentBuffer = 0;
   maxBuffer = noBuffers - 1;
 
   // Create a frame buffer to render to
@@ -48,6 +46,8 @@ ofxEditor::handleKeyPress(ofKeyEventArgs& _key)
   int key = _key.key;
   bool alt = (bool)(ofGetKeyPressed(OF_KEY_ALT));
   bool shift = (bool)(ofGetKeyPressed(OF_KEY_SHIFT));
+
+  // TODO: cmd and ctrl are the same when OS is not MacOS
   bool cmd = (bool)(ofGetKeyPressed(OF_KEY_CONTROL));
   bool ctrl = (bool)(ofGetKeyPressed(OF_KEY_CONTROL));
 
@@ -55,14 +55,17 @@ ofxEditor::handleKeyPress(ofKeyEventArgs& _key)
   if (!cmd && key < 127 && key > 31) {
     buf[currentBuffer]->insert(key);
   }
+
   // Add new line to buffer text
-  if (key == 13) {
+  if (key == OF_KEY_RETURN) {
     buf[currentBuffer]->insert('\n');
   }
+
   // Pass backspace delete to text buffer
   if (key == OF_KEY_BACKSPACE) {
     buf[currentBuffer]->backspace();
   }
+
   // Pass clear command to text buffer
   if (cmd && key == 'n') {
     buf[currentBuffer]->clear();
@@ -93,41 +96,38 @@ ofxEditor::handleKeyPress(ofKeyEventArgs& _key)
     buf[currentBuffer]->insert(ClipBoard::getText());
   }
 
-  // ESC key (27) handled elsewhere
-
   // Tab through buffers
   if (key == OF_KEY_TAB) {
-    if (shift || cmd) {
-      if (--currentBuffer < 0)
+    if (shift) {
+      if (--currentBuffer < 0) {
         currentBuffer = maxBuffer;
-    } else {
-      if (++currentBuffer > maxBuffer)
+      }
+    }
+    if (cmd) {
+      if (++currentBuffer > maxBuffer) {
         currentBuffer = 0;
+      }
     }
   }
 
-  // Switch buffer using ALT+number
-  if (cmd && key >= 49 && key <= 57) {
-    int newBuffer = key - 48;
-    if (newBuffer <= maxBuffer) {
-      currentBuffer = newBuffer;
-    }
-  }
-  // Extra buffer switch for 0
-  if (cmd && key == 48) {
-    if (9 <= maxBuffer) {
-      currentBuffer = 0;
+  // Switch buffer using cmd + number
+  if (cmd && key >= '0' && key <= '9') {
+    // 0 key always goes to the last buffer
+    if (key == '0') {
+      currentBuffer = maxBuffer;
+    } else {
+      auto newBuffer = key - 49;
+      currentBuffer = std::min(newBuffer, maxBuffer);
     }
   }
 
+  // TODO: figure out why this code is here
   if (cmd) {
     if (cmds.count(key) > 0) {
       pair<void*, EditorCommand> callback = cmds[key];
       (*callback.second)(callback.first);
     }
   }
-
-  cout << "Key pressed " << key << endl;
 
   // Key has been pressed so update the editor fbo
   update();

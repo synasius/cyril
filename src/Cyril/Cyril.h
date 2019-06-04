@@ -1,13 +1,6 @@
-//
-//  Cyril.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 05/11/2013.
-//
-//
+#pragma once
 
-#ifndef cyril2_Cyril_h
-#define cyril2_Cyril_h
+//  Created by Darren Mothersele on 05/11/2013.
 
 #include <cyril/cmds.h>
 #include <ofMain.h>
@@ -24,8 +17,10 @@ class Cyril
 public:
   bool valid;
   Cyril() { valid = true; }
-  virtual ~Cyril() {}
   Cyril(const Cyril& other);
+
+  virtual ~Cyril() {}
+
   virtual Cyril* clone();
   virtual void print(){};
   virtual int size();
@@ -33,6 +28,4 @@ public:
   virtual void eval(CyrilState&);
   virtual int matchPushPop() { return 0; }
 };
-
-#endif
 

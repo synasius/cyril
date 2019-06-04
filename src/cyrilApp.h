@@ -1,17 +1,15 @@
 #pragma once
+
 // #define CYRIL_DEBUG
 
-#include <ofMain.h>
-//#include "ofxXmlSettings.h"
 #include "Cyril/CyrilParser.h"
 #include "Engine/Particle.h"
 
+#include <ofMain.h>
 #include <ofxBeat.h>
 #include <ofxEditor.h>
-
-//#include "ofxSyphon.h"
-
 #include <ofxPostProcessing.h>
+
 #define FX_KALEIDOSCOPE 0
 #define FX_NOISE_WARP 1
 #define FX_PIXELATE 2
@@ -88,7 +86,6 @@ public:
   void gotMessage(ofMessage msg);
   void applyGlobalSettings();
   void reloadSettings();
-  void runProgram();
 
   void audioReceived(float*, int, int);
 
