@@ -14,13 +14,12 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
-
-set(OF_DIRECTORY "openFrameworks" CACHE STRING "OpenFrameworks")
-
 project(Cyril VERSION 1.0
               DESCRIPTION "Cyril Live Visuals"
               LANGUAGES CXX)
+
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+set(OF_DIRECTORY "openFrameworks" CACHE STRING "OpenFrameworks")
 
 find_package(BISON REQUIRED)
 find_package(FLEX REQUIRED)
@@ -311,9 +310,8 @@ pkg_check_modules(UriParser REQUIRED IMPORTED_TARGET liburiparser)
 target_link_libraries(cyril PRIVATE PkgConfig::UriParser)
 
 # FreeImage
-# TODO: port to FindFreeImage.cmake
-#pkg_search_module(FreeImage REQUIRED freeimage)
-target_link_libraries(cyril PRIVATE /usr/lib/x86_64-linux-gnu/libfreeimage.so)
+find_package(FreeImage REQUIRED)
+target_link_libraries(cyril PRIVATE FreeImage::FreeImage)
 
 # GLFW
 pkg_check_modules(GLFW REQUIRED IMPORTED_TARGET glfw3)

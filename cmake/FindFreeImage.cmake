@@ -1,73 +1,75 @@
-find_path(FreeImage_INCLUDE_DIR FreeImage.h)
-
-set(freeimage_names ${FreeImage_NAMES} freeimage libfreeimage)
-#foreach(name ${freeimage_names})
-  #list(APPEND jpeg_names_debug "${name}d")
-#endforeach()
+find_path(FreeImage_INCLUDE_DIR NAMES FreeImage.h)
+mark_as_advanced(FreeImage_INCLUDE_DIR)
 
 if(NOT FreeImage_LIBRARY)
-    find_library(FreeImage_LIBRARY_RELEASE NAMES ${freeimage_names})
-  include(${CMAKE_CURRENT_LIST_DIR}/SelectLibraryConfigurations.cmake)
-  select_library_configurations(JPEG)
-  mark_as_advanced(JPEG_LIBRARY_RELEASE JPEG_LIBRARY_DEBUG)
-endif()
-unset(jpeg_names)
-unset(jpeg_names_debug)
+  # Look for the library
+  find_library(FreeImage_LIBRARY_RELEASE NAMES
+      freeimage
+      libfreeimage
+  )
+  mark_as_advanced(FreeImage_LIBRARY_RELEASE)
 
-if(JPEG_INCLUDE_DIR AND EXISTS "${JPEG_INCLUDE_DIR}/jpeglib.h")
-  file(STRINGS "${JPEG_INCLUDE_DIR}/jpeglib.h"
-    jpeg_lib_version REGEX "^#define[\t ]+JPEG_LIB_VERSION[\t ]+.*")
+  find_library(FreeImage_LIBRARY_DEBUG NAMES
+      freeimaged
+      libfreeimaged
+  )
+  mark_as_advanced(FreeImage_LIBRARY_DEBUG)
 
-  if (NOT jpeg_lib_version)
-    # libjpeg-turbo sticks JPEG_LIB_VERSION in jconfig.h
-    find_path(jconfig_dir jconfig.h)
-    if (jconfig_dir)
-      file(STRINGS "${jconfig_dir}/jconfig.h"
-        jpeg_lib_version REGEX "^#define[\t ]+JPEG_LIB_VERSION[\t ]+.*")
-    endif()
-    unset(jconfig_dir)
-  endif()
-
-  string(REGEX REPLACE "^#define[\t ]+JPEG_LIB_VERSION[\t ]+([0-9]+).*"
-    "\\1" JPEG_VERSION "${jpeg_lib_version}")
-  unset(jpeg_lib_version)
+  include(SelectLibraryConfigurations)
+  select_library_configurations(FreeImage)
 endif()
 
-include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
-find_package_handle_standard_args(JPEG
-  REQUIRED_VARS JPEG_LIBRARY JPEG_INCLUDE_DIR
-  VERSION_VAR JPEG_VERSION)
+if(FreeImage_INCLUDE_DIR AND EXISTS "${FreeImage_INCLUDE_DIR}/FreeImage.h")
+  file(STRINGS "${FreeImage_INCLUDE_DIR}/FreeImage.h" freeimage_major_version_str REGEX "^#define[\t ]+FREEIMAGE_MAJOR_VERSION[\t ]+\".*\"")
+  file(STRINGS "${FreeImage_INCLUDE_DIR}/FreeImage.h" freeimage_minor_version_str REGEX "^#define[\t ]+FREEIMAGE_MINOR_VERSION[\t ]+\".*\"")
+  file(STRINGS "${FreeImage_INCLUDE_DIR}/FreeImage.h" freeimage_release_serial_str REGEX "^#define[\t ]+FREEIMAGE_RELEASE_SERIAL[\t ]+\".*\"")
 
-if(JPEG_FOUND)
-  set(JPEG_LIBRARIES ${JPEG_LIBRARY})
-  set(JPEG_INCLUDE_DIRS "${JPEG_INCLUDE_DIR}")
+  string(REGEX REPLACE "^#define[\t ]+FREEIMAGE_MAJOR_VERSION[\t ]+\"([^\"]*)\".*" "\\1" FreeImage_VERSION_MAJOR "${freeimage_major_version_str}")
+  string(REGEX REPLACE "^#define[\t ]+FREEIMAGE_MINOR_VERSION[\t ]+\"([^\"]*)\".*" "\\1" FreeImage_VERSION_MINOR "${freeimage_minor_version_str}")
+  string(REGEX REPLACE "^#define[\t ]+FREEIMAGE_RELEASE_SERIAL[\t ]+\"([^\"]*)\".*" "\\1" FreeImage_RELEASE_SERIAL "${freeimage_release_serial_str}")
+  set(FreeImage_VERSION_STRING ${FreeImage_VERSION_MAJOR}.${FreeImage_VERSION_MINOR}.${FreeImage_RELEASE_SERIAL})
 
-  if(NOT TARGET JPEG::JPEG)
-    add_library(JPEG::JPEG UNKNOWN IMPORTED)
-    if(JPEG_INCLUDE_DIRS)
-      set_target_properties(JPEG::JPEG PROPERTIES
-        INTERFACE_INCLUDE_DIRECTORIES "${JPEG_INCLUDE_DIRS}")
-    endif()
-    if(EXISTS "${JPEG_LIBRARY}")
-      set_target_properties(JPEG::JPEG PROPERTIES
+  unset(freeimage_major_version_str)
+  unset(freeimage_minor_version_str)
+  unset(freeimage_release_serial_str)
+  unset(FreeImage_VERSION_MAJOR)
+  unset(FreeImage_VERSION_MINOR)
+  unset(FreeImage_RELEASE_SERIAL)
+endif()
+
+include(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(
+    FreeImage
+    REQUIRED_VARS FreeImage_LIBRARY FreeImage_INCLUDE_DIR
+    VERSION_VAR FreeImage_VERSION_STRING)
+
+if(FreeImage_FOUND)
+  set(FreeImage_LIBRARIES ${FreeImage_LIBRARY})
+  set(FreeImage_INCLUDE_DIRS ${FreeImage_INCLUDE_DIR})
+
+  if(NOT TARGET FreeImage::FreeImage)
+    add_library(FreeImage::FreeImage UNKNOWN IMPORTED)
+    set_target_properties(FreeImage::FreeImage PROPERTIES
+      INTERFACE_INCLUDE_DIRECTORIES "${FreeImage_INCLUDE_DIRS}")
+
+    if(EXISTS "${FreeImage_LIBRARY}")
+      set_target_properties(FreeImage::FreeImage PROPERTIES
         IMPORTED_LINK_INTERFACE_LANGUAGES "C"
-        IMPORTED_LOCATION "${JPEG_LIBRARY}")
+        IMPORTED_LOCATION "${FreeImage_LIBRARY}")
     endif()
-    if(EXISTS "${JPEG_LIBRARY_RELEASE}")
-      set_property(TARGET JPEG::JPEG APPEND PROPERTY
+    if(FreeImage_LIBRARY_RELEASE)
+      set_property(TARGET FreeImage::FreeImage APPEND PROPERTY
         IMPORTED_CONFIGURATIONS RELEASE)
-      set_target_properties(JPEG::JPEG PROPERTIES
-        IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "C"
-        IMPORTED_LOCATION_RELEASE "${JPEG_LIBRARY_RELEASE}")
+      set_target_properties(FreeImage::FreeImage PROPERTIES
+        IMPORTED_LINK_INTERFACE_LANGUAGES "C"
+        IMPORTED_LOCATION_RELEASE "${FreeImage_LIBRARY_RELEASE}")
     endif()
-    if(EXISTS "${JPEG_LIBRARY_DEBUG}")
-      set_property(TARGET JPEG::JPEG APPEND PROPERTY
+    if(FreeImage_LIBRARY_DEBUG)
+      set_property(TARGET FreeImage::FreeImage APPEND PROPERTY
         IMPORTED_CONFIGURATIONS DEBUG)
-      set_target_properties(JPEG::JPEG PROPERTIES
-        IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "C"
-        IMPORTED_LOCATION_DEBUG "${JPEG_LIBRARY_DEBUG}")
+      set_target_properties(FreeImage::FreeImage PROPERTIES
+        IMPORTED_LINK_INTERFACE_LANGUAGES "C"
+        IMPORTED_LOCATION_DEBUG "${FreeImage_LIBRARY_DEBUG}")
     endif()
   endif()
 endif()
-
-mark_as_advanced(JPEG_LIBRARY JPEG_INCLUDE_DIR)

@@ -71,8 +71,6 @@
 #include "CyrilPaletteFun.h"
 #include "CyrilFftFun.h"
 
-using namespace std;
-
 int yylex();
 
 int line_no = 0;
