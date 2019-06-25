@@ -53,13 +53,15 @@ cyrilApp::setup()
 {
   doResetTimers = true;
 
-  ofSoundStreamSettings settings;
-  settings.numOutputChannels = 0;
-  settings.numInputChannels = 1;
-  settings.sampleRate = 44100;
-  settings.bufferSize = beat.getBufferSize();
-  settings.numBuffers = 4;
-  ofSoundStreamSetup(settings);
+  // TODO: use settings
+  //ofSoundStreamSettings settings;
+  //settings.numOutputChannels = 0;
+  //settings.numInputChannels = 1;
+  //settings.sampleRate = 44100;
+  //settings.bufferSize = beat.getBufferSize();
+  //settings.numBuffers = 4;
+  //ofSoundStreamSetup(settings);
+  ofSoundStreamSetup(0, 1, this, 44100, beat.getBufferSize(), 4);
 
   // Switch back to external data folder
   // ofSetDataPathRoot("../../../data/");
