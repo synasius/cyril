@@ -1,30 +1,21 @@
-//
-//  CyrilFftFun.h
-//  Cyril
-//
-//  Created by Darren Mothersele on 15/11/2013.
-//
-//
+#pragma once
 
-#ifndef __Cyril__CyrilFftFun__
-#define __Cyril__CyrilFftFun__
-
-#include "ofMain.h"
 #include "CyrilFun.h"
 #include "Palette.h"
+#include "ofMain.h"
 
 extern float fftSubbands[32];
 
-class CyrilFftFun : public CyrilFun {
+class CyrilFftFun : public CyrilFun
+{
 public:
   CyrilFftFun(Cyril* _c);
-  CyrilFftFun(const CyrilFftFun &other);
-  virtual ~CyrilFftFun ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+  CyrilFftFun(const CyrilFftFun& other);
+
+  virtual ~CyrilFftFun() override;
+  virtual void print() override;
+  virtual Cyril* clone() override;
+  virtual int size() override;
+  virtual void eval(CyrilState&) override;
 };
 
-
-#endif /* defined(__Cyril__CyrilFftFun__) */

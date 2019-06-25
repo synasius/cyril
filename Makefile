@@ -7,7 +7,7 @@ args = -DOF_DIRECTORY=$(openframeworks_directory) -DCMAKE_EXPORT_COMPILE_COMMAND
 
 release:
 	cmake -B build-release $(args) -DCMAKE_BUILD_TYPE=Release
-	cmake --build build-release -j $(jobs)
+	cmake --build build-release -j $(jobs) --target install
 
 debug:
 	cmake -B build-debug $(args) -DCMAKE_BUILD_TYPE=Debug

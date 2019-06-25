@@ -3,53 +3,51 @@
 #include "EditorBuffer.h"
 
 EditorBuffer::EditorBuffer(ofTrueTypeFont* _f)
-  : text()
-  , cursorPosition(text.end())
-  , selectStart(text.end())
-  , selectEnd(text.end())
-  , font(_f)
-  , minScale(0.5)
-  , maxScale(2.5)
+  : m_text()
+  , m_cursorPosition(m_text.end())
+  , m_selectStart(m_text.end())
+  , m_selectEnd(m_text.end())
+  , m_font(_f)
 {
-  lineHeight = font->getLineHeight();
-  charWidth = font->stringWidth("X") + font->getLetterSpacing();
-  cursorPosition = text.end();
-  selectStart = cursorPosition;
-  selectEnd = cursorPosition;
+  m_lineHeight = m_font->getLineHeight();
+  m_charWidth = m_font->stringWidth("X") + m_font->getLetterSpacing();
+  m_cursorPosition = m_text.end();
+  m_selectStart = m_cursorPosition;
+  m_selectEnd = m_cursorPosition;
 }
 
 string
 EditorBuffer::getText()
 {
-  return text;
+  return m_text;
 }
 
 void
 EditorBuffer::setText(string t)
 {
-  text = t;
-  cursorPosition = text.end();
-  selectStart = cursorPosition;
-  selectEnd = cursorPosition;
+  m_text = t;
+  m_cursorPosition = m_text.end();
+  m_selectStart = m_cursorPosition;
+  m_selectEnd = m_cursorPosition;
 }
 
 void
 EditorBuffer::insert(int key)
 {
-  if (selectStart != selectEnd) {
-    cursorPosition = text.erase(selectStart, selectEnd);
+  if (m_selectStart != m_selectEnd) {
+    m_cursorPosition = m_text.erase(m_selectStart, m_selectEnd);
   }
-  cursorPosition = text.insert(cursorPosition, key);
-  cursorPosition++;
+  m_cursorPosition = m_text.insert(m_cursorPosition, key);
+  m_cursorPosition++;
   updateSelect(false);
 }
 
 void
 EditorBuffer::insert(const string s)
 {
-  int loc = cursorPosition - text.begin();
-  text.insert(cursorPosition, s.begin(), s.end());
-  cursorPosition = text.begin() + loc + s.size();
+  int loc = m_cursorPosition - m_text.begin();
+  m_text.insert(m_cursorPosition, s.begin(), s.end());
+  m_cursorPosition = m_text.begin() + loc + s.size();
   updateSelect(false);
 }
 
@@ -57,29 +55,29 @@ void
 EditorBuffer::updateSelect(bool shift)
 {
   if (shift) {
-    if (cursorPosition > selectEnd) {
-      selectEnd = cursorPosition;
-    } else if (cursorPosition < selectStart) {
-      selectStart = cursorPosition;
+    if (m_cursorPosition > m_selectEnd) {
+      m_selectEnd = m_cursorPosition;
+    } else if (m_cursorPosition < m_selectStart) {
+      m_selectStart = m_cursorPosition;
     }
   } else {
-    selectStart = cursorPosition;
-    selectEnd = cursorPosition;
+    m_selectStart = m_cursorPosition;
+    m_selectEnd = m_cursorPosition;
   }
 }
 
 void
 EditorBuffer::backspace()
 {
-  if (selectStart == selectEnd) {
-    if (cursorPosition != text.begin()) {
-      cursorPosition--;
-      if (cursorPosition != text.end()) {
-        cursorPosition = text.erase(cursorPosition);
+  if (m_selectStart == m_selectEnd) {
+    if (m_cursorPosition != m_text.begin()) {
+      m_cursorPosition--;
+      if (m_cursorPosition != m_text.end()) {
+        m_cursorPosition = m_text.erase(m_cursorPosition);
       }
     }
   } else {
-    cursorPosition = text.erase(selectStart, selectEnd);
+    m_cursorPosition = m_text.erase(m_selectStart, m_selectEnd);
   }
   updateSelect(false);
 }
@@ -89,38 +87,38 @@ EditorBuffer::setCursorPosition(int c, int r)
 {
   if (c >= 0 && r >= 0) {
     int currentRow = 0;
-    cursorPosition = text.begin();
+    m_cursorPosition = m_text.begin();
     while (currentRow < r) {
-      if (*cursorPosition == '\n')
+      if (*m_cursorPosition == '\n')
         currentRow++;
-      cursorPosition++;
+      m_cursorPosition++;
     }
     int currentCol = 0;
-    while (currentCol < c && *cursorPosition != '\n') {
-      cursorPosition++;
+    while (currentCol < c && *m_cursorPosition != '\n') {
+      m_cursorPosition++;
       currentCol++;
     }
   } else {
-    cursorPosition = text.begin();
+    m_cursorPosition = m_text.begin();
   }
   // Prevent cursor from moving outside of text
-  if (cursorPosition < text.begin())
-    cursorPosition = text.begin();
-  if (cursorPosition > text.end())
-    cursorPosition = text.end();
+  if (m_cursorPosition < m_text.begin())
+    m_cursorPosition = m_text.begin();
+  if (m_cursorPosition > m_text.end())
+    m_cursorPosition = m_text.end();
 }
 
 void
 EditorBuffer::clear()
 {
-  text.clear();
-  cursorPosition = text.end();
-  selectStart = cursorPosition;
-  selectEnd = cursorPosition;
+  m_text.clear();
+  m_cursorPosition = m_text.end();
+  m_selectStart = m_cursorPosition;
+  m_selectEnd = m_cursorPosition;
 }
 
 void
-EditorBuffer::moveCursorRow(int direction, bool shift, bool cmd)
+EditorBuffer::moveCursorRow(int direction, bool shift, bool)
 {
   setCursorPosition(getCurrentCol(), getCurrentRow() + direction);
   updateSelect(shift);
@@ -132,25 +130,25 @@ EditorBuffer::moveCursorCol(int direction, bool shift, bool cmd)
   if (cmd) {
     // If command key is pressed move to next word
     bool notFound = true;
-    while (notFound && cursorPosition > text.begin() &&
-           cursorPosition < text.end()) {
+    while (notFound && m_cursorPosition > m_text.begin() &&
+           m_cursorPosition < m_text.end()) {
       char stop_chars[] = " {}[]()\n";
-      cursorPosition += direction;
+      m_cursorPosition += direction;
       updateSelect(shift);
       for (unsigned int i = 0; i < strlen(stop_chars); ++i) {
-        if (*(cursorPosition + direction) == stop_chars[i]) {
+        if (*(m_cursorPosition + direction) == stop_chars[i]) {
           notFound = false;
           break;
         }
       }
     }
   } else {
-    if (direction == -1 && cursorPosition != text.begin()) {
-      cursorPosition--;
+    if (direction == -1 && m_cursorPosition != m_text.begin()) {
+      m_cursorPosition--;
       updateSelect(shift);
     }
-    if (direction == 1 && cursorPosition != text.end()) {
-      cursorPosition++;
+    if (direction == 1 && m_cursorPosition != m_text.end()) {
+      m_cursorPosition++;
       updateSelect(shift);
     }
   }
@@ -159,13 +157,13 @@ EditorBuffer::moveCursorCol(int direction, bool shift, bool cmd)
 const string
 EditorBuffer::getSelection()
 {
-  return string(selectStart, selectEnd);
+  return string(m_selectStart, m_selectEnd);
 }
 
 void
 EditorBuffer::removeSelection()
 {
-  cursorPosition = text.erase(selectStart, selectEnd);
+  m_cursorPosition = m_text.erase(m_selectStart, m_selectEnd);
   updateSelect(false);
 }
 
@@ -173,9 +171,9 @@ int
 EditorBuffer::getCurrentRow()
 {
   // To get current row count number of '\n' characters between
-  // text.begin and cursorPosition
+  // m_text.begin and cursorPosition
   int rowNo = 0;
-  for (string::iterator i = text.begin(); i < cursorPosition; i++) {
+  for (string::iterator i = m_text.begin(); i < m_cursorPosition; i++) {
     if (*i == '\n')
       rowNo++;
   }
@@ -186,9 +184,10 @@ int
 EditorBuffer::getCurrentCol()
 {
   // To get the current column count the number of characters between
-  // cursorPosition and previous '\n' or text.begin()
+  // cursorPosition and previous '\n' or m_text.begin()
   int colNo = 0;
-  for (string::iterator i = cursorPosition - 1; i >= text.begin() && *i != '\n';
+  for (string::iterator i = m_cursorPosition - 1;
+       i >= m_text.begin() && *i != '\n';
        --i) {
     colNo++;
   }
@@ -198,63 +197,65 @@ EditorBuffer::getCurrentCol()
 void
 EditorBuffer::setTextColor(ofColor _c1, ofColor _c2)
 {
-  textColor = _c1;
-  textBorderColor = _c2;
+  m_textColor = _c1;
+  m_textBorderColor = _c2;
 }
+
 void
 EditorBuffer::setCursorColor(ofColor _c)
 {
-  cursorColor = _c;
+  m_cursorColor = _c;
 }
+
 void
 EditorBuffer::setHighlightColor(ofColor _c)
 {
-  highlightColor = _c;
+  m_highlightColor = _c;
 }
 
 void
 EditorBuffer::updateBounds()
 {
-  bounds = ofRectangle(0, 0, 0, lineHeight);
-  string ss;
+  m_bounds = ofRectangle(0, 0, 0, m_lineHeight);
+  std::string ss;
   bool foundCursor = false;
 
   // keep track of selection areas
-  shapes.clear();
+  m_shapes.clear();
   ofPath selection;
   ofPoint select;
   bool inHighlight = false;
 
-  for (string::iterator i = text.begin(); i < text.end(); ++i) {
-    if (i == cursorPosition) {
-      cursorPoint = ofPoint(font->stringWidth(ss), bounds.height);
+  for (string::iterator i = m_text.begin(); i < m_text.end(); ++i) {
+    if (i == m_cursorPosition) {
+      m_cursorPoint = ofPoint(m_font->stringWidth(ss), m_bounds.height);
       foundCursor = true;
     }
-    if (i == selectStart) {
-      select = ofPoint(font->stringWidth(ss), bounds.height);
-      select.y -= lineHeight;
+    if (i == m_selectStart) {
+      select = ofPoint(m_font->stringWidth(ss), m_bounds.height);
+      select.y -= m_lineHeight;
       inHighlight = true;
     }
-    if (i == selectEnd) {
+    if (i == m_selectEnd) {
       selection.rectangle(select.x,
                           select.y,
-                          font->stringWidth(ss) - select.x,
-                          bounds.height - select.y);
+                          m_font->stringWidth(ss) - select.x,
+                          m_bounds.height - select.y);
       inHighlight = false;
     }
     if (*i == '\n') {
       if (inHighlight) {
         selection.rectangle(select.x,
                             select.y,
-                            font->stringWidth(ss) - select.x,
-                            bounds.height - select.y);
+                            m_font->stringWidth(ss) - select.x,
+                            m_bounds.height - select.y);
       }
-      bounds.growToInclude(font->stringWidth(ss), bounds.height);
-      bounds.height += lineHeight;
+      m_bounds.growToInclude(m_font->stringWidth(ss), m_bounds.height);
+      m_bounds.height += m_lineHeight;
       ss.clear();
       if (inHighlight) {
-        select = ofPoint(font->stringWidth(ss), bounds.height);
-        select.y -= lineHeight;
+        select = ofPoint(m_font->stringWidth(ss), m_bounds.height);
+        select.y -= m_lineHeight;
       }
     } else if (*i == ' ') {
       ss.push_back('_');
@@ -265,33 +266,33 @@ EditorBuffer::updateBounds()
   if (inHighlight) {
     selection.rectangle(select.x,
                         select.y,
-                        font->stringWidth(ss) - select.x,
-                        bounds.height - lineHeight - select.y);
+                        m_font->stringWidth(ss) - select.x,
+                        m_bounds.height - m_lineHeight - select.y);
   }
   if (!foundCursor) {
-    cursorPoint = ofPoint(font->stringWidth(ss), bounds.height);
+    m_cursorPoint = ofPoint(m_font->stringWidth(ss), m_bounds.height);
   }
-  bounds.growToInclude(font->stringWidth(ss), bounds.height);
+  m_bounds.growToInclude(m_font->stringWidth(ss), m_bounds.height);
 
-  selection.setColor(highlightColor);
-  shapes.push_back(selection);
+  selection.setColor(m_highlightColor);
+  m_shapes.push_back(selection);
 }
 
 void
 EditorBuffer::drawStrings()
 {
-  float h = lineHeight;
+  float h = m_lineHeight;
   string ss;
-  for (string::iterator i = text.begin(); i < text.end(); ++i) {
+  for (string::iterator i = m_text.begin(); i < m_text.end(); ++i) {
     if (*i == '\n') {
-      font->drawString(ss, 0, h);
-      h += lineHeight;
+      m_font->drawString(ss, 0, h);
+      h += m_lineHeight;
       ss.clear();
     } else {
       ss.push_back(*i);
     }
   }
-  font->drawString(ss, 0, h);
+  m_font->drawString(ss, 0, h);
 }
 
 void
@@ -300,7 +301,6 @@ EditorBuffer::drawCursor()
 
   ofPushMatrix();
   ofPushStyle();
-  // ofTranslate(x, y);
 
   ofPopStyle();
   ofPopMatrix();
@@ -316,37 +316,28 @@ EditorBuffer::draw(float x, float y, float w, float h)
   // Need to calculate size of editor before drawing
   updateBounds();
 
-  // Scale down if needed
-  float scale = 1;
-  if (bounds.width > 0 && bounds.height > 0) {
-    scale = min(w / bounds.width, h / bounds.height);
-    scale = min(scale, maxScale);
-    scale = max(scale, minScale);
-    ofScale(scale, scale);
-  }
-
   // Move editor content if cursor is off screen
-  float offsetY = (h / scale) - cursorPoint.y;
+  float offsetY = h - m_cursorPoint.y;
   if (offsetY < 0) {
     ofTranslate(0, offsetY);
   }
-  float offsetX = (w / scale) - cursorPoint.x;
+  float offsetX = w - m_cursorPoint.x;
   if (offsetX < 0) {
     ofTranslate(offsetX, 0);
   }
 
   // Draw selected text highlight
-  for (vector<ofPath>::iterator i = shapes.begin(); i < shapes.end(); ++i) {
-    (*i).draw();
+  for (const auto& path: m_shapes) {
+    path.draw();
   }
 
   // Draw text buffer content
-  ofSetColor(textColor);
+  ofSetColor(m_textColor);
   drawStrings();
 
   // Draw cursor
-  ofSetColor(cursorColor);
-  ofRect(cursorPoint, 10, -lineHeight);
+  ofSetColor(m_cursorColor);
+  ofDrawRectangle(m_cursorPoint, 10, -m_lineHeight);
 
   ofPopStyle();
   ofPopMatrix();
@@ -355,49 +346,49 @@ EditorBuffer::draw(float x, float y, float w, float h)
 void
 EditorBuffer::updateShapes()
 {
-  shapes.clear();
-  ofPoint location(0, lineHeight);
+  m_shapes.clear();
+  ofPoint location(0, m_lineHeight);
   bool foundCursor = false;
   bool inHighlight = false;
   ofPoint select;
   ofPath selection;
-  selection.setColor(highlightColor);
+  selection.setColor(m_highlightColor);
   ofPath cursor;
-  cursor.setColor(cursorColor);
+  cursor.setColor(m_cursorColor);
   string ss;
 
-  for (string::iterator i = text.begin(); i < text.end(); ++i) {
-    if (i == cursorPosition) {
-      cursorPoint = ofPoint(location.x, location.y);
-      cursor.rectangle(location.x, location.y, 10, -lineHeight);
+  for (string::iterator i = m_text.begin(); i < m_text.end(); ++i) {
+    if (i == m_cursorPosition) {
+      m_cursorPoint = ofPoint(location.x, location.y);
+      cursor.rectangle(location.x, location.y, 10, -m_lineHeight);
       foundCursor = true;
     }
-    if (i == selectStart) {
+    if (i == m_selectStart) {
       select = location;
-      select.y -= lineHeight;
+      select.y -= m_lineHeight;
       inHighlight = true;
     }
-    if (i == selectEnd) {
+    if (i == m_selectEnd) {
       selection.rectangle(
         select.x, select.y, location.x - select.x, location.y - select.y);
       inHighlight = false;
     }
     if (*i == '\n') {
-      font->drawString(ss, 0, location.y);
+      m_font->drawString(ss, 0, location.y);
       ss.clear();
       if (inHighlight) {
         selection.rectangle(
           select.x, select.y, location.x - select.x, location.y - select.y);
       }
       location.x = 0;
-      location.y += lineHeight;
+      location.y += m_lineHeight;
       if (inHighlight) {
         select = location;
-        select.y -= lineHeight;
+        select.y -= m_lineHeight;
       }
     } else if (*i == ' ') {
       ss.push_back(' ');
-      location.x += charWidth;
+      location.x += m_charWidth;
     } else {
       /*
       ofTTFCharacter c = font->getCharacterAsPoints(*i);
@@ -409,7 +400,7 @@ EditorBuffer::updateShapes()
       */
       // font->drawString(*i, location.x, location.y);
       ss.push_back(*i);
-      location.x += charWidth;
+      location.x += m_charWidth;
     }
   }
   if (inHighlight) {
@@ -417,19 +408,18 @@ EditorBuffer::updateShapes()
       select.x, select.y, location.x - select.x, location.y - select.y);
   }
   if (!foundCursor) {
-    cursorPoint = ofPoint(location.x, location.y);
+    m_cursorPoint = ofPoint(location.x, location.y);
     // cursor.rectangle(location.x, location.y, 10, -lineHeight);
-    cursor.rectangle(font->stringWidth(ss), location.y, 10, -lineHeight);
+    cursor.rectangle(m_font->stringWidth(ss), location.y, 10, -m_lineHeight);
   }
-  font->drawString(ss, 0, location.y);
-  shapes.push_back(cursor);
-  shapes.push_back(selection);
+  m_font->drawString(ss, 0, location.y);
+  m_shapes.push_back(cursor);
+  m_shapes.push_back(selection);
 
-  bounds = ofRectangle(0, 0, 0, 0);
-  for (const auto& shape : shapes) {
+  m_bounds = ofRectangle(0, 0, 0, 0);
+  for (const auto& shape : m_shapes) {
     for (const auto& line : shape.getOutline()) {
-      bounds.growToInclude(line.getBoundingBox());
+      m_bounds.growToInclude(line.getBoundingBox());
     }
   }
 }
-

@@ -6,27 +6,6 @@
 
 class EditorBuffer
 {
-
-  string text;
-  string::iterator cursorPosition;
-  string::iterator selectStart;
-  string::iterator selectEnd;
-  void updateSelect(bool);
-
-  ofColor textColor;
-  ofColor textBorderColor;
-  ofColor cursorColor;
-  ofColor highlightColor;
-
-  float lineHeight;
-  float charWidth;
-  ofTrueTypeFont* font;
-
-  vector<ofPath> shapes;
-  ofRectangle bounds;
-  ofPoint cursorPoint;
-  float minScale, maxScale;
-
 public:
   EditorBuffer(ofTrueTypeFont* f);
 
@@ -35,7 +14,7 @@ public:
   void backspace();
   void clear();
 
-  string getText();
+  std::string getText();
   void setText(string);
 
   void moveCursorRow(int direction, bool shift, bool cmd);
@@ -45,7 +24,7 @@ public:
   void setCursorColor(ofColor);
   void setHighlightColor(ofColor);
 
-  const string getSelection();
+  const std::string getSelection();
   void removeSelection();
 
   void setCursorPosition(int, int);
@@ -58,5 +37,26 @@ public:
   void updateBounds();
   void drawStrings();
   void drawCursor();
-};
 
+private:
+  void updateSelect(bool);
+
+  std::string m_text;
+  std::string::iterator m_cursorPosition;
+  std::string::iterator m_selectStart;
+  std::string::iterator m_selectEnd;
+
+  ofColor m_textColor;
+  ofColor m_textBorderColor;
+  ofColor m_cursorColor;
+  ofColor m_highlightColor;
+
+  float m_lineHeight;
+  float m_charWidth;
+  ofTrueTypeFont* m_font;
+
+  std::vector<ofPath> m_shapes;
+  ofRectangle m_bounds;
+  ofPoint m_cursorPoint;
+
+};

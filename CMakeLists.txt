@@ -18,6 +18,10 @@ project(Cyril VERSION 1.0
               DESCRIPTION "Cyril Live Visuals"
               LANGUAGES CXX)
 
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/install-root" CACHE PATH "..." FORCE)
+endif()
+
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 set(OF_DIRECTORY "openFrameworks" CACHE STRING "OpenFrameworks")
 
@@ -226,8 +230,10 @@ add_executable(cyril
 )
 
 target_compile_features(cyril PRIVATE cxx_std_17)
-target_compile_options(cyril PRIVATE -Wno-deprecated-declarations)
-target_compile_options(cyril PRIVATE -Wno-delete-incomplete)
+target_compile_options(cyril PRIVATE -Wall)
+target_compile_options(cyril PRIVATE -Wextra)
+target_compile_options(cyril PRIVATE -Wzero-as-null-pointer-constant)
+target_compile_options(cyril PRIVATE -Wsuggest-override)
 
 target_include_directories(cyril PUBLIC include)
 target_include_directories(cyril PRIVATE src/Cyril)
@@ -247,18 +253,18 @@ target_include_directories(cyril PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 # TODO: move to separate target
 target_link_libraries(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworksCompiled/lib/linux64/libopenFrameworks.a)
-target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/)
-target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/3d)
-target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/app)
-target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/communication)
-target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/events)
-target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/gl)
-target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/graphics)
-target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/math)
-target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/sound)
-target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/types)
-target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/utils)
-target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/video)
+target_include_directories(cyril SYSTEM PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/)
+target_include_directories(cyril SYSTEM PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/3d)
+target_include_directories(cyril SYSTEM PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/app)
+target_include_directories(cyril SYSTEM PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/communication)
+target_include_directories(cyril SYSTEM PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/events)
+target_include_directories(cyril SYSTEM PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/gl)
+target_include_directories(cyril SYSTEM PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/graphics)
+target_include_directories(cyril SYSTEM PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/math)
+target_include_directories(cyril SYSTEM PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/sound)
+target_include_directories(cyril SYSTEM PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/types)
+target_include_directories(cyril SYSTEM PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/utils)
+target_include_directories(cyril SYSTEM PRIVATE ${OF_DIRECTORY}/libs/openFrameworks/video)
 
 find_package(PkgConfig REQUIRED)
 
@@ -352,3 +358,6 @@ target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/json/include)
 target_include_directories(cyril PRIVATE ${OF_DIRECTORY}/libs/kiss/include)
 target_link_libraries(cyril PRIVATE ${OF_DIRECTORY}/libs/kiss/lib/linux64/libkiss.a)
 
+install(TARGETS cyril RUNTIME DESTINATION .)
+install(FILES DroidSansMono.ttf DESTINATION resources)
+install(FILES SourceCodePro.ttf DESTINATION resources)

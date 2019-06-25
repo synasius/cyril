@@ -8,8 +8,12 @@ ofxEditor::ofxEditor(int noBuffers, string fontname)
   , cursorColor(ofColor::white, 200)
   , highlightColor(ofColor::white, 200)
 {
-  if (!m_font.load(fontname, 20, true, true, false, 0.3f, 0)) {
-    std::cout << "Could not load font '" << fontname << "'\n";
+  // here we load path from the current resource folder
+  // TODO: on macOS resource folder is in a different path (see bundle)
+  auto resourcesPath = ofFilePath::join(ofFilePath::getCurrentExeDir(), "resources");
+  auto fontPath = ofFilePath::join(resourcesPath, fontname);
+  if (!m_font.load(fontPath, 30, true, true, false, 0.3f, 0)) {
+    std::cout << "Could not load font '" << fontPath << "'\n";
   }
 
   // Reserve text buffers
@@ -44,12 +48,10 @@ void
 ofxEditor::handleKeyPress(ofKeyEventArgs& _key)
 {
   int key = _key.key;
-  bool alt = (bool)(ofGetKeyPressed(OF_KEY_ALT));
   bool shift = (bool)(ofGetKeyPressed(OF_KEY_SHIFT));
 
   // TODO: cmd and ctrl are the same when OS is not MacOS
   bool cmd = (bool)(ofGetKeyPressed(OF_KEY_CONTROL));
-  bool ctrl = (bool)(ofGetKeyPressed(OF_KEY_CONTROL));
 
   // Add printable ASCII characters to buffer text
   if (!cmd && key < 127 && key > 31) {

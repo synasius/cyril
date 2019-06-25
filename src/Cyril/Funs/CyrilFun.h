@@ -1,16 +1,7 @@
-//
-//  CyrilFun.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 05/11/2013.
-//
-//
+#pragma once
 
-#ifndef cyril2_CyrilFun_h
-#define cyril2_CyrilFun_h
-
-#include <ofMain.h>
 #include <cyril/cmds.h>
+#include <ofMain.h>
 
 #include "Cyril.h"
 
@@ -20,13 +11,13 @@ protected:
   Cyril* c;
 
 public:
-  CyrilFun(Cyril* _c = NULL);
+  CyrilFun(Cyril* _c = nullptr);
   CyrilFun(const CyrilFun& other);
+
   virtual ~CyrilFun();
-  virtual void print();
-  virtual Cyril* clone();
-  virtual int size();
-  virtual void eval(CyrilState&);
+  virtual void print() override;
+  virtual Cyril* clone() override;
+  virtual int size() override;
+  virtual void eval(CyrilState&) override;
 };
 
-#endif

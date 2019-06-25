@@ -3,6 +3,8 @@
 #include <arpa/inet.h>
 #include <ifaddrs.h>
 #include <net/if.h>
+#include <ofSoundStream.h>
+
 
 string
 getIpAddress()
@@ -20,8 +22,8 @@ getIpAddress()
     perror("getifaddrs");
   }
 
-  for (ifa = myaddrs; ifa != NULL; ifa = ifa->ifa_next) {
-    if (ifa->ifa_addr == NULL)
+  for (ifa = myaddrs; ifa != nullptr; ifa = ifa->ifa_next) {
+    if (ifa->ifa_addr == nullptr)
       continue;
     if ((ifa->ifa_flags & IFF_UP) == 0)
       continue;
@@ -31,7 +33,7 @@ getIpAddress()
       if (inet_ntop(ifa->ifa_addr->sa_family,
                     (void*)&(s4->sin_addr),
                     buf,
-                    sizeof(buf)) == NULL) {
+                    sizeof(buf)) == nullptr) {
         printf("%s: inet_ntop failed!\n", ifa->ifa_name);
       } else {
         if (ofToString(ifa->ifa_name) == "en0") {
@@ -51,7 +53,13 @@ cyrilApp::setup()
 {
   doResetTimers = true;
 
-  ofSoundStreamSetup(0, 1, this, 44100, beat.getBufferSize(), 4);
+  ofSoundStreamSettings settings;
+  settings.numOutputChannels = 0;
+  settings.numInputChannels = 1;
+  settings.sampleRate = 44100;
+  settings.bufferSize = beat.getBufferSize();
+  settings.numBuffers = 4;
+  ofSoundStreamSetup(settings);
 
   // Switch back to external data folder
   // ofSetDataPathRoot("../../../data/");
@@ -118,7 +126,7 @@ cyrilApp::setup()
   _state.cs = new map<int, Palette*>;
   // Initialise sprites
   _state.img = new map<int, ofImage*>;
-  _state.parent = NULL;
+  _state.parent = nullptr;
   _state.light = new ofLight();
   //_state.light = NULL;
 
@@ -350,8 +358,6 @@ cyrilApp::draw()
   // ofEnableAlphaBlending();
 
   _state.ms->clearStacks();
-  float X_MAX = (*_state.sym)[REG_X_MAX];
-  float Y_MAX = (*_state.sym)[REG_Y_MAX];
   float X_MID = (*_state.sym)[REG_X_MID];
   float Y_MID = (*_state.sym)[REG_Y_MID];
   float X_SCALE = (*_state.sym)[REG_X_SCALE];
@@ -410,10 +416,10 @@ cyrilApp::draw()
       } else {
         ofSetColor(150);
       }
-      ofRect(i * 10, 0, 8, 8);
+      ofDrawRectangle(i * 10, 0, 8, 8);
       if (editor.currentBuffer == i) {
         ofSetColor(255);
-        ofRect(i * 10, 10, 8, 5);
+        ofDrawRectangle(i * 10, 10, 8, 5);
       }
     }
     ofPopStyle();
@@ -589,32 +595,32 @@ cyrilApp::reloadFileBuffer(std::string filePath)
 
 //--------------------------------------------------------------
 void
-cyrilApp::keyPressed(int key)
+cyrilApp::keyPressed(int)
 {}
 
 //--------------------------------------------------------------
 void
-cyrilApp::keyReleased(int key)
+cyrilApp::keyReleased(int)
 {}
 
 //--------------------------------------------------------------
 void
-cyrilApp::mouseMoved(int x, int y)
+cyrilApp::mouseMoved(int, int)
 {}
 
 //--------------------------------------------------------------
 void
-cyrilApp::mouseDragged(int x, int y, int button)
+cyrilApp::mouseDragged(int, int, int)
 {}
 
 //--------------------------------------------------------------
 void
-cyrilApp::mousePressed(int x, int y, int button)
+cyrilApp::mousePressed(int, int, int)
 {}
 
 //--------------------------------------------------------------
 void
-cyrilApp::mouseReleased(int x, int y, int button)
+cyrilApp::mouseReleased(int, int, int)
 {}
 
 //--------------------------------------------------------------
@@ -631,12 +637,12 @@ cyrilApp::windowResized(int w, int h)
 
 //--------------------------------------------------------------
 void
-cyrilApp::gotMessage(ofMessage msg)
+cyrilApp::gotMessage(ofMessage)
 {}
 
 //--------------------------------------------------------------
 void
-cyrilApp::dragEvent(ofDragInfo dragInfo)
+cyrilApp::dragEvent(ofDragInfo )
 {}
 
 void

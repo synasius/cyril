@@ -23,7 +23,46 @@
 
 class cyrilApp : public ofBaseApp
 {
+public:
+  cyrilApp()
+    : editor(10, "SourceCodePro.ttf")
+  {}
 
+  void setup();
+  void update();
+  void draw();
+
+  void keyPressed(int key);
+  void keyReleased(int key);
+  void mouseMoved(int x, int y);
+  void mouseDragged(int x, int y, int button);
+  void mousePressed(int x, int y, int button);
+  void mouseReleased(int x, int y, int button);
+  void windowResized(int w, int h);
+  void dragEvent(ofDragInfo dragInfo);
+  void gotMessage(ofMessage msg);
+  void applyGlobalSettings();
+  void reloadSettings();
+
+  void audioReceived(float*, int, int);
+
+  void reloadFileBuffer(std::string);
+
+  // Editor command callbacks
+  static void toggleFx(void*);
+  static void toggleFullscreen(void*);
+  static void toggleOrtho(void*);
+  static void toggleEditor(void*);
+  static void toggleBackground(void*);
+  static void toggleLights(void*);
+  static void loadFile(void*);
+  static void saveFile(void*);
+  static void resetTimers(void*);
+  static void pauseProgram(void*);
+  static void runScript(void*);
+  void toggleScript(int i, bool r);
+
+private:
   ofxEditor editor;
   ofxBeat beat;
 
@@ -65,44 +104,5 @@ class cyrilApp : public ofBaseApp
   int lastSignalReport;
 
   void initPPFx();
-
-public:
-  cyrilApp()
-    : editor(10, "DroidSansMono.ttf")
-  {}
-
-  void setup();
-  void update();
-  void draw();
-
-  void keyPressed(int key);
-  void keyReleased(int key);
-  void mouseMoved(int x, int y);
-  void mouseDragged(int x, int y, int button);
-  void mousePressed(int x, int y, int button);
-  void mouseReleased(int x, int y, int button);
-  void windowResized(int w, int h);
-  void dragEvent(ofDragInfo dragInfo);
-  void gotMessage(ofMessage msg);
-  void applyGlobalSettings();
-  void reloadSettings();
-
-  void audioReceived(float*, int, int);
-
-  void reloadFileBuffer(std::string);
-
-  // Editor command callbacks
-  static void toggleFx(void*);
-  static void toggleFullscreen(void*);
-  static void toggleOrtho(void*);
-  static void toggleEditor(void*);
-  static void toggleBackground(void*);
-  static void toggleLights(void*);
-  static void loadFile(void*);
-  static void saveFile(void*);
-  static void resetTimers(void*);
-  static void pauseProgram(void*);
-  static void runScript(void*);
-  void toggleScript(int i, bool r);
 };
 
