@@ -12,7 +12,6 @@ public:
   CyrilFftFun(Cyril* _c);
   CyrilFftFun(const CyrilFftFun& other);
 
-  virtual ~CyrilFftFun() override;
   virtual void print() override;
   virtual Cyril* clone() override;
   virtual int size() override;
