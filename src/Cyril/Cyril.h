@@ -2,8 +2,8 @@
 
 //  Created by Darren Mothersele on 05/11/2013.
 
-#include <cyril/cmds.h>
 #include "ofMain.h"
+#include <cyril/cmds.h>
 
 #include "CyrilState.h"
 
@@ -19,7 +19,7 @@ public:
   Cyril() { valid = true; }
   Cyril(const Cyril& other);
 
-  virtual ~Cyril() {};
+  virtual ~Cyril(){};
   virtual Cyril* clone();
   virtual void print(){};
   virtual int size();

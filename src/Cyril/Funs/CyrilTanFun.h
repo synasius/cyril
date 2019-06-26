@@ -1,27 +1,18 @@
-//
-//  CyrilTanFun.h
-//  cyril2
-//
+#pragma once
+
 //  Created by Darren Mothersele on 06/11/2013.
-//
-//
 
-#ifndef __cyril2__CyrilTanFun__
-#define __cyril2__CyrilTanFun__
-
-#include "ofMain.h"
 #include "CyrilFun.h"
+#include "ofMain.h"
 
-class CyrilTanFun : public CyrilFun {
+class CyrilTanFun : public CyrilFun
+{
 public:
   CyrilTanFun(Cyril* _c);
-  CyrilTanFun(const CyrilTanFun &other);
-  virtual ~CyrilTanFun ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+  CyrilTanFun(const CyrilTanFun& other);
+
+  virtual void print() override;
+  virtual Cyril* clone() override;
+  virtual int size() override;
+  virtual void eval(CyrilState&) override;
 };
-
-
-#endif /* defined(__cyril2__CyrilTanFun__) */

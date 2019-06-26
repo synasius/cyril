@@ -1,28 +1,20 @@
-//
-//  CyrilLerpFun.h
-//  cyril2
-//
+#pragma once
+
 //  Created by Darren Mothersele on 06/11/2013.
-//
-//
 
-#ifndef __cyril2__CyrilLerpFun__
-#define __cyril2__CyrilLerpFun__
-
-#include "ofMain.h"
 #include "CyrilFun.h"
 #include "Palette.h"
+#include "ofMain.h"
 
-class CyrilLerpFun : public CyrilFun {
+class CyrilLerpFun : public CyrilFun
+{
 public:
   CyrilLerpFun(Cyril* _c);
-  CyrilLerpFun(const CyrilLerpFun &other);
-  virtual ~CyrilLerpFun ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+  CyrilLerpFun(const CyrilLerpFun& other);
+
+  virtual void print() override;
+  virtual Cyril* clone() override;
+  virtual int size() override;
+  virtual void eval(CyrilState&) override;
 };
 
-
-#endif /* defined(__cyril2__CyrilLerpFun__) */

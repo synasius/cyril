@@ -1,28 +1,18 @@
-//
-//  CyrilSinFun.h
-//  cyril2
-//
+#pragma once
+
 //  Created by Darren Mothersele on 06/11/2013.
-//
-//
 
-#ifndef __cyril2__CyrilSinFun__
-#define __cyril2__CyrilSinFun__
-
-#include "ofMain.h"
 #include "CyrilFun.h"
+#include "ofMain.h"
 
-class CyrilSinFun : public CyrilFun {
+class CyrilSinFun : public CyrilFun
+{
 public:
   CyrilSinFun(Cyril* _c);
-  CyrilSinFun(const CyrilSinFun &other);
-  virtual ~CyrilSinFun ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+  CyrilSinFun(const CyrilSinFun& other);
+
+  virtual void print() override;
+  virtual Cyril* clone() override;
+  virtual int size() override;
+  virtual void eval(CyrilState&) override;
 };
-
-
-
-#endif /* defined(__cyril2__CyrilSinFun__) */

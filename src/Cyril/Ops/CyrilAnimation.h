@@ -1,28 +1,21 @@
-//
-//  CyrilAnimation.h
-//  cyril2
-//
+#pragma once
+
 //  Created by Darren Mothersele on 07/11/2013.
-//
-//
 
-#ifndef __cyril2__CyrilAnimation__
-#define __cyril2__CyrilAnimation__
-
-#include "ofMain.h"
 #include "Cyril.h"
+#include "ofMain.h"
 
-class CyrilAnimation : public Cyril {
+class CyrilAnimation : public Cyril
+{
   Cyril* e;
+
 public:
   CyrilAnimation(Cyril* _e);
-  CyrilAnimation (const CyrilAnimation &other);
-  virtual ~CyrilAnimation ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+  CyrilAnimation(const CyrilAnimation& other);
+
+  virtual ~CyrilAnimation() override;
+  virtual void print() override;
+  virtual Cyril* clone() override;
+  virtual int size() override;
+  virtual void eval(CyrilState&) override;
 };
-
-
-#endif /* defined(__cyril2__CyrilAnimation__) */

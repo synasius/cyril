@@ -5,7 +5,6 @@
 #include <net/if.h>
 #include <ofSoundStream.h>
 
-
 string
 getIpAddress()
 {
@@ -53,15 +52,15 @@ cyrilApp::setup()
 {
   doResetTimers = true;
 
-  // TODO: use settings
-  //ofSoundStreamSettings settings;
-  //settings.numOutputChannels = 0;
-  //settings.numInputChannels = 1;
-  //settings.sampleRate = 44100;
-  //settings.bufferSize = beat.getBufferSize();
-  //settings.numBuffers = 4;
-  //ofSoundStreamSetup(settings);
-  ofSoundStreamSetup(0, 1, this, 44100, beat.getBufferSize(), 4);
+  ofSoundStreamSettings settings;
+  settings.numOutputChannels = 0;
+  settings.numInputChannels = 1;
+  settings.sampleRate = 44100;
+  settings.bufferSize = beat.getBufferSize();
+  settings.numBuffers = 4;
+  settings.setOutListener(this);
+  settings.setInListener(this);
+  ofSoundStreamSetup(settings);
 
   // Switch back to external data folder
   // ofSetDataPathRoot("../../../data/");
@@ -638,14 +637,10 @@ cyrilApp::windowResized(int w, int h)
 }
 
 //--------------------------------------------------------------
-void
-cyrilApp::gotMessage(ofMessage)
-{}
+void cyrilApp::gotMessage(ofMessage) {}
 
 //--------------------------------------------------------------
-void
-cyrilApp::dragEvent(ofDragInfo )
-{}
+void cyrilApp::dragEvent(ofDragInfo) {}
 
 void
 cyrilApp::audioReceived(float* input, int bufferSize, int nChannels)
