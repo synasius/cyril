@@ -1,18 +1,17 @@
-//#define OS_PRE_DATA_PATH "data/"
-//#define OS_POST_DATA_PATH "../../../data/"
-
-#include "ofMain.h"
 #include "cyrilApp.h"
+#include "ofMain.h"
 
-map < string, ofColor > colorNameMap;
+map<string, ofColor> colorNameMap;
 
-int main( ){
+int
+main()
+{
   // Set this temporarily to load font from packaged Resources
-  //ofSetDataPathRoot("../Resources/data");
+  // ofSetDataPathRoot("../Resources/data");
   ofDisableDataPath();
 
   ofSetEscapeQuitsApp(false);
-  
+
   colorNameMap["white"] = ofColor::white;
   colorNameMap["gray"] = ofColor::gray;
   colorNameMap["black"] = ofColor::black;
@@ -76,8 +75,8 @@ int main( ){
   colorNameMap["greenYellow"] = ofColor::greenYellow;
   colorNameMap["honeyDew"] = ofColor::honeyDew;
   colorNameMap["hotPink"] = ofColor::hotPink;
-  colorNameMap["indianRed "] = ofColor::indianRed ;
-  colorNameMap["indigo "] = ofColor::indigo ;
+  colorNameMap["indianRed "] = ofColor::indianRed;
+  colorNameMap["indigo "] = ofColor::indigo;
   colorNameMap["ivory"] = ofColor::ivory;
   colorNameMap["khaki"] = ofColor::khaki;
   colorNameMap["lavender"] = ofColor::lavender;
@@ -160,12 +159,10 @@ int main( ){
   colorNameMap["wheat"] = ofColor::wheat;
   colorNameMap["whiteSmoke"] = ofColor::whiteSmoke;
   colorNameMap["yellowGreen"] = ofColor::yellowGreen;
-  
+
   int X_MAX = 640;
   int Y_MAX = 480;
-  //int X_MAX = 2048;
-  //int Y_MAX = 768;
   ofSetupOpenGL(X_MAX, Y_MAX, OF_WINDOW);
-  
-	ofRunApp(new cyrilApp());
+
+  ofRunApp(new cyrilApp());
 }
