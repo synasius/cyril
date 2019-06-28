@@ -12,8 +12,8 @@
  *  * Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- *  * Neither the name of Neil Mendoza nor the names of its contributors may be used
- *    to endorse or promote products derived from this software without
+ *  * Neither the name of Neil Mendoza nor the names of its contributors may be
+ * used to endorse or promote products derived from this software without
  *    specific prior written permission.
  *
  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
@@ -32,174 +32,182 @@
 #include "PostProcessing.h"
 #include "ofMain.h"
 
-namespace itg
+namespace itg {
+
+void
+PostProcessing::init(unsigned width, unsigned height, bool arb)
 {
-    void PostProcessing::init(unsigned width, unsigned height, bool arb)
-    {
-        this->width = width;
-        this->height = height;
-        this->arb = arb;
-        
-        ofFbo::Settings s;
-        
-        if (arb)
-        {
-            s.width = width;
-            s.height = height;
-            s.textureTarget = GL_TEXTURE_RECTANGLE_ARB;
+  this->width = width;
+  this->height = height;
+  this->arb = arb;
+
+  ofFbo::Settings s;
+
+  if (arb) {
+    s.width = width;
+    s.height = height;
+    s.textureTarget = GL_TEXTURE_RECTANGLE_ARB;
+  } else {
+    s.width = ofNextPow2(width);
+    s.height = ofNextPow2(height);
+    s.textureTarget = GL_TEXTURE_2D;
+  }
+
+  // no need to use depth for ping pongs
+  for (int i = 0; i < 2; ++i) {
+    pingPong[i].allocate(s);
+  }
+
+  s.useDepth = true;
+  s.depthStencilInternalFormat = GL_DEPTH_COMPONENT24;
+  s.depthStencilAsTexture = true;
+  raw.allocate(s);
+
+  numProcessedPasses = 0;
+  currentReadFbo = 0;
+  flip = true;
+}
+
+void
+PostProcessing::begin()
+{
+  raw.begin(OF_FBOMODE_NODEFAULTS);
+
+  ofPushMatrix();
+  ofPushMatrix();
+
+  ofViewport(0, 0, raw.getWidth(), raw.getHeight());
+
+  glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+
+  ofPushStyle();
+  glPushAttrib(GL_ENABLE_BIT);
+}
+
+void
+PostProcessing::begin(ofCamera& cam)
+{
+  // update camera matrices
+  cam.begin();
+  cam.end();
+
+  raw.begin(OF_FBOMODE_NODEFAULTS);
+
+  ofPushMatrix();
+  ofLoadMatrix(cam.getProjectionMatrix(ofRectangle(0, 0, width, height)));
+
+  ofPushMatrix();
+  ofLoadMatrix(cam.getModelViewMatrix());
+
+  ofViewport(0, 0, raw.getWidth(), raw.getHeight());
+
+  glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+
+  ofPushStyle();
+  glPushAttrib(GL_ENABLE_BIT);
+}
+
+void
+PostProcessing::end(bool autoDraw)
+{
+  glPopAttrib();
+  ofPopStyle();
+
+  ofViewport(0, 0, ofGetWidth(), ofGetHeight());
+
+  ofPopMatrix();
+  ofPopMatrix();
+
+  raw.end();
+
+  ofPushStyle();
+  glPushAttrib(GL_ENABLE_BIT);
+  glDisable(GL_LIGHTING);
+  ofSetColor(255, 255, 255);
+  process();
+  if (autoDraw) {
+    draw();
+  }
+  glPopAttrib();
+  ofPopStyle();
+}
+
+void
+PostProcessing::debugDraw()
+{
+  raw.getTexture().draw(10, 10, 300, 300);
+  raw.getDepthTexture().draw(320, 10, 300, 300);
+  pingPong[currentReadFbo].draw(630, 10, 300, 300);
+}
+
+void
+PostProcessing::draw(float x, float y) const
+{
+  draw(x, y, width, height);
+}
+
+void
+PostProcessing::draw(float x, float y, float w, float h) const
+{
+  if (flip) {
+    ofPushMatrix();
+    ofTranslate(x, y + h, 0);
+    ofScale(1, -1, 1);
+  } else
+    glTranslatef(x, y, 0);
+  if (numProcessedPasses == 0)
+    raw.draw(0, 0, w, h);
+  else
+    pingPong[currentReadFbo].draw(0, 0, w, h);
+  if (flip)
+    ofPopMatrix();
+}
+
+ofTexture&
+PostProcessing::getProcessedTextureReference()
+{
+  if (numProcessedPasses)
+    return pingPong[currentReadFbo].getTexture();
+  else
+    return raw.getTexture();
+}
+
+// need to have depth enabled for some fx
+void
+PostProcessing::process(ofFbo& raw, bool hasDepthAsTexture)
+{
+  numProcessedPasses = 0;
+  for (std::size_t i = 0; i < passes.size(); ++i) {
+    if (passes[i]->getEnabled()) {
+      if (arb && !passes[i]->hasArbShader())
+        ofLogError() << "Arb mode is enabled but pass " << passes[i]->getName()
+                     << " does not have an arb shader.";
+      else {
+        if (hasDepthAsTexture) {
+          if (numProcessedPasses == 0)
+            passes[i]->render(
+              raw, pingPong[1 - currentReadFbo], raw.getDepthTexture());
+          else
+            passes[i]->render(pingPong[currentReadFbo],
+                              pingPong[1 - currentReadFbo],
+                              raw.getDepthTexture());
+        } else {
+          if (numProcessedPasses == 0)
+            passes[i]->render(raw, pingPong[1 - currentReadFbo]);
+          else
+            passes[i]->render(pingPong[currentReadFbo],
+                              pingPong[1 - currentReadFbo]);
         }
-        else
-        {
-            s.width = ofNextPow2(width);
-            s.height = ofNextPow2(height);
-            s.textureTarget = GL_TEXTURE_2D;
-        }
-        
-        // no need to use depth for ping pongs
-        for (int i = 0; i < 2; ++i)
-        {
-            pingPong[i].allocate(s);
-        }
-        
-        s.useDepth = true;
-        s.depthStencilInternalFormat = GL_DEPTH_COMPONENT24;
-        s.depthStencilAsTexture = true;
-        raw.allocate(s);
-        
-        numProcessedPasses = 0;
-        currentReadFbo = 0;
-        flip = true;
+        currentReadFbo = 1 - currentReadFbo;
+        numProcessedPasses++;
+      }
     }
-    
-    void PostProcessing::begin()
-    {
-        raw.begin(OF_FBOMODE_NODEFAULTS);
-        
-        ofMatrixMode(OF_MATRIX_PROJECTION);
-        ofPushMatrix();
-        
-        ofMatrixMode(OF_MATRIX_MODELVIEW);
-        ofPushMatrix();
-        
-        ofViewport(0, 0, raw.getWidth(), raw.getHeight());
-        
-        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-        
-        ofPushStyle();
-        glPushAttrib(GL_ENABLE_BIT);
-    }
-    
-    void PostProcessing::begin(ofCamera& cam)
-    {
-        // update camera matrices
-        cam.begin();
-        cam.end();
-        
-        raw.begin(OF_FBOMODE_NODEFAULTS);
-        
-        ofMatrixMode(OF_MATRIX_PROJECTION);
-        ofPushMatrix();
-        ofLoadMatrix(cam.getProjectionMatrix(ofRectangle(0, 0, width, height)));
-        
-        ofMatrixMode(OF_MATRIX_MODELVIEW);
-        ofPushMatrix();
-        ofLoadMatrix(cam.getModelViewMatrix());
-        
-        ofViewport(0, 0, raw.getWidth(), raw.getHeight());
-        
-        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-        
-        ofPushStyle();
-        glPushAttrib(GL_ENABLE_BIT);
-    }
-    
-    void PostProcessing::end(bool autoDraw)
-    {
-        glPopAttrib();
-        ofPopStyle();
-        
-        ofViewport(0, 0, ofGetWidth(), ofGetHeight());
-        
-        ofMatrixMode(OF_MATRIX_PROJECTION);
-        ofPopMatrix();
-        
-        ofMatrixMode(OF_MATRIX_MODELVIEW);
-        ofPopMatrix();
-        
-        raw.end();
-        
-        ofPushStyle();
-        glPushAttrib(GL_ENABLE_BIT);
-        glDisable(GL_LIGHTING);
-        ofSetColor(255, 255, 255);
-        process();
-        if (autoDraw) draw();
-        glPopAttrib();
-        ofPopStyle();
-    }
-    
-    void PostProcessing::debugDraw()
-    {
-        raw.getTexture().draw(10, 10, 300, 300);
-        raw.getDepthTexture().draw(320, 10, 300, 300);
-        pingPong[currentReadFbo].draw(630, 10, 300, 300);
-    }
-    
-    void PostProcessing::draw(float x, float y) const
-    {
-        draw(x, y, width, height);
-    }
-    
-    void PostProcessing::draw(float x, float y, float w, float h) const
-    {
-        if (flip)
-        {
-            ofPushMatrix();
-            ofTranslate(x, y + h, 0);
-            ofScale(1, -1, 1);
-        }
-        else glTranslatef(x, y, 0);
-        if (numProcessedPasses == 0) raw.draw(0, 0, w, h);
-        else pingPong[currentReadFbo].draw(0, 0, w, h);
-        if (flip) ofPopMatrix();
-    }
-    
-    ofTexture& PostProcessing::getProcessedTextureReference()
-    {
-        if (numProcessedPasses) return pingPong[currentReadFbo].getTexture();
-        else return raw.getTexture();
-    }
-    
-    // need to have depth enabled for some fx
-    void PostProcessing::process(ofFbo& raw, bool hasDepthAsTexture)
-    {
-        numProcessedPasses = 0;
-        for (int i = 0; i < passes.size(); ++i)
-        {
-            if (passes[i]->getEnabled())
-            {
-                if (arb && !passes[i]->hasArbShader()) ofLogError() << "Arb mode is enabled but pass " << passes[i]->getName() << " does not have an arb shader.";
-                else
-                {
-                    if (hasDepthAsTexture)
-                    {
-                        if (numProcessedPasses == 0) passes[i]->render(raw, pingPong[1 - currentReadFbo], raw.getDepthTexture());
-                        else passes[i]->render(pingPong[currentReadFbo], pingPong[1 - currentReadFbo], raw.getDepthTexture());
-                    }
-                    else
-                    {
-                        if (numProcessedPasses == 0) passes[i]->render(raw, pingPong[1 - currentReadFbo]);
-                        else passes[i]->render(pingPong[currentReadFbo], pingPong[1 - currentReadFbo]);
-                    }
-                    currentReadFbo = 1 - currentReadFbo;
-                    numProcessedPasses++;
-                }
-            }
-        }
-    }
-    
-    void PostProcessing::process()
-    {
-        process(raw);
-    }
+  }
+}
+
+void
+PostProcessing::process()
+{
+  process(raw);
+}
 }

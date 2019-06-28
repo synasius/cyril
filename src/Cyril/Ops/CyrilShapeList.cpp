@@ -13,6 +13,7 @@ CyrilShapeList::CyrilShapeList(Cyril* _c)
 }
 
 CyrilShapeList::CyrilShapeList(const CyrilShapeList& other)
+  : Cyril(other)
 {
   c = other.c->clone();
 }

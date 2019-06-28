@@ -1,14 +1,9 @@
-//
-//  CyrilTileOp.cpp
-//  Cyril
-//
-//  Created by Darren Mothersele on 17/11/2013.
-//
-//
-
 #include "CyrilTile.h"
 
-CyrilTile::CyrilTile (Cyril* _e, Cyril* _c) : e(_e), c(_c) {
+CyrilTile::CyrilTile(Cyril* _e, Cyril* _c)
+  : e(_e)
+  , c(_c)
+{
   int s = e->size();
   if (!(s == 1 || s == 2 || s == 3)) {
     yyerror("Tile command takes 1, 2, 3 or 4 arguments");
@@ -16,49 +11,75 @@ CyrilTile::CyrilTile (Cyril* _e, Cyril* _c) : e(_e), c(_c) {
   }
 }
 
-CyrilTile::CyrilTile (const CyrilTile &other) {
-  e = other.e->clone ();
-  c = other.c->clone ();
-}
-CyrilTile::~CyrilTile ()
+CyrilTile::CyrilTile(const CyrilTile& other)
+  : Cyril(other)
 {
+  e = other.e->clone();
+  c = other.c->clone();
+}
+
+CyrilTile::~CyrilTile()
+{
+  delete e;
   delete c;
 }
-void CyrilTile::print() {
+
+void
+CyrilTile::print()
+{
   c->print();
   cout << "Tile" << endl;
 }
-Cyril * CyrilTile::clone () {
-  return new CyrilTile (*this);
+
+Cyril*
+CyrilTile::clone()
+{
+  return new CyrilTile(*this);
 }
-int CyrilTile::size() {
+
+int
+CyrilTile::size()
+{
   return 0;
 }
-void CyrilTile::eval(CyrilState &_s) {
-  float w,h,d;
+
+void
+CyrilTile::eval(CyrilState& _s)
+{
+  float w = 0, h = 0, d = 0;
   float step = 1;
   e->eval(_s);
   switch (e->size()) {
     case 1:
       d = 1;
       h = 1;
-      w = _s.stk->top(); _s.stk->pop();
+      w = _s.stk->top();
+      _s.stk->pop();
       break;
     case 2:
       d = 1;
-      h = _s.stk->top(); _s.stk->pop();
-      w = _s.stk->top(); _s.stk->pop();
+      h = _s.stk->top();
+      _s.stk->pop();
+      w = _s.stk->top();
+      _s.stk->pop();
       break;
     case 3:
-      d = _s.stk->top(); _s.stk->pop();
-      h = _s.stk->top(); _s.stk->pop();
-      w = _s.stk->top(); _s.stk->pop();
+      d = _s.stk->top();
+      _s.stk->pop();
+      h = _s.stk->top();
+      _s.stk->pop();
+      w = _s.stk->top();
+      _s.stk->pop();
       break;
     case 4:
-      step = _s.stk->top(); _s.stk->pop();
-      d = _s.stk->top(); _s.stk->pop();
-      h = _s.stk->top(); _s.stk->pop();
-      w = _s.stk->top(); _s.stk->pop();
+      step = _s.stk->top();
+      _s.stk->pop();
+      d = _s.stk->top();
+      _s.stk->pop();
+      h = _s.stk->top();
+      _s.stk->pop();
+      w = _s.stk->top();
+      _s.stk->pop();
       break;
   }
   float xMin = (step - (w * step)) / 2.0;

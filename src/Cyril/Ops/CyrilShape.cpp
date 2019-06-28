@@ -7,6 +7,7 @@ CyrilShape::CyrilShape(Cyril* _e)
 {}
 
 CyrilShape::CyrilShape(const CyrilShape& other)
+  : Cyril(other)
 {
   e = other.e->clone();
 }

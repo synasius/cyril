@@ -1,14 +1,9 @@
-//
-//  CyrilPaletteItem.cpp
-//  cyril2
-//
-//  Created by Darren Mothersele on 06/11/2013.
-//
-//
-
 #include "CyrilPaletteItem.h"
 
-CyrilPaletteItem::CyrilPaletteItem(float _f, Cyril* _e) : d(_f), e(_e) {
+CyrilPaletteItem::CyrilPaletteItem(float _f, Cyril* _e)
+  : e(_e)
+  , d(_f)
+{
   /*
   string converter(_s);
   stringstream sr(converter.substr(0,2));
@@ -20,7 +15,7 @@ CyrilPaletteItem::CyrilPaletteItem(float _f, Cyril* _e) : d(_f), e(_e) {
   sb >> hex >> ib;
   r = ir; g = ig; b = ib;
   */
-  
+
   int sz = _e->size();
   if (!(sz == 3)) {
     yyerror("Palette item requires 3 arguments");
@@ -29,36 +24,50 @@ CyrilPaletteItem::CyrilPaletteItem(float _f, Cyril* _e) : d(_f), e(_e) {
   paletteCalc = false;
 }
 
-CyrilPaletteItem::CyrilPaletteItem (const CyrilPaletteItem &other) {
+CyrilPaletteItem::CyrilPaletteItem(const CyrilPaletteItem& other)
+  : Cyril(other)
+{
   d = other.d;
   r = other.r;
   g = other.g;
   b = other.b;
 }
-CyrilPaletteItem::~CyrilPaletteItem () {
-  
+
+CyrilPaletteItem::~CyrilPaletteItem()
+{
+  delete e;
 }
 
-void CyrilPaletteItem::print() {
-  
+void
+CyrilPaletteItem::print()
+{
+
   cout << "PaletteItem" << endl;
 }
 
-
-Cyril * CyrilPaletteItem::clone () {
-  return new CyrilPaletteItem (*this);
+Cyril*
+CyrilPaletteItem::clone()
+{
+  return new CyrilPaletteItem(*this);
 }
 
-int CyrilPaletteItem::size() {
+int
+CyrilPaletteItem::size()
+{
   return 4;
 }
 
-void CyrilPaletteItem::eval(CyrilState &_s) {
+void
+CyrilPaletteItem::eval(CyrilState& _s)
+{
   if (!paletteCalc) {
     e->eval(_s);
-    b = _s.stk->top(); _s.stk->pop();
-    g = _s.stk->top(); _s.stk->pop();
-    r = _s.stk->top(); _s.stk->pop();
+    b = _s.stk->top();
+    _s.stk->pop();
+    g = _s.stk->top();
+    _s.stk->pop();
+    r = _s.stk->top();
+    _s.stk->pop();
     paletteCalc = true;
   }
   _s.stk->push(r);

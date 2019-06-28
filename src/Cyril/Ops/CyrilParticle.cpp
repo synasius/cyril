@@ -1,18 +1,24 @@
-//
-//  CyrilParticle.cpp
-//  cyril2
-//
-//  Created by Darren Mothersele on 05/11/2013.
-//
-//
-
 #include "CyrilParticle.h"
 
+CyrilParticle::CyrilParticle(Cyril* _e, Cyril* _c)
+  : e(_e)
+  , c(_c)
+{
+  valid = e->valid && c->valid;
+  int s = e->size();
+  if (!(s == 1 || s == 4)) {
+    yyerror("Particle command requires 1 or 4 arguments");
+    valid = false;
+  }
+}
+
 CyrilParticle::CyrilParticle(const CyrilParticle& other)
+  : Cyril(other)
 {
   e = other.e->clone();
   c = other.c->clone();
 }
+
 CyrilParticle::~CyrilParticle()
 {
   delete e;
