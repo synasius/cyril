@@ -19,12 +19,12 @@ protected:
 public:
   CyrilTile(Cyril* _e, Cyril* _c);
   CyrilTile (const CyrilTile &other);
-  virtual ~CyrilTile ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
-  virtual int matchPushPop() { return c->matchPushPop(); }
+  ~CyrilTile () override;
+  void print() override;
+  Cyril *clone () override;
+  int size() override;
+  void eval(CyrilState &) override;
+  int matchPushPop() override { return c->matchPushPop(); }
 };
 
 #endif /* defined(__Cyril__CyrilTileOp__) */

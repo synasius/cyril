@@ -1,28 +1,14 @@
-//
-//  CyrilMoveOp.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 05/11/2013.
-//
-//
 
-#ifndef __cyril2__CyrilMoveOp__
-#define __cyril2__CyrilMoveOp__
-
-#include "ofMain.h"
 #include "CyrilOp.h"
+#include "ofMain.h"
 
-class CyrilMoveOp : public CyrilOp {
+class CyrilMoveOp : public CyrilOp
+{
 public:
   CyrilMoveOp(Cyril* _c);
-  CyrilMoveOp (const CyrilMoveOp &other);
-  virtual ~CyrilMoveOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
 };
-
-
-
-#endif /* defined(__cyril2__CyrilMoveOp__) */

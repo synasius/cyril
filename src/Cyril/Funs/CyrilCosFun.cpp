@@ -13,6 +13,7 @@ CyrilCosFun::CyrilCosFun(Cyril* _c)
 }
 
 CyrilCosFun::CyrilCosFun(const CyrilCosFun& other)
+  : CyrilFun(other)
 {
   c = other.c->clone();
 }

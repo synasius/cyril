@@ -1,47 +1,23 @@
-//
-//  CyrilNamedColor.h
-//  Cyril
-//
-//  Created by Darren Mothersele on 18/11/2013.
-//
-//
+#pragma once
 
-#ifndef Cyril_CyrilNamedColor_h
-#define Cyril_CyrilNamedColor_h
-
+#include "Cyril.h"
 #include <cyril/cmds.h>
 
 extern map<string, ofColor> colorNameMap;
 
 class CyrilNamedColor : public Cyril
 {
-  string s;
+  std::string s;
   float r, g, b;
 
 public:
-  CyrilNamedColor(const char* _s)
-    : s(_s)
-  {
+  CyrilNamedColor(const char* _s);
+  CyrilNamedColor(const CyrilNamedColor& other) ;
+  ~CyrilNamedColor() override;
 
-    ofColor c = colorNameMap[s];
-
-    r = c.r;
-    g = c.g;
-    b = c.b;
-    // cout << "Debug color: " << r << "," << g << "," << b << endl;
-    valid = true;
-  }
-  CyrilNamedColor(const CyrilNamedColor& other) { s = other.s; }
-  virtual ~CyrilNamedColor() {}
-  void print() { cout << "Named color: " << s << endl; }
-  virtual Cyril* clone() { return new CyrilNamedColor(*this); }
-  virtual int size() { return 3; }
-  virtual void eval(CyrilState& _s)
-  {
-    _s.stk->push(r);
-    _s.stk->push(g);
-    _s.stk->push(b);
-  }
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState& _s) override;
 };
 
-#endif

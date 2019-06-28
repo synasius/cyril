@@ -1,30 +1,21 @@
-//
-//  CyrilShape.h
-//  Cyril
-//
+#pragma once
+
 //  Created by Darren Mothersele on 17/11/2013.
-//
-//
 
-#ifndef __Cyril__CyrilShape__
-#define __Cyril__CyrilShape__
-
-#include "ofMain.h"
 #include "Cyril.h"
+#include "ofMain.h"
 
-class CyrilShape : public Cyril {
+class CyrilShape : public Cyril
+{
   Cyril* e;
+
 public:
   CyrilShape(Cyril* _e);
-  CyrilShape (const CyrilShape &other);
-  virtual ~CyrilShape ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+  CyrilShape(const CyrilShape& other);
+
+  ~CyrilShape() override;
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
 };
-
-
-
-
-#endif /* defined(__Cyril__CyrilShape__) */

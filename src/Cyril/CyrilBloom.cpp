@@ -1,10 +1,4 @@
-//
-//  CyrilBloom.cpp
-//  cyril
-//
-//  Created by Darren Mothersele on 15/09/2014.
-//
-//
+//  Created by Darren Mothersele on 15/09/2014
 
 #include "CyrilBloom.h"
 
@@ -21,6 +15,7 @@ CyrilBloom::CyrilBloom(Cyril* _e)
 }
 
 CyrilBloom::CyrilBloom(const CyrilBloom& other)
+  : Cyril(other)
 {
   e = other.e->clone();
 }
@@ -46,27 +41,26 @@ CyrilBloom::size()
 }
 
 void
-CyrilBloom::update(CyrilState& _s)
+CyrilBloom::update(CyrilState& state)
 {
   // FX_BLOOM = 3
-  _s.post[3]->enable();
+  state.post[3]->enable();
 }
 
 void
-CyrilBloom::eval(CyrilState& _s)
+CyrilBloom::eval(CyrilState& state)
 {
   float bloom;
   if (s == 1) {
-    e->eval(_s);
-    bloom = (_s.stk->top()) / 1000.0f;
-    _s.stk->pop();
+    e->eval(state);
+    bloom = (state.stk->top()) / 1000.0f;
+    state.stk->pop();
   } else {
     // same defaults as ofxPostProcessing:
     bloom = 0.001953125;
   }
   if (bloom != prevBloom) {
     prevBloom = bloom;
-    _s.bloom->setIncrements(bloom, 0, 0, bloom);
+    state.bloom->setIncrements(bloom, 0, 0, bloom);
   }
 }
-

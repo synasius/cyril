@@ -1,12 +1,15 @@
 //  Created by Darren Mothersele on 06/11/2013.
-#include "CyrilState.h"
 
-CyrilState::CyrilState(map<int, float>* _t,
-                       stack<float>* _s,
+#include "CyrilState.h"
+#include "Palette.h"
+#include "Particle.h"
+
+CyrilState::CyrilState(std::map<int, float>* _t,
+                       std::stack<float>* _s,
                        ofMatrixStack* _m,
-                       vector<Particle*>* _p,
-                       map<int, Palette*>* _c,
-                       map<int, ofImage*>* _i,
+                       std::vector<Particle*>* _p,
+                       std::map<int, Palette*>* _c,
+                       std::map<int, ofImage*>* _i,
                        CyrilState* _pr)
   : sym(_t)
   , stk(_s)
@@ -24,15 +27,20 @@ CyrilState::~CyrilState()
   delete sym;
   delete stk;
   delete ms;
-  while (!ps->empty())
+
+  while (!ps->empty()) {
     delete ps->back(), ps->pop_back();
+  }
+
   delete ps;
-  for (map<int, Palette*>::iterator it = cs->begin(); it != cs->end(); ++it) {
+  for (auto it = cs->begin(); it != cs->end(); ++it) {
     delete (*it).second;
   }
+
   delete cs;
-  for (map<int, ofImage*>::iterator it = img->begin(); it != img->end(); ++it) {
+  for (auto it = img->begin(); it != img->end(); ++it) {
     delete (*it).second;
   }
+
   delete img;
 }

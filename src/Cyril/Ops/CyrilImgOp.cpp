@@ -1,14 +1,8 @@
-//
-//  CyrilImgOp.cpp
-//  cyril2
-//
-//  Created by Darren Mothersele on 06/11/2013.
-//
-//
-
 #include "CyrilImgOp.h"
 
-CyrilImgOp::CyrilImgOp (Cyril* _c) : CyrilOp(_c) {
+CyrilImgOp::CyrilImgOp(Cyril* _c)
+  : CyrilOp(_c)
+{
   int s = c->size();
   if (!(s == 1)) {
     yyerror("Image command requires 1 argument");
@@ -16,30 +10,35 @@ CyrilImgOp::CyrilImgOp (Cyril* _c) : CyrilOp(_c) {
   }
 }
 
-CyrilImgOp::CyrilImgOp (const CyrilImgOp &other) {
-  c = other.c->clone ();
-}
-CyrilImgOp::~CyrilImgOp ()
+void
+CyrilImgOp::print()
 {
-  delete c;
-}
-void CyrilImgOp::print() {
   c->print();
   cout << "Image" << endl;
 }
-Cyril * CyrilImgOp::clone () {
-  return new CyrilImgOp (*this);
+
+Cyril*
+CyrilImgOp::clone()
+{
+  return new CyrilImgOp(*this);
 }
-int CyrilImgOp::size() {
+
+int
+CyrilImgOp::size()
+{
   return 0;
 }
-void CyrilImgOp::eval(CyrilState &_s) {
+
+void
+CyrilImgOp::eval(CyrilState& _s)
+{
   c->eval(_s);
   float i;
-  i = _s.stk->top(); _s.stk->pop();
+  i = _s.stk->top();
+  _s.stk->pop();
   ofScale(0.01, 0.01, 0.01);
   if (_s.img->count(i)) {
-    //cout << "Draw image " << _s.img->at(i) << endl;
+    // cout << "Draw image " << _s.img->at(i) << endl;
     _s.img->at(i)->draw(0, 0, 0);
   }
   // TODO: recurse up the parent tree

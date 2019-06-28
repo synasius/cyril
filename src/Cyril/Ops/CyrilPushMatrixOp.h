@@ -16,12 +16,12 @@ class CyrilPushMatrixOp : public CyrilOp {
 public:
   CyrilPushMatrixOp(Cyril* _c);
   CyrilPushMatrixOp (const CyrilPushMatrixOp &other);
-  virtual ~CyrilPushMatrixOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
-  virtual int matchPushPop();
+  ~CyrilPushMatrixOp () override;
+  void print() override;
+  Cyril *clone () override;
+  int size() override;
+  void eval(CyrilState &) override;
+  int matchPushPop() override;
 };
 
 #endif /* defined(__cyril2__CyrilPushMatrixOp__) */

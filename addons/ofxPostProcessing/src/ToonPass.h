@@ -48,7 +48,7 @@ namespace itg
                  const ofVec4f& specularColor = ofVec4f(1,1,1,1),
                  bool isSpecular = false, float shinyness = 100);
         
-        void render(ofFbo& readFbo, ofFbo& writeFbo, ofTexture& depth);
+        void render(ofFbo& readFbo, ofFbo& writeFbo, ofTexture& depth) override;
         
         void setEdgeThreshold(float val) { edgeThreshold = val; }
         float getEdgeThreshold() { return edgeThreshold; }

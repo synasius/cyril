@@ -11,12 +11,12 @@ class Palette;
 class CyrilState
 {
 public:
-  map<int, float>* sym;
-  stack<float>* stk;
+  std::map<int, float>* sym;
+  std::stack<float>* stk;
   ofMatrixStack* ms;
-  vector<Particle*>* ps;
-  map<int, Palette*>* cs;
-  map<int, ofImage*>* img;
+  std::vector<Particle*>* ps;
+  std::map<int, Palette*>* cs;
+  std::map<int, ofImage*>* img;
   CyrilState* parent;
   ofLight* light;
   ofxPostProcessing post;
@@ -26,12 +26,12 @@ public:
   BloomPass::Ptr bloom;
   float kaleidosegments;
 
-  CyrilState(map<int, float>* _t,
-             stack<float>* _s,
+  CyrilState(std::map<int, float>* _t,
+             std::stack<float>* _s,
              ofMatrixStack* _m,
-             vector<Particle*>* _p,
-             map<int, Palette*>* _c,
-             map<int, ofImage*>* _i,
+             std::vector<Particle*>* _p,
+             std::map<int, Palette*>* _c,
+             std::map<int, ofImage*>* _i,
              CyrilState*);
   CyrilState();
   ~CyrilState();

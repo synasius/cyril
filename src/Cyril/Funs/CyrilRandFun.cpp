@@ -37,7 +37,7 @@ void
 CyrilRandFun::eval(CyrilState& state)
 {
   c->eval(state);
-  float r, x, y;
+  float r = 0, x = 0, y = 0;
   switch (c->size()) {
     case 0:
       r = ofRandomf();

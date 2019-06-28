@@ -1,31 +1,24 @@
-//
-//  CyrilBloom.h
-//  cyril
-//
-//  Created by Darren Mothersele on 15/09/2014.
-//
-//
+#pragma once
 
-#ifndef __cyril__CyrilBloom__
-#define __cyril__CyrilBloom__
+//  Created by Darren Mothersele on 15/09/2014.
 
 #include "Cyril.h"
 
-class CyrilBloom : public Cyril {
+class CyrilBloom : public Cyril
+{
+public:
+  CyrilBloom(Cyril* _e);
+  CyrilBloom(const CyrilBloom& other);
+
+  ~CyrilBloom() override;
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
+  void update(CyrilState&) override;
+
 protected:
   Cyril* e;
   int s;
   float prevBloom;
-public:
-  CyrilBloom(Cyril* _e);
-  CyrilBloom (const CyrilBloom &other);
-  virtual ~CyrilBloom ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
-  virtual void update(CyrilState &);
 };
-
-
-#endif /* defined(__cyril__CyrilBloom__) */

@@ -24,11 +24,11 @@ class CyrilPaletteItem : public Cyril
 public:
   CyrilPaletteItem(float _f, Cyril* _e);
   CyrilPaletteItem(const CyrilPaletteItem& other);
-  virtual ~CyrilPaletteItem();
-  void print();
-  virtual Cyril* clone();
-  virtual int size();
-  virtual void eval(CyrilState&);
+  ~CyrilPaletteItem() override;
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
 };
 
 #endif /* defined(__cyril2__CyrilPaletteItem__) */

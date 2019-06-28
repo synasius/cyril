@@ -44,7 +44,7 @@ namespace itg
         
         GodRaysPass(const ofVec2f& aspect, bool arb, const ofVec3f & lightPositionOnScreen = ofVec3f(0.5,0.5,0.5), float lightDirDOTviewDir = 0.3 );
         
-        void render(ofFbo& readFbo, ofFbo& writeFbo, ofTexture& depth);
+        void render(ofFbo& readFbo, ofFbo& writeFbo, ofTexture& depth) override;
         
         void setLightPositionOnScreen(const ofVec3f & val) { lightPositionOnScreen = val; }
         const ofVec3f getlightPositionOnScreen() { return lightPositionOnScreen; }

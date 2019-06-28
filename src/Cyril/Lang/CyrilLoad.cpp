@@ -9,6 +9,7 @@ CyrilLoad::CyrilLoad(int _i)
 }
 
 CyrilLoad::CyrilLoad(const CyrilLoad& other)
+  : Cyril(other)
 {
   m_loc = other.m_loc;
 }
@@ -34,23 +35,22 @@ CyrilLoad::size()
 }
 
 void
-CyrilLoad::eval(CyrilState& _s)
+CyrilLoad::eval(CyrilState& state)
 {
   // Here we should check if the location exists in the current map
-  auto search = _s.sym->find(m_loc);
-  if (search != _s.sym->end()) {
-      _s.stk->push((*_s.sym)[m_loc]);
-      return;
+  auto search = state.sym->find(m_loc);
+  if (search != state.sym->end()) {
+    state.stk->push((*state.sym)[m_loc]);
+    return;
   }
 
   // If the location m_loc does not exists we check on the parent state
-  if (_s.parent->sym != nullptr) {
-    auto search = _s.parent->sym->find(m_loc);
-    if (search != _s.parent->sym->end()) {
-      _s.stk->push((*_s.parent->sym)[m_loc]);
+  if (state.parent->sym != nullptr) {
+    auto search = state.parent->sym->find(m_loc);
+    if (search != state.parent->sym->end()) {
+      state.stk->push((*state.parent->sym)[m_loc]);
     } else {
-      _s.stk->push((*_s.sym)[m_loc]);
+      state.stk->push((*state.sym)[m_loc]);
     }
   }
 }
-

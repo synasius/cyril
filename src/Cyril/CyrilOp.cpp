@@ -1,5 +1,5 @@
 //  Created by Darren Mothersele on 05/11/2013.
-//
+
 #include "CyrilOp.h"
 
 CyrilOp::CyrilOp(Cyril* _c)
@@ -7,9 +7,11 @@ CyrilOp::CyrilOp(Cyril* _c)
 {}
 
 CyrilOp::CyrilOp(const CyrilOp& other)
+  : Cyril(other)
 {
   c = other.c->clone();
 }
+
 CyrilOp::~CyrilOp()
 {
   delete c;
@@ -35,6 +37,6 @@ CyrilOp::size()
 }
 
 void
-CyrilOp::eval(CyrilState& _s)
+CyrilOp::eval(CyrilState&)
 {}
 

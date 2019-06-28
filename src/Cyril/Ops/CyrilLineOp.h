@@ -1,26 +1,16 @@
-//
-//  CyrilLineOp.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 05/11/2013.
-//
-//
+#pragma once
 
-#ifndef __cyril2__CyrilLineOp__
-#define __cyril2__CyrilLineOp__
-
-#include "ofMain.h"
 #include "CyrilOp.h"
+#include "ofMain.h"
 
-class CyrilLineOp : public CyrilOp {
+class CyrilLineOp : public CyrilOp
+{
 public:
   CyrilLineOp(Cyril* _c);
-  CyrilLineOp (const CyrilLineOp &other);
-  virtual ~CyrilLineOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
 };
 
-#endif /* defined(__cyril2__CyrilLineOp__) */

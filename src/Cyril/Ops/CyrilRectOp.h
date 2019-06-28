@@ -16,11 +16,11 @@ class CyrilRectOp : public CyrilOp {
 public:
   CyrilRectOp(Cyril* _c);
   CyrilRectOp (const CyrilRectOp &other);
-  virtual ~CyrilRectOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+  ~CyrilRectOp () override;
+  void print() override;
+  Cyril *clone () override;
+  int size() override;
+  void eval(CyrilState &) override;
 };
 
 #endif /* defined(__cyril2__CyrilRectOp__) */

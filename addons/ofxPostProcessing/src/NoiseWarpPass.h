@@ -42,7 +42,7 @@ namespace itg
         
         NoiseWarpPass(const ofVec2f& aspect, bool arb, float frequency = 4.f, float amplitude = .1f, float speed = .1f);
         
-        void render(ofFbo& readFbo, ofFbo& writeFbo, ofTexture& depth);
+        void render(ofFbo& readFbo, ofFbo& writeFbo, ofTexture& depth) override;
         
         float getFrequency() const { return frequency; }
         void setFrequency(float frequency) { this->frequency = frequency; }

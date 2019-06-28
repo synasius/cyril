@@ -1,27 +1,15 @@
-//
-//  CyrilColorOp.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 05/11/2013.
-//
-//
+#pragma once
 
-#ifndef __cyril2__CyrilColorOp__
-#define __cyril2__CyrilColorOp__
-
-#include "ofMain.h"
 #include "CyrilOp.h"
+#include "ofMain.h"
 
-class CyrilColorOp : public CyrilOp {
+class CyrilColorOp : public CyrilOp
+{
 public:
   CyrilColorOp(Cyril* _c);
-  CyrilColorOp (const CyrilColorOp &other);
-  virtual ~CyrilColorOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
 };
-
-
-#endif /* defined(__cyril2__CyrilColorOp__) */

@@ -1,31 +1,20 @@
-//
-//  CyrilKaleidoscope.h
-//  cyril
-//
-//  Created by Darren Mothersele on 12/09/2014.
-//
-//
-
-#ifndef __cyril__CyrilKaleidoscope__
-#define __cyril__CyrilKaleidoscope__
+#pragma once
 
 #include "Cyril.h"
 
-
-class CyrilKaleidoscope : public Cyril {
+class CyrilKaleidoscope : public Cyril
+{
 protected:
   Cyril* e;
   int s;
+
 public:
   CyrilKaleidoscope(Cyril* _e);
-  CyrilKaleidoscope (const CyrilKaleidoscope &other);
-  virtual ~CyrilKaleidoscope ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
-  virtual void update(CyrilState &);
+  CyrilKaleidoscope(const CyrilKaleidoscope& other);
+  ~CyrilKaleidoscope() override;
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
+  void update(CyrilState&) override;
 };
-
-
-#endif /* defined(__cyril__CyrilKaleidoscope__) */

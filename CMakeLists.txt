@@ -73,22 +73,31 @@ add_executable(cyril
     src/Cyril/Funs/CyrilTanFun.h
     src/Cyril/Funs/CyrilWaveFun.cpp
     src/Cyril/Funs/CyrilWaveFun.h
+    src/Cyril/Lang/CyrilAssign.cpp
     src/Cyril/Lang/CyrilAssign.h
     src/Cyril/Lang/CyrilColorLoad.cpp
     src/Cyril/Lang/CyrilColorLoad.h
     src/Cyril/Lang/CyrilDebugOp.cpp
     src/Cyril/Lang/CyrilDebugOp.h
+    src/Cyril/Lang/CyrilDo.cpp
     src/Cyril/Lang/CyrilDo.h
     src/Cyril/Lang/CyrilFor.cpp
     src/Cyril/Lang/CyrilFor.h
+    src/Cyril/Lang/CyrilHexColor.cpp
     src/Cyril/Lang/CyrilHexColor.h
+    src/Cyril/Lang/CyrilIf.cpp
     src/Cyril/Lang/CyrilIf.h
+    src/Cyril/Lang/CyrilList.cpp
     src/Cyril/Lang/CyrilList.h
-    src/Cyril/Lang/CyrilLoad.h
     src/Cyril/Lang/CyrilLoad.cpp
+    src/Cyril/Lang/CyrilLoad.h
+    src/Cyril/Lang/CyrilNamedColor.cpp
     src/Cyril/Lang/CyrilNamedColor.h
+    src/Cyril/Lang/CyrilPush.cpp
     src/Cyril/Lang/CyrilPush.h
+    src/Cyril/Lang/CyrilUnaryOp.cpp
     src/Cyril/Lang/CyrilUnaryOp.h
+    src/Cyril/Lang/CyrilWhile.cpp
     src/Cyril/Lang/CyrilWhile.h
     src/Cyril/Ops/CyrilAnimation.cpp
     src/Cyril/Ops/CyrilAnimation.h
@@ -100,6 +109,7 @@ add_executable(cyril
     src/Cyril/Ops/CyrilBallDetailOp.h
     src/Cyril/Ops/CyrilBallOp.cpp
     src/Cyril/Ops/CyrilBallOp.h
+    src/Cyril/Ops/CyrilBinaryOp.cpp
     src/Cyril/Ops/CyrilBinaryOp.h
     src/Cyril/Ops/CyrilBlink.cpp
     src/Cyril/Ops/CyrilBlink.h
@@ -109,6 +119,7 @@ add_executable(cyril
     src/Cyril/Ops/CyrilColorOp.h
     src/Cyril/Ops/CyrilConeOp.cpp
     src/Cyril/Ops/CyrilConeOp.h
+    src/Cyril/Ops/CyrilDie.cpp
     src/Cyril/Ops/CyrilDie.h
     src/Cyril/Ops/CyrilFillOp.cpp
     src/Cyril/Ops/CyrilFillOp.h

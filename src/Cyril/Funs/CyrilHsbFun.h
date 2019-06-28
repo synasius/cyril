@@ -11,9 +11,9 @@ public:
   CyrilHsbFun(Cyril* _c);
   CyrilHsbFun(const CyrilHsbFun& other);
 
-  virtual void print() override;
-  virtual Cyril* clone() override;
-  virtual int size() override;
-  virtual void eval(CyrilState&) override;
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
 };
 

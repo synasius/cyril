@@ -9,16 +9,17 @@
 
 class CyrilOp : public Cyril
 {
-protected:
-  Cyril* c;
-
 public:
   CyrilOp(Cyril* _c = nullptr);
   CyrilOp(const CyrilOp& other);
-  virtual ~CyrilOp();
-  virtual void print();
-  virtual Cyril* clone();
-  virtual int size();
-  virtual void eval(CyrilState&);
+  ~CyrilOp() override;
+
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
+
+protected:
+  Cyril* c;
 };
 

@@ -47,10 +47,10 @@ namespace itg
         void end(bool autoDraw = true);
 
         // float rather than int and not const to override ofBaseDraws
-        void draw(float x = 0.f, float y = 0.f) const;
-        void draw(float x, float y, float w, float h) const;
-        float getWidth() const { return width; }
-        float getHeight() const { return height; }
+        void draw(float x = 0.f, float y = 0.f) const override;
+        void draw(float x, float y, float w, float h) const override;
+        float getWidth() const override { return width; }
+        float getHeight() const override { return height; }
         void setWidth(float w) { width = w; }
         void setHeight(float h) { height = h; }
 

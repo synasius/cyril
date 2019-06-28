@@ -16,11 +16,11 @@ class CyrilSphereDetailOp : public CyrilOp {
 public:
   CyrilSphereDetailOp(Cyril* _c);
   CyrilSphereDetailOp (const CyrilSphereDetailOp &other);
-  virtual ~CyrilSphereDetailOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+  ~CyrilSphereDetailOp () override;
+  void print() override;
+  Cyril *clone () override;
+  int size() override;
+  void eval(CyrilState &) override;
 };
 
 #endif /* defined(__cyril2__CyrilSphereDetailOp__) */

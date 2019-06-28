@@ -43,7 +43,7 @@ namespace itg
         
         RimHighlightingPass(const ofVec2f& aspect, bool arb);
         
-        void render(ofFbo& readFbo, ofFbo& writeFbo);
+        void render(ofFbo& readFbo, ofFbo& writeFbo) override;
         
     private:
         ofShader shader;

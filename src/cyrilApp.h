@@ -28,23 +28,23 @@ public:
     : editor(10, "SourceCodePro.ttf")
   {}
 
-  void setup();
-  void update();
-  void draw();
+  void setup() override;
+  void update() override;
+  void draw() override;
 
-  void keyPressed(int key);
-  void keyReleased(int key);
-  void mouseMoved(int x, int y);
-  void mouseDragged(int x, int y, int button);
-  void mousePressed(int x, int y, int button);
-  void mouseReleased(int x, int y, int button);
-  void windowResized(int w, int h);
-  void dragEvent(ofDragInfo dragInfo);
-  void gotMessage(ofMessage msg);
+  void keyPressed(int key) override;
+  void keyReleased(int key) override;
+  void mouseMoved(int x, int y) override;
+  void mouseDragged(int x, int y, int button) override;
+  void mousePressed(int x, int y, int button) override;
+  void mouseReleased(int x, int y, int button) override;
+  void windowResized(int w, int h) override;
+  void dragEvent(ofDragInfo dragInfo) override;
+  void gotMessage(ofMessage msg) override;
   void applyGlobalSettings();
   void reloadSettings();
 
-  void audioReceived(float*, int, int);
+  void audioReceived(float*, int, int) override;
 
   void reloadFileBuffer(std::string);
 

@@ -12,16 +12,6 @@ CyrilBoxOp::CyrilBoxOp(Cyril* _c)
   }
 }
 
-CyrilBoxOp::CyrilBoxOp(const CyrilBoxOp& other)
-{
-  c = other.c->clone();
-}
-
-CyrilBoxOp::~CyrilBoxOp()
-{
-  delete c;
-}
-
 void
 CyrilBoxOp::print()
 {

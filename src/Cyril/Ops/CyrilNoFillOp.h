@@ -1,26 +1,16 @@
-//
-//  CyrilNoNoFillOp.h
-//  Cyril
-//
-//  Created by Darren Mothersele on 14/11/2013.
-//
-//
+#pragma once
 
-#ifndef __Cyril__CyrilNoNoFillOp__
-#define __Cyril__CyrilNoNoFillOp__
-
-#include "ofMain.h"
 #include "CyrilOp.h"
+#include "ofMain.h"
 
-class CyrilNoFillOp : public CyrilOp {
+class CyrilNoFillOp : public CyrilOp
+{
 public:
   CyrilNoFillOp(Cyril* _c);
-  CyrilNoFillOp (const CyrilNoFillOp &other);
-  virtual ~CyrilNoFillOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
 };
 
-#endif /* defined(__Cyril__CyrilNoNoFillOp__) */

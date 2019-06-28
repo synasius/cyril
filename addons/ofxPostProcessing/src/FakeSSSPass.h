@@ -54,7 +54,7 @@ namespace itg
                     float specular = 1.0, float rimScale = 1.0,
                     float attenuationOffset = 3.0, float materialThickness = 0.6);
         
-        void render(ofFbo& readFbo, ofFbo& writeFbo, ofTexture& depth);
+        void render(ofFbo& readFbo, ofFbo& writeFbo, ofTexture& depth) override;
         
         void setLightPosition(const ofPoint& pt) { lightPosition.set(pt); }
         const ofPoint getLightPosition() { return lightPosition; }

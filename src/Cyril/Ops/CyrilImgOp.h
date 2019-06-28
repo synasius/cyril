@@ -1,27 +1,15 @@
-//
-//  CyrilImgOp.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 06/11/2013.
-//
-//
+#pragma once
 
-#ifndef __cyril2__CyrilImgOp__
-#define __cyril2__CyrilImgOp__
-
-#include "ofMain.h"
 #include "CyrilOp.h"
+#include "ofMain.h"
 
-class CyrilImgOp : public CyrilOp {
+class CyrilImgOp : public CyrilOp
+{
 public:
   CyrilImgOp(Cyril* _c);
-  CyrilImgOp (const CyrilImgOp &other);
-  virtual ~CyrilImgOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
 };
-
-
-#endif /* defined(__cyril2__CyrilImgOp__) */

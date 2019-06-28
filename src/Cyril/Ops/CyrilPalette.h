@@ -1,16 +1,5 @@
-//
-//  CyrilPalette.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 06/11/2013.
-//
-//
-
-#ifndef __cyril2__CyrilPalette__
-#define __cyril2__CyrilPalette__
-
-#include <ofMain.h>
 #include <cyril/cmds.h>
+#include <ofMain.h>
 
 #include "Cyril.h"
 #include "Palette.h"
@@ -23,10 +12,10 @@ class CyrilPalette : public Cyril
 public:
   CyrilPalette(int _l, Cyril* _p);
   CyrilPalette(const CyrilPalette& other);
-  virtual ~CyrilPalette();
-  void print();
-  virtual Cyril* clone();
-  virtual int size();
-  virtual void eval(CyrilState&);
+  ~CyrilPalette() override;
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
 };
-#endif /* defined(__cyril2__CyrilPalette__) */
+

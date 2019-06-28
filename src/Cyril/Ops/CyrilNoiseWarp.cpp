@@ -1,14 +1,8 @@
-//
-//  CyrilNoiseWarp.cpp
-//  cyril
-//
-//  Created by Darren Mothersele on 12/09/2014.
-//
-//
-
 #include "CyrilNoiseWarp.h"
 
-CyrilNoiseWarp::CyrilNoiseWarp (Cyril* _e) : e(_e) {
+CyrilNoiseWarp::CyrilNoiseWarp(Cyril* _e)
+  : e(_e)
+{
   s = e->size();
   if (!(s == 3 || s == 0)) {
     // FREQ, AMP, SPEED
@@ -17,26 +11,41 @@ CyrilNoiseWarp::CyrilNoiseWarp (Cyril* _e) : e(_e) {
   }
 }
 
-CyrilNoiseWarp::CyrilNoiseWarp (const CyrilNoiseWarp &other) {
-  e = other.e->clone ();
-}
-CyrilNoiseWarp::~CyrilNoiseWarp ()
+CyrilNoiseWarp::CyrilNoiseWarp(const CyrilNoiseWarp& other)
+  : Cyril(other)
 {
+  e = other.e->clone();
 }
-void CyrilNoiseWarp::print() {
+
+CyrilNoiseWarp::~CyrilNoiseWarp()
+{
+  delete e;
+}
+
+void
+CyrilNoiseWarp::print()
+{
   cout << "NoiseWarp" << endl;
 }
-Cyril * CyrilNoiseWarp::clone () {
-  return new CyrilNoiseWarp (*this);
+Cyril*
+CyrilNoiseWarp::clone()
+{
+  return new CyrilNoiseWarp(*this);
 }
-int CyrilNoiseWarp::size() {
+int
+CyrilNoiseWarp::size()
+{
   return 0;
 }
-void CyrilNoiseWarp::update(CyrilState &_s) {
+void
+CyrilNoiseWarp::update(CyrilState& _s)
+{
   // FX_NOISE_WARP = 1
   _s.post[1]->enable();
 }
-void CyrilNoiseWarp::eval(CyrilState &_s) {
+void
+CyrilNoiseWarp::eval(CyrilState& _s)
+{
   float frequency, amplitude, speed;
   if (s == 3) {
     e->eval(_s);
@@ -46,8 +55,7 @@ void CyrilNoiseWarp::eval(CyrilState &_s) {
     _s.stk->pop();
     speed = _s.stk->top();
     _s.stk->pop();
-  }
-  else {
+  } else {
     // same defaults as ofxPostProcessing:
     frequency = 4.0;
     amplitude = 0.1;

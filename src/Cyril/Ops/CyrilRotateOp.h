@@ -1,26 +1,15 @@
-//
-//  CyrilRotateOp.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 05/11/2013.
-//
-//
+#pragma once
 
-#ifndef __cyril2__CyrilRotateOp__
-#define __cyril2__CyrilRotateOp__
-
-#include "ofMain.h"
 #include "CyrilOp.h"
+#include "ofMain.h"
 
-class CyrilRotateOp : public CyrilOp {
+class CyrilRotateOp : public CyrilOp
+{
 public:
   CyrilRotateOp(Cyril* _c);
-  CyrilRotateOp (const CyrilRotateOp &other);
-  virtual ~CyrilRotateOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
-};
 
-#endif /* defined(__cyril2__CyrilRotateOp__) */
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
+};

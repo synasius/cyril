@@ -8,11 +8,11 @@ class ofApp : public ofBaseApp
 public:
     static const unsigned NUM_BOXES = 100;
     
-    void setup();
-    void update();
-    void draw();
+    void setup() override;
+    void update() override;
+    void draw() override;
 
-    void keyPressed(int key);
+    void keyPressed(int key) override;
     
     // scene stuff
     ofxPostProcessing post;

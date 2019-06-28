@@ -33,12 +33,12 @@ public:
     }
   }
   CyrilParticle(const CyrilParticle& other);
-  virtual ~CyrilParticle();
-  void print();
-  virtual Cyril* clone();
-  virtual int size();
-  virtual void eval(CyrilState&);
-  virtual int matchPushPop() { return c->matchPushPop(); }
+  ~CyrilParticle() override;
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
+  int matchPushPop() override { return c->matchPushPop(); }
 };
 
 #endif

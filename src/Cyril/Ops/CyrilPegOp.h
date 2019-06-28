@@ -16,11 +16,11 @@ class CyrilPegOp : public CyrilOp {
 public:
   CyrilPegOp(Cyril* _c);
   CyrilPegOp (const CyrilPegOp &other);
-  virtual ~CyrilPegOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+  ~CyrilPegOp () override;
+  void print() override;
+  Cyril *clone () override;
+  int size() override;
+  void eval(CyrilState &) override;
 };
 
 #endif /* defined(__cyril2__CyrilPegOp__) */

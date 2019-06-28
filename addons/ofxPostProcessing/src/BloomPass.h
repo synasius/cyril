@@ -43,7 +43,7 @@ namespace itg
 
         BloomPass(const ofVec2f& aspect, bool arb, const ofVec2f& xBlur = ofVec2f(0.001953125, 0.0), const ofVec2f& yBlur = ofVec2f(0.0, 0.001953125), unsigned resolution = 256, bool aspectCorrect = true);
 
-        void render(ofFbo& readFbo, ofFbo& writeFbo);
+        void render(ofFbo& readFbo, ofFbo& writeFbo) override;
 
         void allocateSelectiveGlow(unsigned w, unsigned h);
         void beginSelectiveGlow(bool clear = true);
@@ -51,7 +51,7 @@ namespace itg
 
         void debugDraw();
 
-        bool hasArbShader() { return true; }
+        bool hasArbShader() override { return true; }
 
         void setIncrements(float _x1, float _y1, float _x2, float _y2) {
             xConv->setIncrement(_x1, _y1);

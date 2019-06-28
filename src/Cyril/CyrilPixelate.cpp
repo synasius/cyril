@@ -1,10 +1,4 @@
-//
-//  CyrilPixelate.cpp
-//  cyril
-//
 //  Created by Darren Mothersele on 15/09/2014.
-//
-//
 
 #include "CyrilPixelate.h"
 
@@ -20,6 +14,7 @@ CyrilPixelate::CyrilPixelate(Cyril* _e)
 }
 
 CyrilPixelate::CyrilPixelate(const CyrilPixelate& other)
+  : Cyril(other)
 {
   e = other.e->clone();
 }
@@ -45,32 +40,31 @@ CyrilPixelate::size()
 }
 
 void
-CyrilPixelate::update(CyrilState& _s)
+CyrilPixelate::update(CyrilState& state)
 {
   // FX_PIXELATE = 2
-  _s.post[2]->enable();
+  state.post[2]->enable();
 }
 
 void
-CyrilPixelate::eval(CyrilState& _s)
+CyrilPixelate::eval(CyrilState& state)
 {
   float width, height;
   if (s == 2) {
-    e->eval(_s);
-    height = _s.stk->top();
-    _s.stk->pop();
-    width = _s.stk->top();
-    _s.stk->pop();
+    e->eval(state);
+    height = state.stk->top();
+    state.stk->pop();
+    width = state.stk->top();
+    state.stk->pop();
   } else if (s == 1) {
-    e->eval(_s);
-    height = _s.stk->top();
+    e->eval(state);
+    height = state.stk->top();
     width = height;
-    _s.stk->pop();
+    state.stk->pop();
   } else {
     // same defaults as ofxPostProcessing:
     width = 100;
     height = 100;
   }
-  _s.pixelate->setResolution(width, height);
+  state.pixelate->setResolution(width, height);
 }
-

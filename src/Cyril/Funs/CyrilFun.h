@@ -14,10 +14,10 @@ public:
   CyrilFun(Cyril* _c = nullptr);
   CyrilFun(const CyrilFun& other);
 
-  virtual ~CyrilFun();
-  virtual void print() override;
-  virtual Cyril* clone() override;
-  virtual int size() override;
-  virtual void eval(CyrilState&) override;
+  ~CyrilFun() override;
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
 };
 

@@ -52,9 +52,9 @@ public:
                   float sigma = 4,
                   unsigned kernelSize = 25);
 
-  void render(ofFbo& readFbo, ofFbo& writeFbo);
+  void render(ofFbo& readFbo, ofFbo& writeFbo) override;
 
-  bool hasArbShader() { return true; }
+  bool hasArbShader() override { return true; }
   void setIncrement(float _x, float _y)
   {
     imageIncrement.x = _x;

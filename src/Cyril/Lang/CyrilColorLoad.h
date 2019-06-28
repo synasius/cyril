@@ -1,13 +1,4 @@
-//
-//  CyrilColorLoad.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 06/11/2013.
-//
-//
-
-#ifndef __cyril2__CyrilColorLoad__
-#define __cyril2__CyrilColorLoad__
+#pragma once
 
 #include <cyril/cmds.h>
 #include <ofMain.h>
@@ -16,16 +7,16 @@
 
 class CyrilColorLoad : public Cyril
 {
-  int loc;
-
 public:
   CyrilColorLoad(int _i);
   CyrilColorLoad(const CyrilColorLoad& other);
-  virtual ~CyrilColorLoad();
-  void print();
-  virtual Cyril* clone();
-  virtual int size();
-  virtual void eval(CyrilState&);
-};
+  ~CyrilColorLoad() override;
 
-#endif /* defined(__cyril2__CyrilColorLoad__) */
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
+
+private:
+  int loc;
+};

@@ -16,12 +16,12 @@ class CyrilPopMatrixOp : public CyrilOp {
 public:
   CyrilPopMatrixOp(Cyril* _c);
   CyrilPopMatrixOp (const CyrilPopMatrixOp &other);
-  virtual ~CyrilPopMatrixOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
-  virtual int matchPushPop();
+  ~CyrilPopMatrixOp () override;
+  void print() override;
+  Cyril *clone () override;
+  int size() override;
+  void eval(CyrilState &) override;
+  int matchPushPop() override;
 };
 
 #endif /* defined(__cyril2__CyrilPopMatrix__) */

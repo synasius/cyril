@@ -11,13 +11,13 @@ class CyrilFor : public Cyril
 public:
   CyrilFor(int _i, Cyril* _e1, Cyril* _e2, Cyril* _e3, Cyril* _c);
   CyrilFor(const CyrilFor& other);
-  virtual ~CyrilFor();
+  ~CyrilFor() override;
 
-  void print();
-  virtual Cyril* clone();
-  virtual int size();
-  virtual void eval(CyrilState& _s);
-  virtual int matchPushPop();
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState& _s) override;
+  int matchPushPop() override;
 
 private:
   int loc;

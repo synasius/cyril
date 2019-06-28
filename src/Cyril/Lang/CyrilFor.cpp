@@ -14,7 +14,7 @@ CyrilFor::CyrilFor(int _i, Cyril* _e1, Cyril* _e2, Cyril* _e3, Cyril* _c)
     valid = false;
   }
   CyrilPush* sC = dynamic_cast<CyrilPush*>(e3);
-  if (sC == NULL) {
+  if (sC == nullptr) {
     yyerror("Step of FOR loop must be a number");
     valid = false;
   } else {
@@ -23,6 +23,7 @@ CyrilFor::CyrilFor(int _i, Cyril* _e1, Cyril* _e2, Cyril* _e3, Cyril* _c)
 }
 
 CyrilFor::CyrilFor(const CyrilFor& other)
+  : Cyril(other)
 {
   loc = other.loc;
   e1 = other.e1->clone();

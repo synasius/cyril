@@ -44,7 +44,7 @@ public:
     ~LUTPass();
 
     LUTPass*loadLUT(string path);
-    void render(ofFbo& readFbo, ofFbo& writeFbo);
+    void render(ofFbo& readFbo, ofFbo& writeFbo) override;
 
 private:
 

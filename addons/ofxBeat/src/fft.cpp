@@ -35,7 +35,7 @@
 #include <stdio.h>
 #include <math.h>
 
-int **gFFTBitTable = NULL;
+int **gFFTBitTable = nullptr;
 const int MaxFastBits = 16;
 
 int IsPowerOfTwo(int x)
@@ -134,7 +134,7 @@ void FFT(int NumSamples,
    for (i = 0; i < NumSamples; i++) {
       j = FastReverseBits(i, NumBits);
       RealOut[j] = RealIn[i];
-      ImagOut[j] = (ImagIn == NULL) ? 0.0 : ImagIn[i];
+      ImagOut[j] = (ImagIn == nullptr) ? 0.0 : ImagIn[i];
    }
 
    /*

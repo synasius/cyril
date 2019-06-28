@@ -5,6 +5,7 @@ CyrilAnimation::CyrilAnimation(Cyril* _e)
 {}
 
 CyrilAnimation::CyrilAnimation(const CyrilAnimation& other)
+  : Cyril(other)
 {
   e = other.e->clone();
 }

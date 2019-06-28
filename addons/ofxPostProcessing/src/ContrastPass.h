@@ -45,7 +45,7 @@ namespace itg
         
         ContrastPass(const ofVec2f& aspect, bool arb, float contrast = 1.0f, float brightness = 1.0f);
         
-        void render(ofFbo& readFbo, ofFbo& writeFbo);
+        void render(ofFbo& readFbo, ofFbo& writeFbo) override;
         
         float getContrast() { return contrast; }
         void setContrast(float val) { contrast = val; }

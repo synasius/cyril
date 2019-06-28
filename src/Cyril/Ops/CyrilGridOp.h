@@ -1,26 +1,15 @@
-//
-//  CyrilGridOp.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 05/11/2013.
-//
-//
+#pragma once
 
-#ifndef __cyril2__CyrilGridOp__
-#define __cyril2__CyrilGridOp__
-
-#include "ofMain.h"
 #include "CyrilOp.h"
+#include "ofMain.h"
 
-class CyrilGridOp : public CyrilOp {
+class CyrilGridOp : public CyrilOp
+{
 public:
   CyrilGridOp(Cyril* _c);
-  CyrilGridOp (const CyrilGridOp &other);
-  virtual ~CyrilGridOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
-};
 
-#endif /* defined(__cyril2__CyrilGridOp__) */
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
+};

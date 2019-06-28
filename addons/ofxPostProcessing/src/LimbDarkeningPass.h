@@ -47,7 +47,7 @@ namespace itg
                           const ofVec3f & startColor = ofVec3f(1.0,1.0,1.0),
                           const ofVec3f & endColor = ofVec3f(1.0,1.0,1.0));
         
-        void render(ofFbo& readFbo, ofFbo& writeFbo);
+        void render(ofFbo& readFbo, ofFbo& writeFbo) override;
         
         void setRadialScale(float val) { radialScale = val; };
         float getRadialScale() { return radialScale; }

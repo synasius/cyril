@@ -1,27 +1,15 @@
-//
-//  CyrilFillOp.h
-//  Cyril
-//
-//  Created by Darren Mothersele on 14/11/2013.
-//
-//
+#pragma once
 
-#ifndef __Cyril__CyrilFillOp__
-#define __Cyril__CyrilFillOp__
-
-#include "ofMain.h"
 #include "CyrilOp.h"
+#include "ofMain.h"
 
-class CyrilFillOp : public CyrilOp {
+  class CyrilFillOp : public CyrilOp
+{
 public:
   CyrilFillOp(Cyril* _c);
-  CyrilFillOp (const CyrilFillOp &other);
-  virtual ~CyrilFillOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
 };
-
-
-#endif /* defined(__Cyril__CyrilFillOp__) */

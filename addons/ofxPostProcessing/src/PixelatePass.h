@@ -43,7 +43,7 @@ public:
                bool arb,
                const ofVec2f& resolution = ofVec2f(100.f, 100.f));
 
-  void render(ofFbo& readFbo, ofFbo& writeFbo);
+  void render(ofFbo& readFbo, ofFbo& writeFbo) override;
 
   ofVec2f getResolution() const { return resolution; }
   void setResolution(ofVec2f) { this->resolution = resolution; }

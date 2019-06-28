@@ -1,27 +1,15 @@
-//
-//  CyrilInitOp.h
-//  Cyril
-//
-//  Created by Darren Mothersele on 17/11/2013.
-//
-//
+#pragma once
 
-#ifndef __Cyril__CyrilInitOp__
-#define __Cyril__CyrilInitOp__
-
-#include "ofMain.h"
 #include "CyrilOp.h"
+#include "ofMain.h"
 
-class CyrilInitOp : public CyrilOp {
+class CyrilInitOp : public CyrilOp
+{
 public:
   CyrilInitOp(Cyril* _c);
-  CyrilInitOp (const CyrilInitOp &other);
-  virtual ~CyrilInitOp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
 };
-
-
-#endif /* defined(__Cyril__CyrilInitOp__) */

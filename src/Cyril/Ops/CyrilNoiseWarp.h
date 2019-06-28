@@ -1,31 +1,19 @@
-//
-//  CyrilNoiseWarp.h
-//  cyril
-//
-//  Created by Darren Mothersele on 12/09/2014.
-//
-//
-
-#ifndef __cyril__CyrilNoiseWarp__
-#define __cyril__CyrilNoiseWarp__
 
 #include "Cyril.h"
 
-
-class CyrilNoiseWarp : public Cyril {
+class CyrilNoiseWarp : public Cyril
+{
 protected:
   Cyril* e;
   int s;
+
 public:
   CyrilNoiseWarp(Cyril* _e);
-  CyrilNoiseWarp (const CyrilNoiseWarp &other);
-  virtual ~CyrilNoiseWarp ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
-  virtual void update(CyrilState &);
+  CyrilNoiseWarp(const CyrilNoiseWarp& other);
+  ~CyrilNoiseWarp() override;
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
+  void update(CyrilState&) override;
 };
-
-
-#endif /* defined(__cyril__CyrilNoiseWarp__) */

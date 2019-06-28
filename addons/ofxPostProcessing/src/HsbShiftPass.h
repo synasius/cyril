@@ -42,7 +42,7 @@ namespace itg
         
         HsbShiftPass(const ofVec2f& aspect, bool arb, float hueShift = 0.f, float saturationShift = 0.f, float brightnessShift = 0.f);
         
-        void render(ofFbo& readFbo, ofFbo& writeFbo, ofTexture& depth);
+        void render(ofFbo& readFbo, ofFbo& writeFbo, ofTexture& depth) override;
         
         float getHueShift() const { return hueShift; }
         void setHueShift(float hueShift) { this->hueShift = hueShift; }

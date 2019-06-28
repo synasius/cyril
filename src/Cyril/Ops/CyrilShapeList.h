@@ -1,29 +1,23 @@
-//
-//  CyrilShapeList.h
-//  Cyril
-//
+#pragma once
+
 //  Created by Darren Mothersele on 17/11/2013.
-//
-//
 
-#ifndef __Cyril__CyrilShapeList__
-#define __Cyril__CyrilShapeList__
-
-#include "ofMain.h"
 #include "Cyril.h"
+#include "ofMain.h"
 
-class CyrilShapeList : public Cyril {
-  Cyril* e;
-  Cyril* c;
+class CyrilShapeList : public Cyril
+{
 public:
   CyrilShapeList(Cyril* _c);
-  CyrilShapeList (const CyrilShapeList &other);
-  virtual ~CyrilShapeList ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
+  CyrilShapeList(const CyrilShapeList& other);
+
+  ~CyrilShapeList() override;
+  void print() override;
+  Cyril* clone() override;
+  int size() override;
+  void eval(CyrilState&) override;
+
+private:
+  Cyril* e;
+  Cyril* c;
 };
-
-
-#endif /* defined(__Cyril__CyrilShapeList__) */

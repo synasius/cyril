@@ -18,12 +18,12 @@ class CyrilBlink : public Cyril {
 public:
   CyrilBlink(Cyril* _e, Cyril* _c);
   CyrilBlink (const CyrilBlink &other);
-  virtual ~CyrilBlink ();
-  virtual void print();
-  virtual Cyril *clone ();
-  virtual int size();
-  virtual void eval(CyrilState &);
-  virtual int matchPushPop() { return c->matchPushPop(); }
+  ~CyrilBlink () override;
+  void print() override;
+  Cyril *clone () override;
+  int size() override;
+  void eval(CyrilState &) override;
+  int matchPushPop() override { return c->matchPushPop(); }
 };
 
 #endif /* defined(__cyril2__CyrilBlink__) */
