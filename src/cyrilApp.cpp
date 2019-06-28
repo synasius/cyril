@@ -50,13 +50,13 @@ getIpAddress()
 void
 cyrilApp::setup()
 {
-  doResetTimers = true;
+  m_doResetTimers = true;
 
   ofSoundStreamSettings settings;
   settings.numOutputChannels = 0;
   settings.numInputChannels = 1;
   settings.sampleRate = 44100;
-  settings.bufferSize = beat.getBufferSize();
+  settings.bufferSize = m_beat.getBufferSize();
   settings.numBuffers = 4;
   settings.setOutListener(this);
   settings.setInListener(this);
@@ -66,119 +66,113 @@ cyrilApp::setup()
   // ofSetDataPathRoot("../../../data/");
 
   ofBackground(0);
-  pauseProg = false;
-  // lightsOn = true;
-  lightsOn = true;
-  isOrtho = false;
-  fxOn = true;
+  m_pauseProg = false;
+  m_lightsOn = false;
+  m_isOrtho = false;
+  m_fxOn = false;
 
-  runningProg = false;
-  running[0] = false;
-  running[1] = false;
-  running[2] = false;
-  running[3] = false;
-  running[4] = false;
-  running[5] = false;
-  running[6] = false;
-  running[7] = false;
-  running[8] = false;
-  running[9] = false;
-  error[0] = false;
-  error[1] = false;
-  error[2] = false;
-  error[3] = false;
-  error[4] = false;
-  error[5] = false;
-  error[6] = false;
-  error[7] = false;
-  error[8] = false;
-  error[9] = false;
+  m_runningProg = false;
+  m_running[0] = false;
+  m_running[1] = false;
+  m_running[2] = false;
+  m_running[3] = false;
+  m_running[4] = false;
+  m_running[5] = false;
+  m_running[6] = false;
+  m_running[7] = false;
+  m_running[8] = false;
+  m_running[9] = false;
+  m_error[0] = false;
+  m_error[1] = false;
+  m_error[2] = false;
+  m_error[3] = false;
+  m_error[4] = false;
+  m_error[5] = false;
+  m_error[6] = false;
+  m_error[7] = false;
+  m_error[8] = false;
+  m_error[9] = false;
 
 #ifdef FULL_DEBUG
   ofSetLogLevel("ofxGLEditor", OF_LOG_VERBOSE);
 #endif
 
-  editor.addCommand('z', this, &cyrilApp::toggleFx);
-  editor.addCommand('f', this, &cyrilApp::toggleFullscreen);
-  editor.addCommand('a', this, &cyrilApp::toggleEditor);
-  editor.addCommand('d', this, &cyrilApp::toggleBackground);
-  editor.addCommand('k', this, &cyrilApp::toggleLights);
-  editor.addCommand('l', this, &cyrilApp::loadFile);
-  editor.addCommand('s', this, &cyrilApp::saveFile);
-  editor.addCommand('e', this, &cyrilApp::resetTimers);
-  editor.addCommand('p', this, &cyrilApp::pauseProgram);
-  editor.addCommand('r', this, &cyrilApp::runScript);
-  editor.addCommand('o', this, &cyrilApp::toggleOrtho);
+  m_editor.addCommand('z', this, &cyrilApp::toggleFx);
+  m_editor.addCommand('f', this, &cyrilApp::toggleFullscreen);
+  m_editor.addCommand('a', this, &cyrilApp::toggleEditor);
+  m_editor.addCommand('d', this, &cyrilApp::toggleBackground);
+  m_editor.addCommand('k', this, &cyrilApp::toggleLights);
+  m_editor.addCommand('l', this, &cyrilApp::loadFile);
+  m_editor.addCommand('s', this, &cyrilApp::saveFile);
+  m_editor.addCommand('e', this, &cyrilApp::resetTimers);
+  m_editor.addCommand('p', this, &cyrilApp::pauseProgram);
+  m_editor.addCommand('r', this, &cyrilApp::runScript);
+  m_editor.addCommand('o', this, &cyrilApp::toggleOrtho);
 
-  editorVisible = true;
+  m_editorVisible = true;
 
-  lastSignalReport = -1;
+  m_lastSignalReport = -1;
 
   // Init evaluation stack to empty
-  _state.stk = new stack<float>;
+  m_state.stk = new std::stack<float>;
   // Initialise our own matrix stack
   // TODO: replace with call to get from current renderer?
-  _state.ms = new ofMatrixStack(ofGetWindowPtr());
+  m_state.ms = new ofMatrixStack(ofGetWindowPtr());
   // Initialise empty paticle system
-  _state.ps = new vector<Particle*>;
+  m_state.ps = new std::vector<Particle*>;
   // Initialise empty variable/register map
-  _state.sym = new map<int, float>;
+  m_state.sym = new std::map<int, float>;
   // Initialise palettes
-  _state.cs = new map<int, Palette*>;
+  m_state.cs = new std::map<int, Palette*>;
   // Initialise sprites
-  _state.img = new map<int, ofImage*>;
-  _state.parent = nullptr;
-  _state.light = new ofLight();
+  m_state.img = new std::map<int, ofImage*>;
+  m_state.parent = nullptr;
+  m_state.light = new ofLight();
   //_state.light = NULL;
 
-  (*_state.sym)[REG_X_MAX] = 640;
-  (*_state.sym)[REG_Y_MAX] = 480;
-  (*_state.sym)[REG_X_MID] = (*_state.sym)[REG_X_MAX] / 2.0;
-  (*_state.sym)[REG_Y_MID] = (*_state.sym)[REG_Y_MAX] / 2.0;
+  (*m_state.sym)[REG_X_MAX] = 640;
+  (*m_state.sym)[REG_Y_MAX] = 480;
+  (*m_state.sym)[REG_X_MID] = (*m_state.sym)[REG_X_MAX] / 2.0;
+  (*m_state.sym)[REG_Y_MID] = (*m_state.sym)[REG_Y_MAX] / 2.0;
 
-  (*_state.sym)[REG_X_SCALE] = 100;
-  (*_state.sym)[REG_Y_SCALE] = 100;
-  (*_state.sym)[REG_Z_SCALE] = 100;
+  (*m_state.sym)[REG_X_SCALE] = 100;
+  (*m_state.sym)[REG_Y_SCALE] = 100;
+  (*m_state.sym)[REG_Z_SCALE] = 100;
 
-  (*_state.sym)[REG_PI] = PI;
-  (*_state.sym)[REG_TWO_PI] = TWO_PI;
+  (*m_state.sym)[REG_PI] = PI;
+  (*m_state.sym)[REG_TWO_PI] = TWO_PI;
 
-  (*_state.sym)[REG_PARTICLE_HEALTH] = 1;
-  (*_state.sym)[REG_PARTICLE_DECAY] = 0.1;
+  (*m_state.sym)[REG_PARTICLE_HEALTH] = 1;
+  (*m_state.sym)[REG_PARTICLE_DECAY] = 0.1;
 
-  (*_state.sym)[OSC_X] = 0;
-  (*_state.sym)[OSC_Y] = 0;
-  (*_state.sym)[OSC_F1] = 0;
-  (*_state.sym)[OSC_F2] = 0;
-  (*_state.sym)[OSC_F3] = 0;
-  (*_state.sym)[OSC_F4] = 0;
+  (*m_state.sym)[OSC_X] = 0;
+  (*m_state.sym)[OSC_Y] = 0;
+  (*m_state.sym)[OSC_F1] = 0;
+  (*m_state.sym)[OSC_F2] = 0;
+  (*m_state.sym)[OSC_F3] = 0;
+  (*m_state.sym)[OSC_F4] = 0;
 
   // Reserve some space for Particle System
-  _state.ps->reserve(2000);
+  m_state.ps->reserve(2000);
 
   // Global settings
   ofEnableDepthTest();
   ofSetVerticalSync(true);
-  if (lightsOn) {
+  if (m_lightsOn) {
     ofEnableLighting();
-    _state.light->setAmbientColor(ofColor(0, 0, 0));
-    _state.light->setDiffuseColor(ofColor(255, 255, 255));
-    _state.light->setSpecularColor(ofColor(255, 255, 255));
-    _state.light->setPointLight();
-    _state.light->setAttenuation(1.f, 0.f, 0.f);
+    m_state.light->setAmbientColor(ofColor(0, 0, 0));
+    m_state.light->setDiffuseColor(ofColor(255, 255, 255));
+    m_state.light->setSpecularColor(ofColor(255, 255, 255));
+    m_state.light->setPointLight();
+    m_state.light->setAttenuation(1.f, 0.f, 0.f);
   }
 
-  autoClearBg = true;
+  m_autoClearBg = true;
   ofSetBackgroundAuto(true);
 
-  // changed this...
-  cursorVisible = true;
-  // ofHideCursor();
-#ifdef __APPLE__
-  // CGDisplayHideCursor(NULL); // <- OK
-#endif
+  m_cursorVisible = true;
 
-  (*_state.sym)[REG_FRAME] = 0;
+  (*m_state.sym)[REG_FRAME] = 0;
 
   //  edBuf.allocate();
   //  edBuf.begin();
@@ -189,8 +183,7 @@ cyrilApp::setup()
   ofEnableAntiAliasing();
   ofEnableSmoothing();
 
-  isFullScreen = false;
-  // ofSetFullscreen(true);
+  m_isFullScreen = false;
 
   // mainOutputSyphonServer.setName("Cyril Main Output");
   // mClient.setup();
@@ -201,17 +194,17 @@ cyrilApp::setup()
   //<< endl; 	receiver.setup(PORT);
 
   // Configure the ofxPostProcessing effects
-  _state.post = ofxPostProcessing();
-  _state.post.init(ofGetWidth(), ofGetHeight());
-  _state.post.setFlip(false);
-  _state.kaleido = _state.post.createPass<KaleidoscopePass>();
-  _state.noisewarp = _state.post.createPass<NoiseWarpPass>();
+  m_state.post = ofxPostProcessing();
+  m_state.post.init(ofGetWidth(), ofGetHeight());
+  m_state.post.setFlip(false);
+  m_state.kaleido = m_state.post.createPass<KaleidoscopePass>();
+  m_state.noisewarp = m_state.post.createPass<NoiseWarpPass>();
 
-  _state.pixelate = _state.post.createPass<PixelatePass>();
-  _state.bloom = _state.post.createPass<BloomPass>();
+  m_state.pixelate = m_state.post.createPass<PixelatePass>();
+  m_state.bloom = m_state.post.createPass<BloomPass>();
 
   for (int i = 0; i < 10; ++i) {
-    modTimes[i] = 0;
+    m_modTimes[i] = 0;
   }
 }
 
@@ -229,8 +222,8 @@ cyrilApp::update()
       //          //TODO: had to disable this as ofFile has changed, cf no
       //          PocoFile
       //            Poco::Timestamp t = f.getPocoFile().getLastModified();
-      //            if (t > modTimes[i]) {
-      //                modTimes[i] = t;
+      //            if (t > m_modTimes[i]) {
+      //                m_modTimes[i] = t;
       //                reloadFileBuffer("code/" + ofToString(i) + ".cy");
       //            }
     } else {
@@ -240,48 +233,48 @@ cyrilApp::update()
 
   // Disable all ofxPostProcessing effects so they only activate
   // if command is present in a running program
-  _state.post[FX_KALEIDOSCOPE]->disable();
-  _state.post[FX_NOISE_WARP]->disable();
-  _state.post[FX_PIXELATE]->disable();
-  _state.post[FX_BLOOM]->disable();
+  m_state.post[FX_KALEIDOSCOPE]->disable();
+  m_state.post[FX_NOISE_WARP]->disable();
+  m_state.post[FX_PIXELATE]->disable();
+  m_state.post[FX_BLOOM]->disable();
 
   for (int i = 0; i < 10; ++i) {
-    if (running[i]) {
-      if (prog[i]->valid) {
-        prog[i]->update(_state);
+    if (m_running[i]) {
+      if (m_prog[i]->valid) {
+        m_prog[i]->update(m_state);
       }
     }
   }
 
-  if (doResetTimers) {
-    (*_state.sym)[REG_FRAME] = 0;
+  if (m_doResetTimers) {
+    (*m_state.sym)[REG_FRAME] = 0;
     ofResetElapsedTimeCounter();
-    doResetTimers = false;
+    m_doResetTimers = false;
   } else {
-    (*_state.sym)[REG_FRAME]++;
+    (*m_state.sym)[REG_FRAME]++;
   }
 
-  (*_state.sym)[REG_TIME] = ofGetElapsedTimeMillis();
-  (*_state.sym)[REG_SECS] = ofGetElapsedTimef();
-  (*_state.sym)[REG_FAST] = ofGetElapsedTimef() * 10;
-  (*_state.sym)[REG_SLOW] = ofGetElapsedTimef() * 2;
+  (*m_state.sym)[REG_TIME] = ofGetElapsedTimeMillis();
+  (*m_state.sym)[REG_SECS] = ofGetElapsedTimef();
+  (*m_state.sym)[REG_FAST] = ofGetElapsedTimef() * 10;
+  (*m_state.sym)[REG_SLOW] = ofGetElapsedTimef() * 2;
 
   // For beat detection
-  beat.update((*_state.sym)[REG_TIME]);
-  (*_state.sym)[REG_BEAT_MAGNITUDE] = beat.getMagnitude();
-  (*_state.sym)[REG_BEAT_KICK] = beat.kick();
-  (*_state.sym)[REG_BEAT_SNARE] = beat.snare();
-  (*_state.sym)[REG_BEAT_HIHAT] = beat.hihat();
+  m_beat.update((*m_state.sym)[REG_TIME]);
+  (*m_state.sym)[REG_BEAT_MAGNITUDE] = m_beat.getMagnitude();
+  (*m_state.sym)[REG_BEAT_KICK] = m_beat.kick();
+  (*m_state.sym)[REG_BEAT_SNARE] = m_beat.snare();
+  (*m_state.sym)[REG_BEAT_HIHAT] = m_beat.hihat();
   for (int i = REG_BEAT_FFT_START; i < REG_BEAT_FFT_MAX; ++i) {
-    (*_state.sym)[i] = beat.getBand(i - REG_BEAT_FFT_START);
+    (*m_state.sym)[i] = m_beat.getBand(i - REG_BEAT_FFT_START);
   }
 
-  for (vector<Particle*>::iterator it = _state.ps->begin();
-       it != _state.ps->end();
+  for (vector<Particle*>::iterator it = m_state.ps->begin();
+       it != m_state.ps->end();
        ++it) {
     (*it)->update();
   }
-  ofRemove(*_state.ps, Particle::isDead);
+  ofRemove(*m_state.ps, Particle::isDead);
 
   //	// check for waiting OSC messages
   //	while(receiver.hasWaitingMessages()){
@@ -342,83 +335,83 @@ void
 cyrilApp::draw()
 {
 
-  if (fxOn) {
-    _state.post.begin();
+  if (m_fxOn) {
+    m_state.post.begin();
   }
 
   ofEnableDepthTest();
 
-  if (lightsOn) {
-    _state.light->enable();
+  if (m_lightsOn) {
+    m_state.light->enable();
     // The default position of the light (apply z-scale)
-    _state.light->setPosition(0, 0, 1000);
+    m_state.light->setPosition(0, 0, 1000);
   } else {
     ofDisableLighting();
   }
 
   // ofEnableAlphaBlending();
 
-  _state.ms->clearStacks();
-  float X_MID = (*_state.sym)[REG_X_MID];
-  float Y_MID = (*_state.sym)[REG_Y_MID];
-  float X_SCALE = (*_state.sym)[REG_X_SCALE];
-  float Y_SCALE = (*_state.sym)[REG_Y_SCALE];
-  float Z_SCALE = (*_state.sym)[REG_Z_SCALE];
+  m_state.ms->clearStacks();
+  float X_MID = (*m_state.sym)[REG_X_MID];
+  float Y_MID = (*m_state.sym)[REG_Y_MID];
+  float X_SCALE = (*m_state.sym)[REG_X_SCALE];
+  float Y_SCALE = (*m_state.sym)[REG_Y_SCALE];
+  float Z_SCALE = (*m_state.sym)[REG_Z_SCALE];
 
   for (int i = 0; i < 10; ++i) {
-    if (running[i]) {
-      if (prog[i]->valid) {
+    if (m_running[i]) {
+      if (m_prog[i]->valid) {
         ofPushMatrix();
         ofTranslate(X_MID, Y_MID);
-        _state.ms->pushMatrix();
-        _state.ms->translate(X_MID, Y_MID);
+        m_state.ms->pushMatrix();
+        m_state.ms->translate(X_MID, Y_MID);
 
         ofScale(X_SCALE, Y_SCALE, Z_SCALE);
-        _state.ms->scale(X_SCALE, Y_SCALE, Z_SCALE);
+        m_state.ms->scale(X_SCALE, Y_SCALE, Z_SCALE);
 
-        prog[i]->eval(_state);
+        m_prog[i]->eval(m_state);
 
-        _state.ms->popMatrix();
+        m_state.ms->popMatrix();
         ofPopMatrix();
       }
     }
   }
 
-  for (vector<Particle*>::iterator it = _state.ps->begin();
-       it != _state.ps->end();
+  for (vector<Particle*>::iterator it = m_state.ps->begin();
+       it != m_state.ps->end();
        ++it) {
-    (*it)->draw(&_state);
+    (*it)->draw(&m_state);
   }
 
-  if (lightsOn) {
-    _state.light->disable();
+  if (m_lightsOn) {
+    m_state.light->disable();
   }
 
-  if (fxOn) {
-    _state.post.end();
+  if (m_fxOn) {
+    m_state.post.end();
   }
 
   // mainOutputSyphonServer.publishScreen();
 
   // Draw the editor if enabled
-  if (editorVisible) {
+  if (m_editorVisible) {
     ofDisableDepthTest();
     ofPushMatrix();
     ofPushStyle();
     ofSetColor(255);
     ofFill();
-    editor.draw();
+    m_editor.draw();
     ofTranslate(X_MID - 50, 10);
     for (int i = 0; i < 10; ++i) {
-      if (error[i]) {
+      if (m_error[i]) {
         ofSetColor(255, 0, 0);
-      } else if (running[i]) {
+      } else if (m_running[i]) {
         ofSetColor(255);
       } else {
         ofSetColor(150);
       }
       ofDrawRectangle(i * 10, 0, 8, 8);
-      if (editor.currentBuffer == i) {
+      if (m_editor.currentBuffer == i) {
         ofSetColor(255);
         ofDrawRectangle(i * 10, 10, 8, 5);
       }
@@ -431,16 +424,16 @@ cyrilApp::draw()
 void
 cyrilApp::toggleFx(void* _o)
 {
-  ((cyrilApp*)_o)->fxOn = !((cyrilApp*)_o)->fxOn;
+  ((cyrilApp*)_o)->m_fxOn = !((cyrilApp*)_o)->m_fxOn;
 }
 
 void
 cyrilApp::toggleFullscreen(void* _o)
 {
-  ((cyrilApp*)_o)->isFullScreen = !((cyrilApp*)_o)->isFullScreen;
-  ofSetFullscreen(((cyrilApp*)_o)->isFullScreen);
+  ((cyrilApp*)_o)->m_isFullScreen = !((cyrilApp*)_o)->m_isFullScreen;
+  ofSetFullscreen(((cyrilApp*)_o)->m_isFullScreen);
 
-  if (((cyrilApp*)_o)->isFullScreen) {
+  if (((cyrilApp*)_o)->m_isFullScreen) {
     ofHideCursor();
 #ifdef __APPLE__
     CGDisplayHideCursor(NULL);
@@ -455,13 +448,13 @@ cyrilApp::toggleFullscreen(void* _o)
 void
 cyrilApp::toggleEditor(void* _o)
 {
-  ((cyrilApp*)_o)->editorVisible = !((cyrilApp*)_o)->editorVisible;
+  ((cyrilApp*)_o)->m_editorVisible = !((cyrilApp*)_o)->m_editorVisible;
 }
 void
 cyrilApp::toggleOrtho(void* _o)
 {
-  ((cyrilApp*)_o)->isOrtho = !((cyrilApp*)_o)->isOrtho;
-  if (((cyrilApp*)_o)->isOrtho) {
+  ((cyrilApp*)_o)->m_isOrtho = !((cyrilApp*)_o)->m_isOrtho;
+  if (((cyrilApp*)_o)->m_isOrtho) {
     // ofSetupScreenOrtho();
     ofSetupScreenOrtho(1200, 1200, 0, 10);
   } else {
@@ -471,79 +464,79 @@ cyrilApp::toggleOrtho(void* _o)
 void
 cyrilApp::toggleBackground(void* _o)
 {
-  ((cyrilApp*)_o)->autoClearBg = !((cyrilApp*)_o)->autoClearBg;
+  ((cyrilApp*)_o)->m_autoClearBg = !((cyrilApp*)_o)->m_autoClearBg;
 }
 void
 cyrilApp::toggleLights(void* _o)
 {
-  ((cyrilApp*)_o)->lightsOn = !((cyrilApp*)_o)->lightsOn;
+  ((cyrilApp*)_o)->m_lightsOn = !((cyrilApp*)_o)->m_lightsOn;
   ofEnableLighting();
   ofSetSmoothLighting(true);
-  ((cyrilApp*)_o)->_state.light->setAmbientColor(ofColor(0, 0, 0));
-  ((cyrilApp*)_o)->_state.light->setDiffuseColor(ofColor(255, 255, 255));
-  ((cyrilApp*)_o)->_state.light->setSpecularColor(ofColor(255, 255, 255));
-  ((cyrilApp*)_o)->_state.light->setPointLight();
-  ((cyrilApp*)_o)->_state.light->setAttenuation(1.f, 0.f, 0.f);
+  ((cyrilApp*)_o)->m_state.light->setAmbientColor(ofColor(0, 0, 0));
+  ((cyrilApp*)_o)->m_state.light->setDiffuseColor(ofColor(255, 255, 255));
+  ((cyrilApp*)_o)->m_state.light->setSpecularColor(ofColor(255, 255, 255));
+  ((cyrilApp*)_o)->m_state.light->setPointLight();
+  ((cyrilApp*)_o)->m_state.light->setAttenuation(1.f, 0.f, 0.f);
 }
 
 void
 cyrilApp::loadFile(void* _o)
 {
-  int whichEditor = ((cyrilApp*)_o)->editor.currentBuffer;
+  int whichEditor = ((cyrilApp*)_o)->m_editor.currentBuffer;
   ((cyrilApp*)_o)
-    ->editor.loadFile("code/" + ofToString(whichEditor) + ".cy", whichEditor);
-  ((cyrilApp*)_o)->editor.update();
+    ->m_editor.loadFile("code/" + ofToString(whichEditor) + ".cy", whichEditor);
+  ((cyrilApp*)_o)->m_editor.update();
 }
 
 void
 cyrilApp::saveFile(void* _o)
 {
-  int whichEditor = ((cyrilApp*)_o)->editor.currentBuffer;
+  int whichEditor = ((cyrilApp*)_o)->m_editor.currentBuffer;
   ((cyrilApp*)_o)
-    ->editor.saveFile("code/" + ofToString(whichEditor) + ".cy", whichEditor);
+    ->m_editor.saveFile("code/" + ofToString(whichEditor) + ".cy", whichEditor);
 }
 
 void
 cyrilApp::resetTimers(void* _o)
 {
-  ((cyrilApp*)_o)->doResetTimers = true;
+  ((cyrilApp*)_o)->m_doResetTimers = true;
 }
 
 void
 cyrilApp::pauseProgram(void* _o)
 {
-  if (((cyrilApp*)_o)->prog[((cyrilApp*)_o)->editor.currentBuffer] &&
-      ((cyrilApp*)_o)->prog[((cyrilApp*)_o)->editor.currentBuffer]->valid) {
-    int whichEditor = ((cyrilApp*)_o)->editor.currentBuffer;
-    ((cyrilApp*)_o)->running[whichEditor] =
-      !((cyrilApp*)_o)->running[whichEditor];
+  if (((cyrilApp*)_o)->m_prog[((cyrilApp*)_o)->m_editor.currentBuffer] &&
+      ((cyrilApp*)_o)->m_prog[((cyrilApp*)_o)->m_editor.currentBuffer]->valid) {
+    int whichEditor = ((cyrilApp*)_o)->m_editor.currentBuffer;
+    ((cyrilApp*)_o)->m_running[whichEditor] =
+      !((cyrilApp*)_o)->m_running[whichEditor];
   }
 }
 
 void
 cyrilApp::runScript(void* _o)
 {
-  int whichEditor = ((cyrilApp*)_o)->editor.currentBuffer;
+  int whichEditor = ((cyrilApp*)_o)->m_editor.currentBuffer;
 #ifdef DEBUG_PRINT
   cout << "run script in editor " << whichEditor << endl;
 #endif
   Cyril* tempProg = CyrilParser::parseString(
-    ((cyrilApp*)_o)->editor.buf[whichEditor]->getText());
+    ((cyrilApp*)_o)->m_editor.buf[whichEditor]->getText());
   if (tempProg->valid) {
-    ((cyrilApp*)_o)->prog[whichEditor] = tempProg;
-    ((cyrilApp*)_o)->runningProg = true;
-    ((cyrilApp*)_o)->running[whichEditor] = true;
-    ((cyrilApp*)_o)->error[whichEditor] = false;
+    ((cyrilApp*)_o)->m_prog[whichEditor] = tempProg;
+    ((cyrilApp*)_o)->m_runningProg = true;
+    ((cyrilApp*)_o)->m_running[whichEditor] = true;
+    ((cyrilApp*)_o)->m_error[whichEditor] = false;
 #ifdef DEBUG_PRINT
     ((cyrilApp*)_o)->prog[whichEditor]->print();
 #endif
   } else {
-    ((cyrilApp*)_o)->error[whichEditor] = true;
+    ((cyrilApp*)_o)->m_error[whichEditor] = true;
 #ifdef DEBUG_PRINT
     cout << "Invalid program" << endl;
 #endif
   }
-  ((cyrilApp*)_o)->reportError = true;
+  ((cyrilApp*)_o)->m_reportError = true;
 }
 
 std::string
@@ -559,11 +552,11 @@ void
 cyrilApp::toggleScript(int i, bool r)
 {
   if (r) {
-    editor.loadFile("code/" + ofToString(i) + ".cy", i);
-    editor.currentBuffer = i;
+    m_editor.loadFile("code/" + ofToString(i) + ".cy", i);
+    m_editor.currentBuffer = i;
     runScript(this);
   } else {
-    running[i] = false;
+    m_running[i] = false;
   }
 }
 
@@ -575,10 +568,10 @@ cyrilApp::reloadFileBuffer(std::string filePath)
   if (file.getExtension() == "cy") {
     int whichEditor = ofToInt(removeExtension(file.getFileName()));
     if (whichEditor >= 0 && whichEditor <= 9) {
-      editor.loadFile(filePath, whichEditor);
+      m_editor.loadFile(filePath, whichEditor);
       // editor.update();
-      if (running[whichEditor]) {
-        editor.currentBuffer = whichEditor;
+      if (m_running[whichEditor]) {
+        m_editor.currentBuffer = whichEditor;
         runScript(this);
       }
     }
@@ -586,11 +579,11 @@ cyrilApp::reloadFileBuffer(std::string filePath)
   if (file.getExtension() == "png") {
     // cout << "Loading image " << file.getFileName() << endl;
     int whichImg = ofToInt(removeExtension(file.getFileName()));
-    (*_state.img)[whichImg] = new ofImage(filePath);
+    (*m_state.img)[whichImg] = new ofImage(filePath);
     // cout << "Loaded image type = " << ((*_state.img)[whichImg]->type) <<
     // endl;
     //(*_state.img)[whichImg]->setImageType(OF_IMAGE_COLOR_ALPHA);
-    (*_state.img)[whichImg]->setAnchorPercent(0.5, 0.5);
+    (*m_state.img)[whichImg]->setAnchorPercent(0.5, 0.5);
   }
 }
 
@@ -628,12 +621,12 @@ cyrilApp::mouseReleased(int, int, int)
 void
 cyrilApp::windowResized(int w, int h)
 {
-  (*_state.sym)[REG_X_MAX] = w;
-  (*_state.sym)[REG_Y_MAX] = h;
-  (*_state.sym)[REG_X_MID] = w / 2.0;
-  (*_state.sym)[REG_Y_MID] = h / 2.0;
-  _state.post.setWidth(w);
-  _state.post.setHeight(h);
+  (*m_state.sym)[REG_X_MAX] = w;
+  (*m_state.sym)[REG_Y_MAX] = h;
+  (*m_state.sym)[REG_X_MID] = w / 2.0;
+  (*m_state.sym)[REG_Y_MID] = h / 2.0;
+  m_state.post.setWidth(w);
+  m_state.post.setHeight(h);
 }
 
 //--------------------------------------------------------------
@@ -645,6 +638,5 @@ void cyrilApp::dragEvent(ofDragInfo) {}
 void
 cyrilApp::audioReceived(float* input, int bufferSize, int nChannels)
 {
-  beat.audioReceived(input, bufferSize, nChannels);
+  m_beat.audioReceived(input, bufferSize, nChannels);
 }
-

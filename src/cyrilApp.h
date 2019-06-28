@@ -25,7 +25,7 @@ class cyrilApp : public ofBaseApp
 {
 public:
   cyrilApp()
-    : editor(10, "SourceCodePro.ttf")
+    : m_editor(10, "SourceCodePro.ttf")
   {}
 
   void setup() override;
@@ -63,8 +63,8 @@ public:
   void toggleScript(int i, bool r);
 
 private:
-  ofxEditor editor;
-  ofxBeat beat;
+  ofxEditor m_editor;
+  ofxBeat m_beat;
 
   // ofxSyphonServer mainOutputSyphonServer;
   // ofxSyphonClient mClient;
@@ -72,37 +72,32 @@ private:
   //  ofxOscReceiver receiver;
 
   // ofxXmlSettings settings;
-  string fileName;
 
-  Cyril* prog[10];
+  Cyril* m_prog[10];
 
-  Poco::Timestamp modTimes[10];
+  Poco::Timestamp m_modTimes[10];
 
-  bool running[10];
-  bool error[10];
+  bool m_running[10];
+  bool m_error[10];
 
-  CyrilState _state;
-  vector<string> progFiles;
-  int currentProg;
-  bool reportError;
+  CyrilState m_state;
+  bool m_reportError;
 
   //  ofFbo edBuf;
 
-  bool lightsOn;
-  bool fxOn;
+  bool m_lightsOn;
+  bool m_fxOn;
+  bool m_isOrtho;
 
-  bool autoClearBg;
-  bool pauseProg;
-  bool runningProg;
-  bool overlay;
-  bool editorVisible;
-  bool cursorVisible;
-  bool isFullScreen;
-  bool doResetTimers;
-  bool isOrtho;
+  bool m_autoClearBg;
+  bool m_pauseProg;
+  bool m_runningProg;
+  bool m_editorVisible;
+  bool m_cursorVisible;
+  bool m_isFullScreen;
+  bool m_doResetTimers;
 
-  int lastSignalReport;
+  int m_lastSignalReport;
 
   void initPPFx();
 };
-
