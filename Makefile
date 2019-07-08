@@ -11,4 +11,4 @@ release:
 
 debug:
 	cmake -B build-debug $(args) -DCMAKE_BUILD_TYPE=Debug
-	cmake --build build-debug -j $(jobs)
+	cmake --build build-debug -j $(jobs) --target install

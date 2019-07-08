@@ -93,8 +93,10 @@ LUTPass::loadLUT(string path)
       }
     }
 
-    if (lut.size() != (LUT_3D_SIZE * LUT_3D_SIZE * LUT_3D_SIZE))
+    std::size_t lut_3d_size = LUT_3D_SIZE * LUT_3D_SIZE * LUT_3D_SIZE;
+    if (lut.size() != lut_3d_size) {
       ofLogError() << "LUT size is incorrect.";
+    }
   }
 
   // gen texture
