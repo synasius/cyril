@@ -44,7 +44,7 @@ public:
   void applyGlobalSettings();
   void reloadSettings();
 
-  void audioReceived(float*, int, int) override;
+  void audioIn(ofSoundBuffer &buffer) override;
 
   void reloadFileBuffer(std::string);
 
@@ -65,6 +65,7 @@ public:
 private:
   ofxEditor m_editor;
   ofxBeat m_beat;
+  ofSoundStream m_soundStream;
 
   // ofxSyphonServer mainOutputSyphonServer;
   // ofxSyphonClient mClient;

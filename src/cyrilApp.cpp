@@ -58,9 +58,9 @@ cyrilApp::setup()
   settings.sampleRate = 44100;
   settings.bufferSize = m_beat.getBufferSize();
   settings.numBuffers = 4;
-  settings.setOutListener(this);
   settings.setInListener(this);
-  ofSoundStreamSetup(settings);
+
+  m_soundStream.setup(settings);
 
   // Switch back to external data folder
   // ofSetDataPathRoot("../../../data/");
@@ -636,7 +636,8 @@ void cyrilApp::gotMessage(ofMessage) {}
 void cyrilApp::dragEvent(ofDragInfo) {}
 
 void
-cyrilApp::audioReceived(float* input, int bufferSize, int nChannels)
+cyrilApp::audioIn(ofSoundBuffer& buffer)
 {
-  m_beat.audioReceived(input, bufferSize, nChannels);
+  m_beat.audioReceived(
+    buffer.getBuffer().data(), buffer.size(), buffer.getNumChannels());
 }
