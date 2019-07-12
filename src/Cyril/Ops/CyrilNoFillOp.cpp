@@ -16,16 +16,19 @@ CyrilNoFillOp::print()
   c->print();
   cout << "Fill" << endl;
 }
+
 Cyril*
 CyrilNoFillOp::clone()
 {
   return new CyrilNoFillOp(*this);
 }
+
 int
 CyrilNoFillOp::size()
 {
   return 0;
 }
+
 void
 CyrilNoFillOp::eval(CyrilState& _s)
 {
