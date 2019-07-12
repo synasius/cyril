@@ -1,13 +1,4 @@
-//
-//  Particle.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 05/11/2013.
-//
-//
-
-#ifndef cyril2_Particle_h
-#define cyril2_Particle_h
+#pragma once
 
 #include <cyril/cmds.h>
 #include <ofMain.h>
@@ -60,5 +51,3 @@ public:
   void draw(CyrilState* _s);
   static bool isDead(Particle*& p) { return p->health <= 0; }
 };
-
-#endif
