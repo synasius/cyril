@@ -48,7 +48,7 @@ CyrilRotateOp::eval(CyrilState& state)
       state.stk->pop();
       x = state.stk->top();
       state.stk->pop();
-      w = state.stk->top();
+      z = state.stk->top();
       state.stk->pop();
       ofRotateXDeg(x);
       ofRotateYDeg(y);

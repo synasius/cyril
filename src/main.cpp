@@ -164,5 +164,5 @@ main()
   int Y_MAX = 480;
   ofSetupOpenGL(X_MAX, Y_MAX, OF_WINDOW);
 
-  ofRunApp(new cyrilApp());
+  return ofRunApp(new cyrilApp());
 }
