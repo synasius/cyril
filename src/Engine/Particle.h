@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <cyril/cmds.h>
 #include <ofMain.h>
 
@@ -15,7 +16,7 @@ public:
   ofVec3f acceleration;
   float health;
   float decay;
-  Cyril* shape;
+  std::shared_ptr<Cyril> shape;
   CyrilState _sub_state;
 
   Particle(ofMatrix4x4 _o,
@@ -23,31 +24,17 @@ public:
            ofVec3f _a,
            float _h,
            float _d,
-           Cyril* _s)
-    : origin(_o)
-    , velocity(_v)
-    , acceleration(_a)
-    , health(_h)
-    , decay(_d)
-    , shape(_s)
-  {
+           std::shared_ptr<Cyril> _s);
 
-    _sub_state.stk = new stack<float>;
-    _sub_state.ms = new ofMatrixStack(ofGetWindowPtr());
-    _sub_state.ps = new vector<Particle*>;
-    _sub_state.sym = new map<int, float>;
-    _sub_state.cs = new map<int, Palette*>;
-    _sub_state.img = new map<int, ofImage*>;
-    (*_sub_state.sym)[REG_PARTICLE_HEALTH] = health;
-    (*_sub_state.sym)[REG_PARTICLE_DECAY] = decay;
-  }
-  ~Particle();
-  void update()
-  {
-    velocity += acceleration;
-    location.translate(velocity);
-    health -= decay;
-  }
+  // deleted copy constructor and assignment operator
+  Particle(const Particle&) = delete;
+  Particle& operator=(const Particle&) = delete;
+
+  Particle(Particle&&) = default;
+  Particle& operator=(Particle&&) = default;
+
+  void update();
   void draw(CyrilState* _s);
-  static bool isDead(Particle*& p) { return p->health <= 0; }
+
+  bool isDead() const;
 };

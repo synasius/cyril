@@ -119,7 +119,8 @@ cyrilApp::setup()
   // TODO: replace with call to get from current renderer?
   m_state.ms = new ofMatrixStack(ofGetWindowPtr());
   // Initialise empty paticle system
-  m_state.ps = new std::vector<Particle*>;
+  // FIXME: DELETE
+  // m_state.ps = new std::vector<Particle*>;
   // Initialise empty variable/register map
   m_state.sym = new std::map<int, float>;
   // Initialise palettes
@@ -153,7 +154,7 @@ cyrilApp::setup()
   (*m_state.sym)[OSC_F4] = 0;
 
   // Reserve some space for Particle System
-  m_state.ps->reserve(2000);
+  m_state.ps.reserve(2000);
 
   // Global settings
   ofEnableDepthTest();
@@ -269,12 +270,18 @@ cyrilApp::update()
     (*m_state.sym)[i] = m_beat.getBand(i - REG_BEAT_FFT_START);
   }
 
-  for (vector<Particle*>::iterator it = m_state.ps->begin();
-       it != m_state.ps->end();
-       ++it) {
-    (*it)->update();
+  // Cal update on all the particles so that transform and health is updated
+  for (auto& particle : m_state.ps) {
+    particle->update();
   }
-  ofRemove(*m_state.ps, Particle::isDead);
+
+  // Here we remove all dead particles from the particle vectore stored in the
+  // state
+  // TODO: we could move this action in the state class itself
+  m_state.ps.erase(std::remove_if(m_state.ps.begin(),
+                                  m_state.ps.end(),
+                                  [](auto const& p) { return p->isDead(); }),
+                   m_state.ps.end());
 
   //	// check for waiting OSC messages
   //	while(receiver.hasWaitingMessages()){
@@ -377,10 +384,9 @@ cyrilApp::draw()
     }
   }
 
-  for (vector<Particle*>::iterator it = m_state.ps->begin();
-       it != m_state.ps->end();
-       ++it) {
-    (*it)->draw(&m_state);
+  // Draw all the particles
+  for (auto& particle : m_state.ps) {
+    particle->draw(&m_state);
   }
 
   if (m_lightsOn) {

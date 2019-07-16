@@ -16,13 +16,13 @@ CyrilParticle::CyrilParticle(const CyrilParticle& other)
   : Cyril(other)
 {
   e = other.e->clone();
-  c = other.c->clone();
+
+  c = std::shared_ptr<Cyril>(other.c->clone());
 }
 
 CyrilParticle::~CyrilParticle()
 {
   delete e;
-  delete c;
 }
 
 void
@@ -74,10 +74,10 @@ CyrilParticle::eval(CyrilState& _s)
   // GLfloat matrix[16];
   // glGetFloatv (GL_MODELVIEW_MATRIX, matrix);
   // ofMatrix4x4 m(matrix);
-  _s.ps->push_back(new Particle(_s.ms->getCurrentMatrix(),
-                                ofVec3f(x, 0, 0),
-                                ofVec3f(w, h, d),
-                                (*_s.sym)[REG_PARTICLE_HEALTH],
-                                (*_s.sym)[REG_PARTICLE_DECAY],
-                                c));
+  _s.ps.push_back(std::make_unique<Particle>(_s.ms->getCurrentMatrix(),
+                                             ofVec3f(x, 0, 0),
+                                             ofVec3f(w, h, d),
+                                             (*_s.sym)[REG_PARTICLE_HEALTH],
+                                             (*_s.sym)[REG_PARTICLE_DECAY],
+                                             c));
 }

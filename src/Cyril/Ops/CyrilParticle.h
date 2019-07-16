@@ -1,3 +1,4 @@
+#include <memory>
 #include <cyril/cmds.h>
 #include <ofMain.h>
 
@@ -20,5 +21,5 @@ public:
 
 private:
   Cyril* e;
-  Cyril* c;
+  std::shared_ptr<Cyril> c;
 };
