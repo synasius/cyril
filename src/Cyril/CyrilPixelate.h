@@ -8,11 +8,9 @@ class CyrilPixelate : public Cyril
 {
 public:
   CyrilPixelate(Cyril* _e);
-  CyrilPixelate(const CyrilPixelate& other);
-
   ~CyrilPixelate() override;
+
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
   void update(CyrilState&) override;

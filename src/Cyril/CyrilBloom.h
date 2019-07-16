@@ -8,11 +8,9 @@ class CyrilBloom : public Cyril
 {
 public:
   CyrilBloom(Cyril* _e);
-  CyrilBloom(const CyrilBloom& other);
-
   ~CyrilBloom() override;
+
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
   void update(CyrilState&) override;

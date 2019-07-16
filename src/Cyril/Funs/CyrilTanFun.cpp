@@ -12,21 +12,11 @@ CyrilTanFun::CyrilTanFun(Cyril* _c)
   }
 }
 
-CyrilTanFun::CyrilTanFun(const CyrilTanFun& other)
-  : CyrilFun(other)
-{}
-
 void
 CyrilTanFun::print()
 {
   c->print();
   cout << "Tan" << endl;
-}
-
-Cyril*
-CyrilTanFun::clone()
-{
-  return new CyrilTanFun(*this);
 }
 
 int

@@ -9,10 +9,8 @@ class CyrilMapFun : public CyrilFun
 {
 public:
   CyrilMapFun(Cyril* _c);
-  CyrilMapFun(const CyrilMapFun& other);
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
 };

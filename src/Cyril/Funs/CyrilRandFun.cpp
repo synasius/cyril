@@ -10,21 +10,11 @@ CyrilRandFun::CyrilRandFun(Cyril* _c)
   }
 }
 
-CyrilRandFun::CyrilRandFun(const CyrilRandFun& other)
-  : CyrilFun(other)
-{}
-
 void
 CyrilRandFun::print()
 {
   c->print();
   cout << "Rand" << endl;
-}
-
-Cyril*
-CyrilRandFun::clone()
-{
-  return new CyrilRandFun(*this);
 }
 
 int

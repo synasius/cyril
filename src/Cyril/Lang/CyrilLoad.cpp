@@ -8,24 +8,12 @@ CyrilLoad::CyrilLoad(int _i)
   valid = true;
 }
 
-CyrilLoad::CyrilLoad(const CyrilLoad& other)
-  : Cyril(other)
-{
-  m_loc = other.m_loc;
-}
-
 CyrilLoad::~CyrilLoad() {}
 
 void
 CyrilLoad::print()
 {
   cout << "Load: " << m_loc << endl;
-}
-
-Cyril*
-CyrilLoad::clone()
-{
-  return new CyrilLoad(*this);
 }
 
 int

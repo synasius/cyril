@@ -12,23 +12,11 @@ CyrilCosFun::CyrilCosFun(Cyril* _c)
   }
 }
 
-CyrilCosFun::CyrilCosFun(const CyrilCosFun& other)
-  : CyrilFun(other)
-{
-  c = other.c->clone();
-}
-
 void
 CyrilCosFun::print()
 {
   c->print();
   cout << "Cos" << endl;
-}
-
-Cyril*
-CyrilCosFun::clone()
-{
-  return new CyrilCosFun(*this);
 }
 
 int

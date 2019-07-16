@@ -18,24 +18,12 @@ CyrilHexColor::CyrilHexColor(const char* _s)
   valid = true;
 }
 
-CyrilHexColor::CyrilHexColor(const CyrilHexColor& other)
-  : Cyril(other)
-{
-  s = other.s;
-}
-
 CyrilHexColor::~CyrilHexColor() {}
 
 void
 CyrilHexColor::print()
 {
   std::cout << "Hex: " << s << std::endl;
-}
-
-Cyril*
-CyrilHexColor::clone()
-{
-  return new CyrilHexColor(*this);
 }
 
 int

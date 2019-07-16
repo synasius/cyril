@@ -17,12 +17,6 @@ CyrilInitOp::print()
   cout << "Init" << endl;
 }
 
-Cyril*
-CyrilInitOp::clone()
-{
-  return new CyrilInitOp(*this);
-}
-
 int
 CyrilInitOp::size()
 {

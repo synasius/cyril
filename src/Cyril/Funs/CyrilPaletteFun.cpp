@@ -12,21 +12,11 @@ CyrilPaletteFun::CyrilPaletteFun(Cyril* _c)
   }
 }
 
-CyrilPaletteFun::CyrilPaletteFun(const CyrilPaletteFun& other)
-  : CyrilFun(other)
-{}
-
 void
 CyrilPaletteFun::print()
 {
   c->print();
   cout << "Palette" << endl;
-}
-
-Cyril*
-CyrilPaletteFun::clone()
-{
-  return new CyrilPaletteFun(*this);
 }
 
 int

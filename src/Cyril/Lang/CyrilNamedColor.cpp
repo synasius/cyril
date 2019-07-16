@@ -13,24 +13,12 @@ CyrilNamedColor::CyrilNamedColor(const char* _s)
   valid = true;
 }
 
-CyrilNamedColor::CyrilNamedColor(const CyrilNamedColor& other)
-  : Cyril(other)
-{
-  s = other.s;
-}
-
 CyrilNamedColor::~CyrilNamedColor() {}
 
 void
 CyrilNamedColor::print()
 {
   cout << "Named color: " << s << endl;
-}
-
-Cyril*
-CyrilNamedColor::clone()
-{
-  return new CyrilNamedColor(*this);
 }
 
 int

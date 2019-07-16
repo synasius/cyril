@@ -13,24 +13,12 @@ CyrilPixelate::CyrilPixelate(Cyril* _e)
   }
 }
 
-CyrilPixelate::CyrilPixelate(const CyrilPixelate& other)
-  : Cyril(other)
-{
-  e = other.e->clone();
-}
-
 CyrilPixelate::~CyrilPixelate() {}
 
 void
 CyrilPixelate::print()
 {
   cout << "CyrilPixelate" << endl;
-}
-
-Cyril*
-CyrilPixelate::clone()
-{
-  return new CyrilPixelate(*this);
 }
 
 int

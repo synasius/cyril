@@ -10,11 +10,9 @@ class CyrilFor : public Cyril
 {
 public:
   CyrilFor(int _i, Cyril* _e1, Cyril* _e2, Cyril* _e3, Cyril* _c);
-  CyrilFor(const CyrilFor& other);
   ~CyrilFor() override;
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState& _s) override;
   int matchPushPop() override;

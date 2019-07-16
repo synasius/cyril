@@ -16,12 +16,6 @@ CyrilSphereDetailOp::print()
   cout << "SphereDetail" << endl;
 }
 
-Cyril*
-CyrilSphereDetailOp::clone()
-{
-  return new CyrilSphereDetailOp(*this);
-}
-
 int
 CyrilSphereDetailOp::size()
 {

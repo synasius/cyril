@@ -10,21 +10,11 @@ CyrilDie::CyrilDie(Cyril* _c)
   }
 }
 
-CyrilDie::CyrilDie(const CyrilDie& other)
-  : CyrilOp(other)
-{}
-
 void
 CyrilDie::print()
 {
   c->print();
   cout << "Die" << endl;
-}
-
-Cyril*
-CyrilDie::clone()
-{
-  return new CyrilDie(*this);
 }
 
 int

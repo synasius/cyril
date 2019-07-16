@@ -4,12 +4,6 @@ CyrilAnimation::CyrilAnimation(Cyril* _e)
   : e(_e)
 {}
 
-CyrilAnimation::CyrilAnimation(const CyrilAnimation& other)
-  : Cyril(other)
-{
-  e = other.e->clone();
-}
-
 CyrilAnimation::~CyrilAnimation()
 {
   delete e;
@@ -20,12 +14,6 @@ CyrilAnimation::print()
 {
   e->print();
   std::cout << "Animation" << std::endl;
-}
-
-Cyril*
-CyrilAnimation::clone()
-{
-  return new CyrilAnimation(*this);
 }
 
 int

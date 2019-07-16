@@ -14,24 +14,12 @@ CyrilBloom::CyrilBloom(Cyril* _e)
   prevBloom = 0.001953125;
 }
 
-CyrilBloom::CyrilBloom(const CyrilBloom& other)
-  : Cyril(other)
-{
-  e = other.e->clone();
-}
-
 CyrilBloom::~CyrilBloom() {}
 
 void
 CyrilBloom::print()
 {
   cout << "CyrilBloom" << endl;
-}
-
-Cyril*
-CyrilBloom::clone()
-{
-  return new CyrilBloom(*this);
 }
 
 int

@@ -9,11 +9,9 @@ class CyrilColorLoad : public Cyril
 {
 public:
   CyrilColorLoad(int _i);
-  CyrilColorLoad(const CyrilColorLoad& other);
   ~CyrilColorLoad() override;
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
 

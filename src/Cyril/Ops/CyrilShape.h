@@ -11,11 +11,9 @@ class CyrilShape : public Cyril
 
 public:
   CyrilShape(Cyril* _e);
-  CyrilShape(const CyrilShape& other);
 
   ~CyrilShape() override;
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
 };

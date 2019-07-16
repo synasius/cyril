@@ -18,12 +18,6 @@ CyrilBackgroundOp::print()
   cout << "Background" << endl;
 }
 
-Cyril*
-CyrilBackgroundOp::clone()
-{
-  return new CyrilBackgroundOp(*this);
-}
-
 int
 CyrilBackgroundOp::size()
 {

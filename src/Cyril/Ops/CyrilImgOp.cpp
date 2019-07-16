@@ -17,12 +17,6 @@ CyrilImgOp::print()
   cout << "Image" << endl;
 }
 
-Cyril*
-CyrilImgOp::clone()
-{
-  return new CyrilImgOp(*this);
-}
-
 int
 CyrilImgOp::size()
 {

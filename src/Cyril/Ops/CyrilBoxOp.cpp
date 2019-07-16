@@ -19,12 +19,6 @@ CyrilBoxOp::print()
   cout << "Box" << endl;
 }
 
-Cyril*
-CyrilBoxOp::clone()
-{
-  return new CyrilBoxOp(*this);
-}
-
 int
 CyrilBoxOp::size()
 {

@@ -16,12 +16,6 @@ CyrilPopMatrixOp::print()
   cout << "PopMatrix" << endl;
 }
 
-Cyril*
-CyrilPopMatrixOp::clone()
-{
-  return new CyrilPopMatrixOp(*this);
-}
-
 int
 CyrilPopMatrixOp::size()
 {

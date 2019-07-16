@@ -12,13 +12,6 @@ CyrilWhile::CyrilWhile(Cyril* _e, Cyril* _c)
   }
 }
 
-CyrilWhile::CyrilWhile(const CyrilWhile& other)
-  : Cyril(other)
-{
-  e = other.e->clone();
-  c = other.c->clone();
-}
-
 CyrilWhile::~CyrilWhile()
 {
   delete e;
@@ -31,12 +24,6 @@ CyrilWhile::print()
   c->print();
   e->print();
   cout << "While: " << endl;
-}
-
-Cyril*
-CyrilWhile::clone()
-{
-  return new CyrilWhile(*this);
 }
 
 int

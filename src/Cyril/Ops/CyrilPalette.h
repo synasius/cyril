@@ -11,11 +11,9 @@ class CyrilPalette : public Cyril
 
 public:
   CyrilPalette(int _l, Cyril* _p);
-  CyrilPalette(const CyrilPalette& other);
   ~CyrilPalette() override;
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
 };

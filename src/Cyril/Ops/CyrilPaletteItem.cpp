@@ -24,15 +24,6 @@ CyrilPaletteItem::CyrilPaletteItem(float _f, Cyril* _e)
   paletteCalc = false;
 }
 
-CyrilPaletteItem::CyrilPaletteItem(const CyrilPaletteItem& other)
-  : Cyril(other)
-{
-  d = other.d;
-  r = other.r;
-  g = other.g;
-  b = other.b;
-}
-
 CyrilPaletteItem::~CyrilPaletteItem()
 {
   delete e;
@@ -43,12 +34,6 @@ CyrilPaletteItem::print()
 {
 
   cout << "PaletteItem" << endl;
-}
-
-Cyril*
-CyrilPaletteItem::clone()
-{
-  return new CyrilPaletteItem(*this);
 }
 
 int

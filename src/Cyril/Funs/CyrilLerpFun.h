@@ -10,10 +10,8 @@ class CyrilLerpFun : public CyrilFun
 {
 public:
   CyrilLerpFun(Cyril* _c);
-  CyrilLerpFun(const CyrilLerpFun& other);
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
 };

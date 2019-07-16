@@ -16,16 +16,13 @@ CyrilMoveOp::print()
   c->print();
   cout << "Move" << endl;
 }
-Cyril*
-CyrilMoveOp::clone()
-{
-  return new CyrilMoveOp(*this);
-}
+
 int
 CyrilMoveOp::size()
 {
   return 0;
 }
+
 void
 CyrilMoveOp::eval(CyrilState& _s)
 {

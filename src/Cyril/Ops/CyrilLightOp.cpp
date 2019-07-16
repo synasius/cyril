@@ -16,16 +16,13 @@ CyrilLightOp::print()
   c->print();
   cout << "Light" << endl;
 }
-Cyril*
-CyrilLightOp::clone()
-{
-  return new CyrilLightOp(*this);
-}
+
 int
 CyrilLightOp::size()
 {
   return 0;
 }
+
 void
 CyrilLightOp::eval(CyrilState& _s)
 {

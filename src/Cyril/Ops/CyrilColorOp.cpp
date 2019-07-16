@@ -17,12 +17,6 @@ CyrilColorOp::print()
   cout << "Color" << endl;
 }
 
-Cyril*
-CyrilColorOp::clone()
-{
-  return new CyrilColorOp(*this);
-}
-
 int
 CyrilColorOp::size()
 {

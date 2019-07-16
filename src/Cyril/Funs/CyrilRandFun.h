@@ -9,10 +9,8 @@ class CyrilRandFun : public CyrilFun
 {
 public:
   CyrilRandFun(Cyril* _c);
-  CyrilRandFun(const CyrilRandFun& other);
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
 };

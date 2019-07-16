@@ -12,21 +12,11 @@ CyrilHsbFun::CyrilHsbFun(Cyril* _c)
   }
 }
 
-CyrilHsbFun::CyrilHsbFun(const CyrilHsbFun& other)
-  : CyrilFun(other)
-{}
-
 void
 CyrilHsbFun::print()
 {
   c->print();
   std::cout << "HSB" << std::endl;
-}
-
-Cyril*
-CyrilHsbFun::clone()
-{
-  return new CyrilHsbFun(*this);
 }
 
 int

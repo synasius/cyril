@@ -6,24 +6,12 @@ CyrilPush::CyrilPush(float _f)
   valid = true;
 }
 
-CyrilPush::CyrilPush(const CyrilPush& other)
-  : Cyril(other)
-{
-  f = other.f;
-}
-
 CyrilPush::~CyrilPush() {}
 
 void
 CyrilPush::print()
 {
   cout << "Push: " << f << endl;
-}
-
-Cyril*
-CyrilPush::clone()
-{
-  return new CyrilPush(*this);
 }
 
 int

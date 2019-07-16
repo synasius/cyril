@@ -17,12 +17,6 @@ CyrilRotateOp::print()
   std::cout << "Rotate" << std::endl;
 }
 
-Cyril*
-CyrilRotateOp::clone()
-{
-  return new CyrilRotateOp(*this);
-}
-
 int
 CyrilRotateOp::size()
 {

@@ -9,11 +9,9 @@ class CyrilBinaryOp : public Cyril
 {
 public:
   CyrilBinaryOp(std::string _o, Cyril* _e1, Cyril* _e2);
-  CyrilBinaryOp(const CyrilBinaryOp& other);
   ~CyrilBinaryOp() override;
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState& _s) override;
 

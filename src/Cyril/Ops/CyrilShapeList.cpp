@@ -12,12 +12,6 @@ CyrilShapeList::CyrilShapeList(Cyril* _c)
   }
 }
 
-CyrilShapeList::CyrilShapeList(const CyrilShapeList& other)
-  : Cyril(other)
-{
-  c = other.c->clone();
-}
-
 CyrilShapeList::~CyrilShapeList()
 {
   delete c;
@@ -28,12 +22,6 @@ CyrilShapeList::print()
 {
   c->print();
   cout << "ShapeList point" << endl;
-}
-
-Cyril*
-CyrilShapeList::clone()
-{
-  return new CyrilShapeList(*this);
 }
 
 int

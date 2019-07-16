@@ -1,13 +1,4 @@
-//
-//  Palette.h
-//  cyril2
-//
-//  Created by Darren Mothersele on 06/11/2013.
-//
-//
-
-#ifndef __cyril2__Palette__
-#define __cyril2__Palette__
+#pragma once
 
 #include <ofMain.h>
 
@@ -44,8 +35,5 @@ public:
   ofColor lerp(float);
   Palette(const Palette& other);
   virtual ~Palette();
-  virtual Palette* clone();
   void drawBackground();
 };
-
-#endif /* defined(__cyril2__Palette__) */

@@ -11,11 +11,9 @@ class CyrilPush : public Cyril
 
 public:
   CyrilPush(float _f);
-  CyrilPush(const CyrilPush& other);
   ~CyrilPush();
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState& _s) override;
 

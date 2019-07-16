@@ -6,12 +6,6 @@ CyrilShape::CyrilShape(Cyril* _e)
   : e(_e)
 {}
 
-CyrilShape::CyrilShape(const CyrilShape& other)
-  : Cyril(other)
-{
-  e = other.e->clone();
-}
-
 CyrilShape::~CyrilShape()
 {
   delete e;
@@ -22,12 +16,6 @@ CyrilShape::print()
 {
   e->print();
   cout << "Shape" << endl;
-}
-
-Cyril*
-CyrilShape::clone()
-{
-  return new CyrilShape(*this);
 }
 
 int

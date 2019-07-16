@@ -2,16 +2,9 @@
 
 #include "Cyril.h"
 
-Cyril*
-Cyril::clone()
-{
-  return new Cyril(*this);
-}
-
-Cyril::Cyril(const Cyril& other)
-{
-  valid = other.valid;
-}
+Cyril::Cyril()
+  : valid{ true }
+{}
 
 // How many items are left on the stack after eval?
 int
@@ -30,4 +23,10 @@ void
 Cyril::update(CyrilState&)
 {
   // Do nothing!
+}
+
+int
+Cyril::matchPushPop()
+{
+  return 0;
 }

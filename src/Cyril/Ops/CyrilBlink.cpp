@@ -10,13 +10,6 @@ CyrilBlink::CyrilBlink(Cyril* _e, Cyril* _c)
   }
 }
 
-CyrilBlink::CyrilBlink(const CyrilBlink& other)
-  : Cyril(other)
-{
-  e = other.e->clone();
-  c = other.c->clone();
-}
-
 CyrilBlink::~CyrilBlink()
 {
   delete e;
@@ -29,12 +22,6 @@ CyrilBlink::print()
   e->print();
   c->print();
   std::cout << "Blink" << std::endl;
-}
-
-Cyril*
-CyrilBlink::clone()
-{
-  return new CyrilBlink(*this);
 }
 
 int

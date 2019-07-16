@@ -36,13 +36,6 @@ CyrilPalette::CyrilPalette(int _l, Cyril* _p)
   }
 }
 
-CyrilPalette::CyrilPalette(const CyrilPalette& other)
-  : Cyril(other)
-{
-  loc = other.loc;
-  palette = other.palette->clone();
-}
-
 CyrilPalette::~CyrilPalette()
 {
   delete palette;
@@ -52,12 +45,6 @@ void
 CyrilPalette::print()
 {
   cout << "Palette" << endl;
-}
-
-Cyril*
-CyrilPalette::clone()
-{
-  return new CyrilPalette(*this);
 }
 
 int

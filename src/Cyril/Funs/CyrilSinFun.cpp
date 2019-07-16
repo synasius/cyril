@@ -10,21 +10,11 @@ CyrilSinFun::CyrilSinFun(Cyril* _c)
   }
 }
 
-CyrilSinFun::CyrilSinFun(const CyrilSinFun& other)
-  : CyrilFun(other)
-{}
-
 void
 CyrilSinFun::print()
 {
   c->print();
   std::cout << "Sin" << std::endl;
-}
-
-Cyril*
-CyrilSinFun::clone()
-{
-  return new CyrilSinFun(*this);
 }
 
 int

@@ -16,15 +16,16 @@ class Cyril
 {
 public:
   bool valid;
-  Cyril() { valid = true; }
-  Cyril(const Cyril& other);
-
+  Cyril();
   virtual ~Cyril(){};
-  virtual Cyril* clone();
+
+  Cyril(const Cyril& other) = delete;
+  Cyril& operator=(const Cyril& other) = delete;
+
   virtual void print(){};
   virtual int size();
   virtual void update(CyrilState&);
   virtual void eval(CyrilState&);
-  virtual int matchPushPop() { return 0; }
+  virtual int matchPushPop();
 };
 

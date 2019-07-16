@@ -10,10 +10,8 @@ class CyrilPaletteFun : public CyrilFun
 {
 public:
   CyrilPaletteFun(Cyril* _c);
-  CyrilPaletteFun(const CyrilPaletteFun& other);
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
 };

@@ -9,11 +9,9 @@ class CyrilAnimStep : public Cyril
 {
 public:
   CyrilAnimStep(float _n, Cyril* _e1, Cyril* _e2);
-  CyrilAnimStep(const CyrilAnimStep& other);
-
   ~CyrilAnimStep() override;
+
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
 

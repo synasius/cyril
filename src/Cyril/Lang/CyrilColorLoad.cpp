@@ -8,24 +8,12 @@ CyrilColorLoad::CyrilColorLoad(int _i)
   valid = true;
 }
 
-CyrilColorLoad::CyrilColorLoad(const CyrilColorLoad& other)
-  : Cyril(other)
-{
-  loc = other.loc;
-}
-
 CyrilColorLoad::~CyrilColorLoad() {}
 
 void
 CyrilColorLoad::print()
 {
   cout << "Color Load: " << loc << endl;
-}
-
-Cyril*
-CyrilColorLoad::clone()
-{
-  return new CyrilColorLoad(*this);
 }
 
 int

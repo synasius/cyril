@@ -12,11 +12,9 @@ class CyrilNamedColor : public Cyril
 
 public:
   CyrilNamedColor(const char* _s);
-  CyrilNamedColor(const CyrilNamedColor& other) ;
   ~CyrilNamedColor() override;
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState& _s) override;
 };

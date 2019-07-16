@@ -11,11 +11,9 @@ class CyrilOp : public Cyril
 {
 public:
   CyrilOp(Cyril* _c = nullptr);
-  CyrilOp(const CyrilOp& other);
   ~CyrilOp() override;
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
 

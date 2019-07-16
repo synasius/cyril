@@ -1,6 +1,6 @@
 openframeworks_directory = $(OF_DIRECTORY)
 
-jobs = 8
+jobs = 7
 args = -DOF_DIRECTORY=$(openframeworks_directory) -DCMAKE_EXPORT_COMPILE_COMMANDS=1
 
 .PHONY = release debug

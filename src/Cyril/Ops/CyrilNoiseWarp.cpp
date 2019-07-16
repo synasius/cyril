@@ -11,12 +11,6 @@ CyrilNoiseWarp::CyrilNoiseWarp(Cyril* _e)
   }
 }
 
-CyrilNoiseWarp::CyrilNoiseWarp(const CyrilNoiseWarp& other)
-  : Cyril(other)
-{
-  e = other.e->clone();
-}
-
 CyrilNoiseWarp::~CyrilNoiseWarp()
 {
   delete e;
@@ -27,11 +21,7 @@ CyrilNoiseWarp::print()
 {
   cout << "NoiseWarp" << endl;
 }
-Cyril*
-CyrilNoiseWarp::clone()
-{
-  return new CyrilNoiseWarp(*this);
-}
+
 int
 CyrilNoiseWarp::size()
 {
@@ -43,6 +33,7 @@ CyrilNoiseWarp::update(CyrilState& _s)
   // FX_NOISE_WARP = 1
   _s.post[1]->enable();
 }
+
 void
 CyrilNoiseWarp::eval(CyrilState& _s)
 {

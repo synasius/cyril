@@ -11,13 +11,6 @@ CyrilTile::CyrilTile(Cyril* _e, Cyril* _c)
   }
 }
 
-CyrilTile::CyrilTile(const CyrilTile& other)
-  : Cyril(other)
-{
-  e = other.e->clone();
-  c = other.c->clone();
-}
-
 CyrilTile::~CyrilTile()
 {
   delete e;
@@ -29,12 +22,6 @@ CyrilTile::print()
 {
   c->print();
   cout << "Tile" << endl;
-}
-
-Cyril*
-CyrilTile::clone()
-{
-  return new CyrilTile(*this);
 }
 
 int

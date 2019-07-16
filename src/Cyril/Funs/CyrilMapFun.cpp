@@ -12,21 +12,11 @@ CyrilMapFun::CyrilMapFun(Cyril* _c)
   }
 }
 
-CyrilMapFun::CyrilMapFun(const CyrilMapFun& other)
-  : CyrilFun(other)
-{}
-
 void
 CyrilMapFun::print()
 {
   c->print();
   cout << "MAP" << endl;
-}
-
-Cyril*
-CyrilMapFun::clone()
-{
-  return new CyrilMapFun(*this);
 }
 
 int

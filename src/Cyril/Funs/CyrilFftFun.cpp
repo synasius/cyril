@@ -10,22 +10,11 @@ CyrilFftFun::CyrilFftFun(Cyril* _c)
   }
 }
 
-CyrilFftFun::CyrilFftFun(const CyrilFftFun& other)
-  : CyrilFun(other)
-{
-}
-
 void
 CyrilFftFun::print()
 {
   c->print();
   cout << "Palette" << endl;
-}
-
-Cyril*
-CyrilFftFun::clone()
-{
-  return new CyrilFftFun(*this);
 }
 
 int
@@ -40,7 +29,8 @@ CyrilFftFun::eval(CyrilState& state)
   c->eval(state);
   int d = state.stk->top();
   state.stk->pop();
-  // cout << "FFT of " << (d % 32) << endl;
+  auto v = (*state.sym)[REG_BEAT_FFT_START + (d % 32)];
+  std::cout << "FFT of " << (d % 32) << " is " << v << std::endl;
   // float f = fftSubbands[d % 32];
 
   state.stk->push((*state.sym)[REG_BEAT_FFT_START + (d % 32)]);

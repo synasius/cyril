@@ -11,12 +11,6 @@ CyrilDebugOp::print()
   cout << "Debug" << endl;
 }
 
-Cyril*
-CyrilDebugOp::clone()
-{
-  return new CyrilDebugOp(*this);
-}
-
 int
 CyrilDebugOp::size()
 {

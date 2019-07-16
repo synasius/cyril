@@ -17,13 +17,6 @@ CyrilUnaryOp::CyrilUnaryOp(string _o, Cyril* _e)
   }
 }
 
-CyrilUnaryOp::CyrilUnaryOp(const CyrilUnaryOp& other)
-  : Cyril(other)
-{
-  o = other.o;
-  e = other.e->clone();
-}
-
 CyrilUnaryOp::~CyrilUnaryOp()
 {
   delete e;
@@ -34,12 +27,6 @@ CyrilUnaryOp::print()
 {
   e->print();
   cout << "Unary: " << o << endl;
-}
-
-Cyril*
-CyrilUnaryOp::clone()
-{
-  return new CyrilUnaryOp(*this);
 }
 
 int

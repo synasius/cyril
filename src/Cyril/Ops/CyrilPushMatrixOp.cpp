@@ -16,12 +16,6 @@ CyrilPushMatrixOp::print()
   cout << "PushMatrix" << endl;
 }
 
-Cyril*
-CyrilPushMatrixOp::clone()
-{
-  return new CyrilPushMatrixOp(*this);
-}
-
 int
 CyrilPushMatrixOp::size()
 {

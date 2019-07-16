@@ -11,13 +11,6 @@ CyrilIf::CyrilIf(Cyril* _e, Cyril* _c)
   }
 }
 
-CyrilIf::CyrilIf(const CyrilIf& other)
-  : Cyril(other)
-{
-  e = other.e->clone();
-  c = other.c->clone();
-}
-
 CyrilIf::~CyrilIf()
 {
   delete e;
@@ -30,12 +23,6 @@ CyrilIf::print()
   c->print();
   e->print();
   cout << "If: " << endl;
-}
-
-Cyril*
-CyrilIf::clone()
-{
-  return new CyrilIf(*this);
 }
 
 int

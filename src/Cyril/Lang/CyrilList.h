@@ -9,11 +9,9 @@ class CyrilList : public Cyril
 {
 public:
   CyrilList(Cyril* _c1, Cyril* _c2);
-  CyrilList(const CyrilList& other);
   ~CyrilList() override;
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void update(CyrilState& _s) override;
   void eval(CyrilState& _s) override;

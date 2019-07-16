@@ -12,22 +12,11 @@ CyrilLerpFun::CyrilLerpFun(Cyril* _c)
   }
 }
 
-CyrilLerpFun::CyrilLerpFun(const CyrilLerpFun& other)
-  : CyrilFun(other)
-{
-}
-
 void
 CyrilLerpFun::print()
 {
   c->print();
   std::cout << "Lerp" << std::endl;
-}
-
-Cyril*
-CyrilLerpFun::clone()
-{
-  return new CyrilLerpFun(*this);
 }
 
 int

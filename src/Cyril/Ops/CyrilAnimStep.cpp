@@ -8,14 +8,6 @@ CyrilAnimStep::CyrilAnimStep(float _n, Cyril* _e1, Cyril* _e2)
   , e2(_e2)
 {}
 
-CyrilAnimStep::CyrilAnimStep(const CyrilAnimStep& other)
-  : Cyril(other)
-{
-  n = other.n;
-  e1 = other.e1->clone();
-  e2 = other.e2->clone();
-}
-
 CyrilAnimStep::~CyrilAnimStep()
 {
   delete e1;
@@ -28,12 +20,6 @@ CyrilAnimStep::print()
   e1->print();
   e2->print();
   cout << "AnimStep " << n << endl;
-}
-
-Cyril*
-CyrilAnimStep::clone()
-{
-  return new CyrilAnimStep(*this);
 }
 
 int

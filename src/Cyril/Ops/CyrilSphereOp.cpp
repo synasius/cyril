@@ -17,12 +17,6 @@ CyrilSphereOp::print()
   cout << "Sphere" << endl;
 }
 
-Cyril*
-CyrilSphereOp::clone()
-{
-  return new CyrilSphereOp(*this);
-}
-
 int
 CyrilSphereOp::size()
 {

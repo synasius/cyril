@@ -16,16 +16,13 @@ CyrilLineOp::print()
   c->print();
   cout << "Line" << endl;
 }
-Cyril*
-CyrilLineOp::clone()
-{
-  return new CyrilLineOp(*this);
-}
+
 int
 CyrilLineOp::size()
 {
   return 0;
 }
+
 void
 CyrilLineOp::eval(CyrilState& _s)
 {

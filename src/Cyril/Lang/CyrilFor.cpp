@@ -22,16 +22,6 @@ CyrilFor::CyrilFor(int _i, Cyril* _e1, Cyril* _e2, Cyril* _e3, Cyril* _c)
   }
 }
 
-CyrilFor::CyrilFor(const CyrilFor& other)
-  : Cyril(other)
-{
-  loc = other.loc;
-  e1 = other.e1->clone();
-  e2 = other.e2->clone();
-  e3 = other.e3->clone();
-  c = other.c->clone();
-}
-
 CyrilFor::~CyrilFor()
 {
   delete e1;
@@ -48,12 +38,6 @@ CyrilFor::print()
   e3->print();
   c->print();
   cout << "For: " << loc << endl;
-}
-
-Cyril*
-CyrilFor::clone()
-{
-  return new CyrilFor(*this);
 }
 
 int

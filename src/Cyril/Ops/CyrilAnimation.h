@@ -11,11 +11,9 @@ class CyrilAnimation : public Cyril
 
 public:
   CyrilAnimation(Cyril* _e);
-  CyrilAnimation(const CyrilAnimation& other);
 
   ~CyrilAnimation() override;
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
 };

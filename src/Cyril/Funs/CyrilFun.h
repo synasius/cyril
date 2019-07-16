@@ -12,11 +12,9 @@ protected:
 
 public:
   CyrilFun(Cyril* _c = nullptr);
-  CyrilFun(const CyrilFun& other);
 
   ~CyrilFun() override;
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
 };

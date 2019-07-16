@@ -10,12 +10,6 @@ CyrilKaleidoscope::CyrilKaleidoscope(Cyril* _e)
   }
 }
 
-CyrilKaleidoscope::CyrilKaleidoscope(const CyrilKaleidoscope& other)
-  : Cyril(other)
-{
-  e = other.e->clone();
-}
-
 CyrilKaleidoscope::~CyrilKaleidoscope()
 {
   delete e;
@@ -25,12 +19,6 @@ void
 CyrilKaleidoscope::print()
 {
   cout << "Kaleidoscope" << endl;
-}
-
-Cyril*
-CyrilKaleidoscope::clone()
-{
-  return new CyrilKaleidoscope(*this);
 }
 
 int

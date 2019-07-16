@@ -18,12 +18,6 @@ CyrilGridOp::print()
   cout << "Grid" << endl;
 }
 
-Cyril*
-CyrilGridOp::clone()
-{
-  return new CyrilGridOp(*this);
-}
-
 int
 CyrilGridOp::size()
 {

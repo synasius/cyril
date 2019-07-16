@@ -142,14 +142,6 @@ CyrilBinaryOp::CyrilBinaryOp(string _o, Cyril* _e1, Cyril* _e2)
   }
 }
 
-CyrilBinaryOp::CyrilBinaryOp(const CyrilBinaryOp& other)
-  : Cyril(other)
-{
-  o = other.o;
-  e1 = other.e1->clone();
-  e2 = other.e2->clone();
-}
-
 CyrilBinaryOp::~CyrilBinaryOp()
 {
   delete e1;
@@ -162,12 +154,6 @@ CyrilBinaryOp::print()
   e1->print();
   e2->print();
   cout << "Binary: " << o << endl;
-}
-
-Cyril*
-CyrilBinaryOp::clone()
-{
-  return new CyrilBinaryOp(*this);
 }
 
 int

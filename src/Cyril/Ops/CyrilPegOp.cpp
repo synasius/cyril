@@ -17,12 +17,6 @@ CyrilPegOp::print()
   cout << "Peg" << endl;
 }
 
-Cyril*
-CyrilPegOp::clone()
-{
-  return new CyrilPegOp(*this);
-}
-
 int
 CyrilPegOp::size()
 {

@@ -9,11 +9,9 @@ class CyrilUnaryOp : public Cyril
 {
 public:
   CyrilUnaryOp(string _o, Cyril* _e);
-  CyrilUnaryOp(const CyrilUnaryOp& other);
 
   ~CyrilUnaryOp() override;
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState& _s) override;
 

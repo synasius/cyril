@@ -16,12 +16,6 @@ CyrilBallDetailOp::print()
   cout << "BallDetail" << endl;
 }
 
-Cyril*
-CyrilBallDetailOp::clone()
-{
-  return new CyrilBallDetailOp(*this);
-}
-
 int
 CyrilBallDetailOp::size()
 {

@@ -9,11 +9,9 @@ class CyrilLoad : public Cyril
 {
 public:
   CyrilLoad(int _i);
-  CyrilLoad(const CyrilLoad& other);
   ~CyrilLoad() override;
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState& _s) override;
 

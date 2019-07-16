@@ -12,13 +12,6 @@ CyrilAssign::CyrilAssign(int _i, Cyril* _c)
   }
 }
 
-CyrilAssign::CyrilAssign(const CyrilAssign& other)
-  : Cyril(other)
-{
-  loc = other.loc;
-  c = other.c->clone();
-}
-
 CyrilAssign::~CyrilAssign()
 {
   delete c;
@@ -29,12 +22,6 @@ CyrilAssign::print()
 {
   c->print();
   cout << "Assign: " << loc << endl;
-}
-
-Cyril*
-CyrilAssign::clone()
-{
-  return new CyrilAssign(*this);
 }
 
 int

@@ -1,11 +1,3 @@
-//
-//  CyrilConeOp.cpp
-//  cyril2
-//
-//  Created by Darren Mothersele on 05/11/2013.
-//
-//
-
 #include "CyrilConeOp.h"
 
 CyrilConeOp::CyrilConeOp(Cyril* _c)
@@ -23,12 +15,6 @@ CyrilConeOp::print()
 {
   c->print();
   cout << "Cone" << endl;
-}
-
-Cyril*
-CyrilConeOp::clone()
-{
-  return new CyrilConeOp(*this);
 }
 
 int

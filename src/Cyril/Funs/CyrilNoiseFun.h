@@ -9,10 +9,8 @@ class CyrilNoiseFun : public CyrilFun
 {
 public:
   CyrilNoiseFun(Cyril* _c);
-  CyrilNoiseFun(const CyrilNoiseFun& other);
 
   void print() override;
-  Cyril* clone() override;
   int size() override;
   void eval(CyrilState&) override;
 };

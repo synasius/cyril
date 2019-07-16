@@ -6,12 +6,6 @@ CyrilOp::CyrilOp(Cyril* _c)
   : c(_c)
 {}
 
-CyrilOp::CyrilOp(const CyrilOp& other)
-  : Cyril(other)
-{
-  c = other.c->clone();
-}
-
 CyrilOp::~CyrilOp()
 {
   delete c;
@@ -22,12 +16,6 @@ CyrilOp::print()
 {
   c->print();
   cout << "No Op" << endl;
-}
-
-Cyril*
-CyrilOp::clone()
-{
-  return new CyrilOp(*this);
 }
 
 int

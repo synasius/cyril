@@ -12,21 +12,11 @@ CyrilNoiseFun::CyrilNoiseFun(Cyril* _c)
   }
 }
 
-CyrilNoiseFun::CyrilNoiseFun(const CyrilNoiseFun& other)
-  : CyrilFun(other)
-{}
-
 void
 CyrilNoiseFun::print()
 {
   c->print();
   std::cout << "Noise" << std::endl;
-}
-
-Cyril*
-CyrilNoiseFun::clone()
-{
-  return new CyrilNoiseFun(*this);
 }
 
 int

@@ -12,21 +12,11 @@ CyrilWaveFun::CyrilWaveFun(Cyril* _c)
   }
 }
 
-CyrilWaveFun::CyrilWaveFun(const CyrilWaveFun& other)
-  : CyrilFun(other)
-{}
-
 void
 CyrilWaveFun::print()
 {
   c->print();
   cout << "Wave" << endl;
-}
-
-Cyril*
-CyrilWaveFun::clone()
-{
-  return new CyrilWaveFun(*this);
 }
 
 int

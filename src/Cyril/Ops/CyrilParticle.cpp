@@ -12,14 +12,6 @@ CyrilParticle::CyrilParticle(Cyril* _e, Cyril* _c)
   }
 }
 
-CyrilParticle::CyrilParticle(const CyrilParticle& other)
-  : Cyril(other)
-{
-  e = other.e->clone();
-
-  c = std::shared_ptr<Cyril>(other.c->clone());
-}
-
 CyrilParticle::~CyrilParticle()
 {
   delete e;
@@ -31,12 +23,6 @@ CyrilParticle::print()
   e->print();
   c->print();
   cout << "Particle" << endl;
-}
-
-Cyril*
-CyrilParticle::clone()
-{
-  return new CyrilParticle(*this);
 }
 
 int

@@ -11,13 +11,6 @@ CyrilDo::CyrilDo(Cyril* _e, Cyril* _c)
   }
 }
 
-CyrilDo::CyrilDo(const CyrilDo& other)
-  : Cyril(other)
-{
-  e = other.e->clone();
-  c = other.c->clone();
-}
-
 CyrilDo::~CyrilDo()
 {
   delete e;
@@ -30,12 +23,6 @@ CyrilDo::print()
   c->print();
   e->print();
   cout << "Do: " << endl;
-}
-
-Cyril*
-CyrilDo::clone()
-{
-  return new CyrilDo(*this);
 }
 
 int

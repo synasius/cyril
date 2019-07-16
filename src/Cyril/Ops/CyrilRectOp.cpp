@@ -17,12 +17,6 @@ CyrilRectOp::print()
   cout << "Rect" << endl;
 }
 
-Cyril*
-CyrilRectOp::clone()
-{
-  return new CyrilRectOp(*this);
-}
-
 int
 CyrilRectOp::size()
 {

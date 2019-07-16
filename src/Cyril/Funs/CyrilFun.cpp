@@ -6,12 +6,6 @@ CyrilFun::CyrilFun(Cyril* _c)
   : c(_c)
 {}
 
-CyrilFun::CyrilFun(const CyrilFun& other)
-  : Cyril(other)
-{
-  c = other.c->clone();
-}
-
 CyrilFun::~CyrilFun()
 {
   delete c;
@@ -22,12 +16,6 @@ CyrilFun::print()
 {
   c->print();
   cout << "No Fun" << endl;
-}
-
-Cyril*
-CyrilFun::clone()
-{
-  return new CyrilFun(*this);
 }
 
 int

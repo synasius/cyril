@@ -17,12 +17,6 @@ CyrilScaleOp::print()
   cout << "Scale" << endl;
 }
 
-Cyril*
-CyrilScaleOp::clone()
-{
-  return new CyrilScaleOp(*this);
-}
-
 int
 CyrilScaleOp::size()
 {

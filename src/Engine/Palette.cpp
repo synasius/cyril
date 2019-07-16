@@ -8,27 +8,37 @@
 
 #include "Palette.h"
 
-Palette::Palette() : total(0) {
-  
-}
-void Palette::addColor(float _d, int _hex) {
+Palette::Palette()
+  : total(0)
+{}
+
+void
+Palette::addColor(float _d, int _hex)
+{
   total += _d;
   colors.push_back(PaletteItem(_d, _hex));
 }
-void Palette::addColor(float _d, float _r, float _g, float _b) {
+
+void
+Palette::addColor(float _d, float _r, float _g, float _b)
+{
   total += _d;
   colors.push_back(PaletteItem(_d, _r, _g, _b));
 }
 
-void Palette::drawBackground() {
+void
+Palette::drawBackground()
+{
   // TODO: draw gradient background using palette variable
-  //for (int y = 0; y < ofGetHeight(); y++) {
-    //ofSetColor(lerp(y / ofGetHeight()));
-    //ofLine(0, y, ofGetWidth(), y);
+  // for (int y = 0; y < ofGetHeight(); y++) {
+  // ofSetColor(lerp(y / ofGetHeight()));
+  // ofLine(0, y, ofGetWidth(), y);
   //}
 }
 
-ofColor Palette::lerp(float _v) {
+ofColor
+Palette::lerp(float _v)
+{
   PaletteItem first = colors.front();
   float newV = ofMap(ofClamp(_v, 0, 1), 0, 1, 0, total);
   float keepV = newV;
@@ -36,7 +46,8 @@ ofColor Palette::lerp(float _v) {
   bool findFirst = true;
   ofColor found, nextC;
   float prevD(0), nextD(0);
-  for(vector<PaletteItem>::iterator it = colors.begin(); it != colors.end(); ++it){
+  for (vector<PaletteItem>::iterator it = colors.begin(); it != colors.end();
+       ++it) {
     if (findFirst) {
       found = it->c;
       prevD += it->distance;
@@ -45,8 +56,7 @@ ofColor Palette::lerp(float _v) {
         findFirst = false;
         nextD = prevD;
       }
-    }
-    else {
+    } else {
       nextC = it->c;
       nextD += it->distance;
       break;
@@ -58,36 +68,36 @@ ofColor Palette::lerp(float _v) {
   return found.lerp(nextC, ofMap(keepV, prevD - first.distance, nextD, 0, 1));
 }
 
-ofColor Palette::getColor(float _v) {
+ofColor
+Palette::getColor(float _v)
+{
   ofColor found;
-  for(vector<PaletteItem>::iterator it = colors.begin(); it != colors.end(); ++it){
+  for (vector<PaletteItem>::iterator it = colors.begin(); it != colors.end();
+       ++it) {
     found = it->c;
     _v -= it->distance;
-    if (_v <= 0) break;
+    if (_v <= 0)
+      break;
   }
   return found;
 }
-ofColor Palette::randomColor() {
+
+ofColor
+Palette::randomColor()
+{
   return getColor(ofRandom(total));
 }
-ofColor Palette::getColorAt(float _i) {
+
+ofColor
+Palette::getColorAt(float _i)
+{
   return getColor(total * _i);
 }
 
-Palette::Palette (const Palette &other) {
+Palette::Palette(const Palette& other)
+{
   total = other.total;
-  colors = * new vector<PaletteItem>(other.colors);
-}
-Palette::~Palette () {
-  
-}
-Palette * Palette::clone () {
-  return new Palette(* this);
+  colors = *new vector<PaletteItem>(other.colors);
 }
 
-
-
-
-
-
-
+Palette::~Palette() {}

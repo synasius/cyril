@@ -17,12 +17,6 @@ CyrilNoFillOp::print()
   cout << "Fill" << endl;
 }
 
-Cyril*
-CyrilNoFillOp::clone()
-{
-  return new CyrilNoFillOp(*this);
-}
-
 int
 CyrilNoFillOp::size()
 {
