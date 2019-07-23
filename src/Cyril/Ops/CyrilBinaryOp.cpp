@@ -153,7 +153,7 @@ CyrilBinaryOp::print()
 {
   e1->print();
   e2->print();
-  cout << "Binary: " << o << endl;
+  std::cout << "Binary: " << o << endl;
 }
 
 int
@@ -183,7 +183,7 @@ CyrilBinaryOp::eval(CyrilState& _s)
       break;
     case OP_DIV:
       if (v2 == 0) {
-        cout << "Warning: divide by 0" << endl;
+        std::cout << "Warning: divide by 0" << endl;
         _s.stk->push(0);
       } else {
         _s.stk->push(v1 / v2);
@@ -191,10 +191,11 @@ CyrilBinaryOp::eval(CyrilState& _s)
       break;
     case OP_MOD:
       if (v2 == 0) {
-        cout << "Warning: divide(mod) by 0" << endl;
+        std::cout << "Warning: divide(mod) by 0" << endl;
         _s.stk->push(0);
       } else {
-        _s.stk->push(int(v1) % int(v2));
+        auto res = std::fmod(v1, v2);
+        _s.stk->push(res);
       }
       break;
     case OP_EQ:
@@ -255,6 +256,6 @@ CyrilBinaryOp::eval(CyrilState& _s)
       break;
     default:
       _s.stk->push(0);
-      cout << "Warning unknown operator " << op << endl;
+      std::cout << "Warning unknown operator " << op << endl;
   }
 }
