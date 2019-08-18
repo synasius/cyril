@@ -428,18 +428,20 @@ cyrilApp::draw()
 }
 
 void
-cyrilApp::toggleFx(void* _o)
+cyrilApp::toggleFx(void* target)
 {
-  ((cyrilApp*)_o)->m_fxOn = !((cyrilApp*)_o)->m_fxOn;
+  auto app = static_cast<cyrilApp*>(target);
+  app->m_fxOn = !app->m_fxOn;
 }
 
 void
-cyrilApp::toggleFullscreen(void* _o)
+cyrilApp::toggleFullscreen(void* target)
 {
-  ((cyrilApp*)_o)->m_isFullScreen = !((cyrilApp*)_o)->m_isFullScreen;
-  ofSetFullscreen(((cyrilApp*)_o)->m_isFullScreen);
+  auto app = static_cast<cyrilApp*>(target);
+  app->m_isFullScreen = !app->m_isFullScreen;
+  ofSetFullscreen(app->m_isFullScreen);
 
-  if (((cyrilApp*)_o)->m_isFullScreen) {
+  if (app->m_isFullScreen) {
     ofHideCursor();
 #ifdef __APPLE__
     CGDisplayHideCursor(NULL);
@@ -451,98 +453,106 @@ cyrilApp::toggleFullscreen(void* _o)
 #endif
   }
 }
+
 void
-cyrilApp::toggleEditor(void* _o)
+cyrilApp::toggleEditor(void* target)
 {
-  ((cyrilApp*)_o)->m_editorVisible = !((cyrilApp*)_o)->m_editorVisible;
+  auto app = static_cast<cyrilApp*>(target);
+  app->m_editorVisible = !app->m_editorVisible;
 }
+
 void
-cyrilApp::toggleOrtho(void* _o)
+cyrilApp::toggleOrtho(void* target)
 {
-  ((cyrilApp*)_o)->m_isOrtho = !((cyrilApp*)_o)->m_isOrtho;
-  if (((cyrilApp*)_o)->m_isOrtho) {
+  auto app = static_cast<cyrilApp*>(target);
+  app->m_isOrtho = !app->m_isOrtho;
+  if (app->m_isOrtho) {
     // ofSetupScreenOrtho();
     ofSetupScreenOrtho(1200, 1200, 0, 10);
   } else {
     ofSetupScreenPerspective(1200, 1200, 0, 0, 0);
   }
 }
+
 void
-cyrilApp::toggleBackground(void* _o)
+cyrilApp::toggleBackground(void* target)
 {
-  ((cyrilApp*)_o)->m_autoClearBg = !((cyrilApp*)_o)->m_autoClearBg;
+  auto app = static_cast<cyrilApp*>(target);
+  app->m_autoClearBg = !app->m_autoClearBg;
 }
+
 void
-cyrilApp::toggleLights(void* _o)
+cyrilApp::toggleLights(void* target)
 {
-  ((cyrilApp*)_o)->m_lightsOn = !((cyrilApp*)_o)->m_lightsOn;
+  auto app = static_cast<cyrilApp*>(target);
+  app->m_lightsOn = !app->m_lightsOn;
   ofEnableLighting();
   ofSetSmoothLighting(true);
-  ((cyrilApp*)_o)->m_state.light->setAmbientColor(ofColor(0, 0, 0));
-  ((cyrilApp*)_o)->m_state.light->setDiffuseColor(ofColor(255, 255, 255));
-  ((cyrilApp*)_o)->m_state.light->setSpecularColor(ofColor(255, 255, 255));
-  ((cyrilApp*)_o)->m_state.light->setPointLight();
-  ((cyrilApp*)_o)->m_state.light->setAttenuation(1.f, 0.f, 0.f);
+  app->m_state.light->setAmbientColor(ofColor(0, 0, 0));
+  app->m_state.light->setDiffuseColor(ofColor(255, 255, 255));
+  app->m_state.light->setSpecularColor(ofColor(255, 255, 255));
+  app->m_state.light->setPointLight();
+  app->m_state.light->setAttenuation(1.f, 0.f, 0.f);
 }
 
 void
-cyrilApp::loadFile(void* _o)
+cyrilApp::loadFile(void* target)
 {
-  int whichEditor = ((cyrilApp*)_o)->m_editor.currentBuffer;
-  ((cyrilApp*)_o)
-    ->m_editor.loadFile("code/" + ofToString(whichEditor) + ".cy", whichEditor);
-  ((cyrilApp*)_o)->m_editor.update();
+  auto app = static_cast<cyrilApp*>(target);
+  int whichEditor = app->m_editor.currentBuffer;
+  app->m_editor.loadFile("code/" + ofToString(whichEditor) + ".cy", whichEditor);
+  app->m_editor.update();
 }
 
 void
-cyrilApp::saveFile(void* _o)
+cyrilApp::saveFile(void* target)
 {
-  int whichEditor = ((cyrilApp*)_o)->m_editor.currentBuffer;
-  ((cyrilApp*)_o)
-    ->m_editor.saveFile("code/" + ofToString(whichEditor) + ".cy", whichEditor);
+  auto app = static_cast<cyrilApp*>(target);
+  int whichEditor = app->m_editor.currentBuffer;
+  app->m_editor.saveFile("code/" + ofToString(whichEditor) + ".cy", whichEditor);
 }
 
 void
-cyrilApp::resetTimers(void* _o)
+cyrilApp::resetTimers(void* target)
 {
-  ((cyrilApp*)_o)->m_doResetTimers = true;
+  auto app = static_cast<cyrilApp*>(target);
+  app->m_doResetTimers = true;
 }
 
 void
-cyrilApp::pauseProgram(void* _o)
+cyrilApp::pauseProgram(void* target)
 {
-  if (((cyrilApp*)_o)->m_prog[((cyrilApp*)_o)->m_editor.currentBuffer] &&
-      ((cyrilApp*)_o)->m_prog[((cyrilApp*)_o)->m_editor.currentBuffer]->valid) {
-    int whichEditor = ((cyrilApp*)_o)->m_editor.currentBuffer;
-    ((cyrilApp*)_o)->m_running[whichEditor] =
-      !((cyrilApp*)_o)->m_running[whichEditor];
+  auto app = static_cast<cyrilApp*>(target);
+  auto whichEditor = app->m_editor.currentBuffer;
+  if (app->m_prog[whichEditor] && app->m_prog[whichEditor]->valid) {
+    app->m_running[whichEditor] = !app->m_running[whichEditor];
   }
 }
 
 void
-cyrilApp::runScript(void* _o)
+cyrilApp::runScript(void* target)
 {
-  int whichEditor = ((cyrilApp*)_o)->m_editor.currentBuffer;
+  auto app = static_cast<cyrilApp*>(target);
+  int whichEditor = app->m_editor.currentBuffer;
 #ifdef DEBUG_PRINT
-  cout << "run script in editor " << whichEditor << endl;
+  std::cout << "run script in editor " << whichEditor << std::endl;
 #endif
-  Cyril* tempProg = CyrilParser::parseString(
-    ((cyrilApp*)_o)->m_editor.buf[whichEditor]->getText());
+  Cyril* tempProg = CyrilParser::parseString(app->m_editor.buf[whichEditor]->getText());
   if (tempProg->valid) {
-    ((cyrilApp*)_o)->m_prog[whichEditor] = tempProg;
-    ((cyrilApp*)_o)->m_runningProg = true;
-    ((cyrilApp*)_o)->m_running[whichEditor] = true;
-    ((cyrilApp*)_o)->m_error[whichEditor] = false;
+    app->m_prog[whichEditor] = tempProg;
+    app->m_runningProg = true;
+    app->m_running[whichEditor] = true;
+    app->m_error[whichEditor] = false;
 #ifdef DEBUG_PRINT
-    ((cyrilApp*)_o)->prog[whichEditor]->print();
+    app->prog[whichEditor]->print();
 #endif
   } else {
-    ((cyrilApp*)_o)->m_error[whichEditor] = true;
+    app->m_error[whichEditor] = true;
 #ifdef DEBUG_PRINT
     cout << "Invalid program" << endl;
 #endif
   }
-  ((cyrilApp*)_o)->m_reportError = true;
+  app->m_reportError = true;
 }
 
 std::string

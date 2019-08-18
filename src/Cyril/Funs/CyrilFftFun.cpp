@@ -30,7 +30,7 @@ CyrilFftFun::eval(CyrilState& state)
   int d = state.stk->top();
   state.stk->pop();
   auto v = (*state.sym)[REG_BEAT_FFT_START + (d % 32)];
-  std::cout << "FFT of " << (d % 32) << " is " << v << std::endl;
+  //std::cout << "FFT of " << (d % 32) << " is " << v << std::endl;
   // float f = fftSubbands[d % 32];
 
   state.stk->push((*state.sym)[REG_BEAT_FFT_START + (d % 32)]);
