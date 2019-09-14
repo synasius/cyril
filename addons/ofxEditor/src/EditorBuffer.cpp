@@ -128,20 +128,41 @@ void
 EditorBuffer::moveCursorCol(int direction, bool shift, bool cmd)
 {
   if (cmd) {
-    // If command key is pressed move to next word
-    bool notFound = true;
-    while (notFound && m_cursorPosition > m_text.begin() &&
-           m_cursorPosition < m_text.end()) {
-      char stop_chars[] = " {}[]()\n";
-      m_cursorPosition += direction;
-      updateSelect(shift);
-      for (unsigned int i = 0; i < strlen(stop_chars); ++i) {
-        if (*(m_cursorPosition + direction) == stop_chars[i]) {
-          notFound = false;
-          break;
-        }
+    std::string tofind = " {}[]()\n";
+
+    if (direction == -1) {
+      // do not move if cursor is at the beginning fo the text
+      if (m_cursorPosition == m_text.begin()) {
+        return;
       }
+
+      std::string textToSearch(m_text.begin(), m_cursorPosition - 1);
+      auto pos = textToSearch.find_last_of(tofind);
+      if (pos != std::string::npos) {
+        auto posShift = textToSearch.length() - pos;
+        m_cursorPosition -= posShift;
+      } else {
+        m_cursorPosition = m_text.begin();
+      }
+      updateSelect(shift);
     }
+
+    if (direction == 1) {
+      // do not move if cursor is at the end fo the text
+      if (m_cursorPosition == m_text.end()) {
+        return;
+      }
+
+      std::string textToSearch(m_cursorPosition + 1, m_text.end());
+      auto pos = textToSearch.find_first_of(tofind);
+      if (pos != std::string::npos) {
+        m_cursorPosition += (pos + 1);
+      } else {
+        m_cursorPosition = m_text.end();
+      }
+      updateSelect(shift);
+    }
+
   } else {
     if (direction == -1 && m_cursorPosition != m_text.begin()) {
       m_cursorPosition--;

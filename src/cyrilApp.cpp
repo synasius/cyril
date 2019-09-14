@@ -118,9 +118,6 @@ cyrilApp::setup()
   // Initialise our own matrix stack
   // TODO: replace with call to get from current renderer?
   m_state.ms = new ofMatrixStack(ofGetWindowPtr());
-  // Initialise empty paticle system
-  // FIXME: DELETE
-  // m_state.ps = new std::vector<Particle*>;
   // Initialise empty variable/register map
   m_state.sym = new std::map<int, float>;
   // Initialise palettes
