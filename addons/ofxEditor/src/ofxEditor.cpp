@@ -10,7 +10,8 @@ ofxEditor::ofxEditor(int noBuffers, string fontname)
 {
   // here we load path from the current resource folder
   // TODO: on macOS resource folder is in a different path (see bundle)
-  auto resourcesPath = ofFilePath::join(ofFilePath::getCurrentExeDir(), "resources");
+  auto resourcesPath =
+    ofFilePath::join(ofFilePath::getCurrentExeDir(), "resources");
   auto fontPath = ofFilePath::join(resourcesPath, fontname);
   if (!m_font.load(fontPath, 30, true, true, false, 0.3f, 0)) {
     std::cout << "Could not load font '" << fontPath << "'\n";
@@ -99,17 +100,22 @@ ofxEditor::handleKeyPress(ofKeyEventArgs& _key)
   }
 
   // Tab through buffers
-  if (key == OF_KEY_TAB) {
+  // Cmd/Ctrl + Tab: goes to the next buffer
+  // Cmd/Ctrl + Shift + Tab: goes to the previous buffer
+  if (cmd && key == OF_KEY_TAB) {
     if (shift) {
       if (--currentBuffer < 0) {
         currentBuffer = maxBuffer;
       }
+    } else if (++currentBuffer > maxBuffer) {
+      currentBuffer = 0;
     }
-    if (cmd) {
-      if (++currentBuffer > maxBuffer) {
-        currentBuffer = 0;
-      }
-    }
+  }
+
+  // If only Tab is pressed we insert 2 spaces
+  // TODO: this is hard coded at the moment
+  if (!cmd && !shift && key == OF_KEY_TAB) {
+    buf[currentBuffer]->insert("  ");
   }
 
   // Switch buffer using cmd + number

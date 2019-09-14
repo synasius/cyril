@@ -12,3 +12,6 @@ release:
 debug:
 	cmake -B build-debug $(args) -DCMAKE_BUILD_TYPE=Debug
 	cmake --build build-debug -j $(jobs) --target install
+
+run:
+	build-release/install-root/cyril
