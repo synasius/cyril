@@ -1,24 +1,19 @@
 #include "CyrilKaleidoscope.h"
 
-CyrilKaleidoscope::CyrilKaleidoscope(Cyril* _e)
-  : e(_e)
+CyrilKaleidoscope::CyrilKaleidoscope(std::unique_ptr<Cyril> e)
+  : m_e(std::move(e))
 {
-  s = e->size();
-  if (!(s == 1 || s == 0)) {
+  m_s = m_e->size();
+  if (!(m_s == 1 || m_s == 0)) {
     yyerror("Kaleidoscope command takes 0 or 1 argument");
     valid = false;
   }
 }
 
-CyrilKaleidoscope::~CyrilKaleidoscope()
-{
-  delete e;
-}
-
 void
 CyrilKaleidoscope::print()
 {
-  cout << "Kaleidoscope" << endl;
+  std::cout << "Kaleidoscope" << std::endl;
 }
 
 int
@@ -28,23 +23,23 @@ CyrilKaleidoscope::size()
 }
 
 void
-CyrilKaleidoscope::update(CyrilState& _s)
+CyrilKaleidoscope::update(CyrilState& state)
 {
   // FX_KALEIDOSCOPE = 0
-  _s.post[0]->enable();
+  state.post[0]->enable();
 }
 
 void
-CyrilKaleidoscope::eval(CyrilState& _s)
+CyrilKaleidoscope::eval(CyrilState& state)
 {
   float d;
-  if (s == 0) {
+  if (m_s == 0) {
     d = 2.0;
   } else {
-    e->eval(_s);
-    d = _s.stk->top();
-    _s.stk->pop();
-  }
-  _s.kaleido->setSegments(d);
-}
+    m_e->eval(state);
 
+    d = state.stk->top();
+    state.stk->pop();
+  }
+  state.kaleido->setSegments(d);
+}
